@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 장 다중회귀모형 | R에 의한 회귀분석</title>
+  <meta name="description" content="4 장 다중회귀모형 | R에 의한 회귀분석" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 장 다중회귀모형 | R에 의한 회귀분석" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 장 다중회귀모형 | R에 의한 회귀분석" />
+  
+  
+  
+
+<meta name="author" content="박동련" />
+
+
+<meta name="date" content="2023-08-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="simple-reg-infer.html"/>
+<link rel="next" href="reg-diag.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>소개하기</a></li>
+<li class="chapter" data-level="1" data-path="ch1.html"><a href="ch1.html"><i class="fa fa-check"></i><b>1</b> 회귀모형</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ch1.html"><a href="ch1.html#반응변수와-설명변수-사이의-관계-설정"><i class="fa fa-check"></i><b>1.1</b> 반응변수와 설명변수 사이의 관계 설정</a></li>
+<li class="chapter" data-level="1.2" data-path="ch1.html"><a href="ch1.html#회귀모형의-설정"><i class="fa fa-check"></i><b>1.2</b> 회귀모형의 설정</a></li>
+<li class="chapter" data-level="1.3" data-path="ch1.html"><a href="ch1.html#회귀모형의-사용"><i class="fa fa-check"></i><b>1.3</b> 회귀모형의 사용</a></li>
+<li class="chapter" data-level="1.4" data-path="ch1.html"><a href="ch1.html#r의-역할"><i class="fa fa-check"></i><b>1.4</b> R의 역할</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="simple-reg.html"><a href="simple-reg.html"><i class="fa fa-check"></i><b>2</b> 단순회귀모형</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="simple-reg.html"><a href="simple-reg.html#단순회귀모형의-설정"><i class="fa fa-check"></i><b>2.1</b> 단순회귀모형의 설정</a></li>
+<li class="chapter" data-level="2.2" data-path="simple-reg.html"><a href="simple-reg.html#회귀계수의-최소제곱추정"><i class="fa fa-check"></i><b>2.2</b> 회귀계수의 최소제곱추정</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="simple-reg.html"><a href="simple-reg.html#모수-beta_0와-beta_1의-추정"><i class="fa fa-check"></i><b>2.2.1</b> 모수 <span class="math inline">\(\beta_{0}\)</span>와 <span class="math inline">\(\beta_{1}\)</span>의 추정</a></li>
+<li class="chapter" data-level="2.2.2" data-path="simple-reg.html"><a href="simple-reg.html#section-property-lse"><i class="fa fa-check"></i><b>2.2.2</b> 최소제곱추정량의 특성</a></li>
+<li class="chapter" data-level="2.2.3" data-path="simple-reg.html"><a href="simple-reg.html#section-simple-sigma"><i class="fa fa-check"></i><b>2.2.3</b> 오차분산 <span class="math inline">\(\sigma^{2}\)</span>의 추정</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html"><i class="fa fa-check"></i><b>3</b> 단순회귀모형의 추론</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#회귀계수-beta_1에-대한-추론"><i class="fa fa-check"></i><b>3.1</b> 회귀계수 <span class="math inline">\(\beta_{1}\)</span>에 대한 추론</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#hatbeta_1의-표본분포"><i class="fa fa-check"></i><b>3.1.1</b> <span class="math inline">\(\hat{\beta}_{1}\)</span>의 표본분포</a></li>
+<li class="chapter" data-level="3.1.2" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#section-ci-beta1"><i class="fa fa-check"></i><b>3.1.2</b> <span class="math inline">\(\beta_{1}\)</span>의 신뢰구간</a></li>
+<li class="chapter" data-level="3.1.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#section-test-beta1"><i class="fa fa-check"></i><b>3.1.3</b> <span class="math inline">\(\beta_{1}\)</span>에 대한 가설검정</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#회귀계수-beta_0에-대한-추론"><i class="fa fa-check"></i><b>3.2</b> 회귀계수 <span class="math inline">\(\beta_{0}\)</span>에 대한 추론</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#hatbeta_0-의-표본분포"><i class="fa fa-check"></i><b>3.2.1</b> <span class="math inline">\(\hat{\beta}_{0}\)</span> 의 표본분포</a></li>
+<li class="chapter" data-level="3.2.2" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#beta_0의-신뢰구간"><i class="fa fa-check"></i><b>3.2.2</b> <span class="math inline">\(\beta_{0}\)</span>의 신뢰구간</a></li>
+<li class="chapter" data-level="3.2.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#beta_0에-대한-가설검정"><i class="fa fa-check"></i><b>3.2.3</b> <span class="math inline">\(\beta_{0}\)</span>에 대한 가설검정</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-평균-eyx_o에-대한-신뢰구간-추정"><i class="fa fa-check"></i><b>3.3</b> 반응변수의 평균, <span class="math inline">\(E(Y|X_{o})\)</span>에 대한 신뢰구간 추정</a></li>
+<li class="chapter" data-level="3.4" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-개별-관측값-예측"><i class="fa fa-check"></i><b>3.4</b> 반응변수의 개별 관측값 예측</a></li>
+<li class="chapter" data-level="3.5" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#단순회귀모형에서-두-변수-사이의-연관성-측정-상관계수"><i class="fa fa-check"></i><b>3.5</b> 단순회귀모형에서 두 변수 사이의 연관성 측정: 상관계수</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> 다중회귀모형</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-model"><i class="fa fa-check"></i><b>4.1</b> 다중회귀모형의 설정</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-fitting"><i class="fa fa-check"></i><b>4.1.1</b> 회귀계수의 추정</a></li>
+<li class="chapter" data-level="4.1.2" data-path="multiple-reg.html"><a href="multiple-reg.html#다항회귀모형"><i class="fa fa-check"></i><b>4.1.2</b> 다항회귀모형</a></li>
+<li class="chapter" data-level="4.1.3" data-path="multiple-reg.html"><a href="multiple-reg.html#section-dummy"><i class="fa fa-check"></i><b>4.1.3</b> 가변수 회귀모형</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-infer"><i class="fa fa-check"></i><b>4.2</b> 다중회귀모형의 추론</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="multiple-reg.html"><a href="multiple-reg.html#회귀계수-추정량의-표본분포"><i class="fa fa-check"></i><b>4.2.1</b> 회귀계수 추정량의 표본분포</a></li>
+<li class="chapter" data-level="4.2.2" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-model-signif"><i class="fa fa-check"></i><b>4.2.2</b> 회귀모형의 유의성 검정</a></li>
+<li class="chapter" data-level="4.2.3" data-path="multiple-reg.html"><a href="multiple-reg.html#개별회귀계수-유의성-검정"><i class="fa fa-check"></i><b>4.2.3</b> 개별회귀계수 유의성 검정</a></li>
+<li class="chapter" data-level="4.2.4" data-path="multiple-reg.html"><a href="multiple-reg.html#두-회귀모형의-비교"><i class="fa fa-check"></i><b>4.2.4</b> 두 회귀모형의 비교</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#section-selection"><i class="fa fa-check"></i><b>4.3</b> 변수선택</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="reg-diag.html"><a href="reg-diag.html"><i class="fa fa-check"></i><b>5</b> 회귀모형의 진단</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R에 의한 회귀분석</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="multiple-reg" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4 장</span> 다중회귀모형<a href="multiple-reg.html#multiple-reg" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>반응변수의 변동을 하나의 설명변수만으로 충분하게 설명하는 것은 대부분의 경우 불가능할 것이다.
+따라서 반응변수와 관련이 있을 것으로 보이는 여러 개의 설명변수를 모형에 포함시키는 다중회귀모형이 실제 상황에서 많이 사용되는 모형이 된다.
+기본 가정 및 추론 방법에서는 단순회귀모형과 큰 차이가 있는 것은 아니지만, 모형에 여러 개의 설명변수가 포함되기 때문에 단순회귀모형에서는 없었던 문제들이 발생할 수 있다.</p>
+<div id="section-multi-model" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> 다중회귀모형의 설정<a href="multiple-reg.html#section-multi-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>다중선형회귀모형에서는 반응변수 <span class="math inline">\(Y\)</span> 와 설명변수 <span class="math inline">\(X_{1}, \ldots, X_{k}\)</span> 사이에 다음의 관계가 존재한다고 가정한다.</p>
+<p><span class="math display" id="eq:multi-reg">\[\begin{equation}
+Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \cdots + \beta_{k}X_{ki} + \varepsilon_{i},~~i=1,\ldots,n
+\tag{4.1}
+\end{equation}\]</span></p>
+<p><span class="math inline">\(Y_{i}\)</span> 는 반응변수의 <span class="math inline">\(i\)</span> 번째 값, <span class="math inline">\(X_{ji}\)</span> 는 설명변수 <span class="math inline">\(X_{j}\)</span> 의 <span class="math inline">\(i\)</span> 번째 값을 나타내며,
+모수 <span class="math inline">\(\beta_{0}, \beta_{1}, \ldots, \beta_{k}\)</span> 는 <span class="math inline">\((k+1)\)</span> 차원의 공간에서 정의되는 회귀평면을 구성하고 있다.
+오차항 <span class="math inline">\(\varepsilon_{i}\)</span> 은 단순회귀모형에서와 동일한 의미를 갖고 있는 확률변수로서, <span class="math inline">\(\varepsilon_{i} \stackrel{iid}{\sim} N(0,\sigma^{2}),~i=1,\ldots,n\)</span> 의 가정을 하고 있다.</p>
+<p>식 <a href="multiple-reg.html#eq:multi-reg">(4.1)</a>의 관계식은 다음과 같이 풀어서 표현할 수 있으며,</p>
+<p><span class="math display">\[\begin{align*}
+Y_{1} &amp;= \beta_{0} + \beta_{1}X_{11} + \cdots + \beta_{k}X_{k1} + \varepsilon_{1} \\
+Y_{2} &amp;= \beta_{0} + \beta_{1}X_{12} + \cdots + \beta_{k}X_{k2} + \varepsilon_{2} \\
+\vdots \\
+Y_{n} &amp;= \beta_{0} + \beta_{1}X_{1n} + \cdots + \beta_{k}X_{kn} + \varepsilon_{n}
+\end{align*}\]</span></p>
+<p>이것은 다시 다음과 같이 행렬의 형태로 정리할 수 있다.</p>
+<p><span class="math display" id="eq:reg-matrix-1">\[
+\begin{pmatrix}
+Y_{1} \\ Y_{2} \\ \vdots  \\ Y_{n}
+\end{pmatrix} =
+\begin{pmatrix}
+1 &amp; X_{11} &amp; \cdots &amp; X_{k1} \\
+1 &amp; X_{12} &amp; \cdots &amp; X_{k2} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+1 &amp; X_{1n} &amp; \cdots &amp; X_{kn}
+\end{pmatrix}
+\begin{pmatrix}
+\beta_{0} \\ \beta_{1} \\ \vdots \\ \beta_{k}
+\end{pmatrix} +
+\begin{pmatrix}
+\varepsilon_{1} \\ \varepsilon_{2} \\ \vdots \\ \varepsilon_{n}
+\end{pmatrix}
+\tag{4.2}
+\]</span>
+또는 다음의 행렬로 표현할 수 있다.</p>
+<p><span class="math display" id="eq:reg-matrix-2">\[\begin{equation}
+\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+\tag{4.3}
+\end{equation}\]</span></p>
+<p><span class="math inline">\(\mathbf{Y}\)</span> 는 반응변수의 관찰값 벡터이고, <span class="math inline">\(\mathbf{X}\)</span> 는 설명변수의 관찰값 행렬로써 design matrix라고 하며, <span class="math inline">\(\boldsymbol{\beta}\)</span> 는 모수 벡터, <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> 은 오차항 벡터이다.</p>
+<div id="section-multi-fitting" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> 회귀계수의 추정<a href="multiple-reg.html#section-multi-fitting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>회귀계수 <span class="math inline">\(\beta_{0}, \beta_{1}, \ldots, \beta_{k}\)</span> 의 추정은 단순회귀모형의 경우와 동일한 방식으로 이루어진다.
+반응변수 <span class="math inline">\(Y\)</span> 와 설명변수 <span class="math inline">\(X_{1}, \ldots, X_{k}\)</span> 에 대해 관측된 <span class="math inline">\(n\)</span> 개의 자료를 <span class="math inline">\((y_{i}, x_{1i}, \ldots, x_{ki}), ~i=1,\ldots,n\)</span> 이라고 하면, 다음의 <span class="math inline">\(RSS\)</span> 를 최소화하는 <span class="math inline">\(\hat{\boldsymbol{\beta}} = (\hat{\beta}_{0}, \hat{\beta}_{1}, \ldots, \hat{\beta}_{k})\)</span> 를 선택한다.</p>
+<p><span class="math display" id="eq:multi-rss">\[\begin{equation}
+RSS = \sum_{i=1}^{n} \left(y_{i} - \hat{\beta}_{0} - \hat{\beta}_{1}x_{1i} - \ldots -
+\hat{\beta}_{k}x_{ki} \right)^{2}
+\tag{4.4}
+\end{equation}\]</span></p>
+<p>식 <a href="multiple-reg.html#eq:multi-rss">(4.4)</a>의 <span class="math inline">\(RSS\)</span> 를 최소화시키는 추정값 <span class="math inline">\(\hat{\beta}_{0}, \ldots, \hat{\beta}_{k}\)</span> 를 구하기 위해서 <span class="math inline">\(RSS\)</span> 를 <span class="math inline">\(\hat{\beta}_{j}, ~j = 0, \ldots, k\)</span> 에 대하여 각각 편미분을 실시해서 다음의 <span class="math inline">\((k+1)\)</span> 개의 방정식을 얻는다.</p>
+<p><span class="math display" id="eq:multi-lse-1">\[\begin{align}
+\frac{\partial RSS}{\partial \hat{\beta}_{0}} &amp; = -2 \sum_{i=1}^{n}(y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{1i}-\cdots-\hat{\beta}_{k}x_{ki})  = 0\\
+\frac{\partial RSS}{\partial \hat{\beta}_{1}} &amp; = -2 \sum_{i=1}^{n}x_{1i}(y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{1i}-\cdots-\hat{\beta}_{k}x_{ki})  = 0 \\
+&amp;\vdots \\
+\frac{\partial RSS}{\partial \hat{\beta}_{k}} &amp; = -2 \sum_{i=1}^{n}x_{ki}(y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{1i}-\cdots-\hat{\beta}_{k}x_{ki})  = 0
+\tag{4.5}
+\end{align}\]</span></p>
+<p>식 <a href="multiple-reg.html#eq:multi-lse-1">(4.5)</a>을 정리하면 다음과 같이 표현이 되며,</p>
+<p><span class="math display" id="eq:multi-lse-2">\[\begin{align}
+n\hat{\beta}_{0}+\hat{\beta}_{1}\sum_{i=1}^{n} x_{1i} + \cdots + \hat{\beta}_{k}\sum_{i=1}^{n} x_{ki} &amp;= \sum_{i=1}^{n} y_{i} \\
+\hat{\beta}_{0}\sum_{i=1}^{n} x_{1i} + \hat{\beta}_{1}\sum_{i=1}^{n} x_{1i}^{2} + \cdots + \hat{\beta}_{k} \sum_{i=1}^{n} x_{1i}x_{ki} &amp;= \sum_{i=1}^{n} x_{1i}y_{i} \\
+&amp; \vdots \\
+\hat{\beta}_{0}\sum_{i=1}^{n} x_{ki} + \hat{\beta}_{1}\sum_{i=1}^{n} x_{ki}x_{1i} + \cdots + \hat{\beta}_{k}\sum_{i=1}^{n} x_{ki}^{2} &amp;= \sum_{i=1}^{n} x_{ki}y_{i}
+\tag{4.6}
+\end{align}\]</span></p>
+<p>행렬의 형태로 표현하면 다음과 같이 된다.</p>
+<p><span class="math display" id="eq:multi-lse-3">\[
+\begin{pmatrix}
+n &amp; \sum x_{1i} &amp; \cdots &amp; \sum x_{ki} \\
+\sum x_{1i} &amp; \sum x_{1i}^{2} &amp; \cdots &amp; \sum x_{1i}x_{ki} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\sum x_{ki} &amp; \sum x_{ki}x_{1i} &amp; \cdots &amp; \sum x_{ki}^{2}
+\end{pmatrix}
+\begin{pmatrix}
+\hat{\beta}_{0} \\ \hat{\beta}_{1} \\ \vdots \\ \hat{\beta}_{k}
+\end{pmatrix}=
+\begin{pmatrix}
+1 &amp; 1 &amp; \cdots &amp; 1 \\
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1n} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+x_{k1} &amp; x_{k2} &amp; \cdots &amp; x_{kn}
+\end{pmatrix}
+\begin{pmatrix}
+y_{1} \\
+y_{2} \\
+\vdots \\
+y_{n}
+\end{pmatrix}
+\tag{4.7}
+\]</span></p>
+<p>식 <a href="multiple-reg.html#eq:multi-lse-3">(4.7)</a>의 좌변 첫 번째 행렬은 식 <a href="multiple-reg.html#eq:reg-matrix-2">(4.3)</a>에서 정의된 행렬 <span class="math inline">\(\mathbf{X}\)</span> 로 다음과 같이 표현된다.</p>
+<p><span class="math display" id="eq:multi-lse-4">\[
+\begin{pmatrix}
+n &amp; \sum x_{1i} &amp; \cdots &amp; \sum x_{ki} \\
+\sum x_{1i} &amp; \sum x_{1i}^{2} &amp; \cdots &amp; \sum x_{1i}x_{ki} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\sum x_{ki} &amp; \sum x_{ki}x_{1i} &amp; \cdots &amp; \sum x_{ki}^{2}
+\end{pmatrix}=
+\mathbf{X}^{T}\mathbf{X}
+\tag{4.8}
+\]</span>
+단, <span class="math inline">\(\mathbf{X}^{T}\)</span> 는 행렬 <span class="math inline">\(\mathbf{X}\)</span> 의 전치행렬이다.</p>
+<p>따라서 다중회귀모형의 회귀계수에 대한 최소제곱추정량을 구하기 위한 방정식은 다음과 같이 주어진다.</p>
+<p><span class="math display" id="eq:multi-lse-5">\[\begin{equation}
+\mathbf{X}^{T}\mathbf{X}\hat{\boldsymbol{\beta}} = \mathbf{X}^{T}\mathbf{Y}
+\tag{4.9}
+\end{equation}\]</span></p>
+<p>만일 <span class="math inline">\(\mathbf{X}^{T}\mathbf{X}\)</span> 의 역행렬이 존재한다면, 최소제곱추정량은 다음과 같이 표현된다.</p>
+<p><span class="math display" id="eq:multi-lse-6">\[\begin{equation}
+\hat{\boldsymbol{\beta}} = (\mathbf{X}^{T}\mathbf{X})^{-1}\mathbf{X}^{T}\mathbf{Y}
+\tag{4.10}
+\end{equation}\]</span></p>
+<p><span class="math inline">\(\bullet\)</span> 예제 4.1 : 다중회귀모형의 회귀계수 추정</p>
+<p>데이터 프레임 <code>mtcars</code>는 1974년 <span class="math inline">\(\textit{Motor Trend US}\)</span> 에 실린 32 종류 자동차 모델의 연비와 관련된 자료가 입력되어 있다.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="multiple-reg.html#cb24-1" tabindex="-1"></a><span class="fu">str</span>(mtcars)</span>
+<span id="cb24-2"><a href="multiple-reg.html#cb24-2" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    32 obs. of  11 variables:</span></span>
+<span id="cb24-3"><a href="multiple-reg.html#cb24-3" tabindex="-1"></a><span class="do">##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...</span></span>
+<span id="cb24-4"><a href="multiple-reg.html#cb24-4" tabindex="-1"></a><span class="do">##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...</span></span>
+<span id="cb24-5"><a href="multiple-reg.html#cb24-5" tabindex="-1"></a><span class="do">##  $ disp: num  160 160 108 258 360 ...</span></span>
+<span id="cb24-6"><a href="multiple-reg.html#cb24-6" tabindex="-1"></a><span class="do">##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...</span></span>
+<span id="cb24-7"><a href="multiple-reg.html#cb24-7" tabindex="-1"></a><span class="do">##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...</span></span>
+<span id="cb24-8"><a href="multiple-reg.html#cb24-8" tabindex="-1"></a><span class="do">##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...</span></span>
+<span id="cb24-9"><a href="multiple-reg.html#cb24-9" tabindex="-1"></a><span class="do">##  $ qsec: num  16.5 17 18.6 19.4 17 ...</span></span>
+<span id="cb24-10"><a href="multiple-reg.html#cb24-10" tabindex="-1"></a><span class="do">##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...</span></span>
+<span id="cb24-11"><a href="multiple-reg.html#cb24-11" tabindex="-1"></a><span class="do">##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb24-12"><a href="multiple-reg.html#cb24-12" tabindex="-1"></a><span class="do">##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...</span></span>
+<span id="cb24-13"><a href="multiple-reg.html#cb24-13" tabindex="-1"></a><span class="do">##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</span></span></code></pre></div>
+<p>연비를 나타내는 <code>mpg</code>를 반응변수로 하고, 설명변수에는 차량의 무게를 나타내는 <code>wt</code>와 0.25 마일까지 도달하는 데 걸리는 시간을 나타내는 <code>qsec</code>을 선택해서 다중회귀모형을 설정하고 회귀계수를 추정해 보자.</p>
+<p>단순회귀모형의 경우와 동일하게 다중회귀모형에서도 함수 <code>lm()</code>을 사용해서 모형적합을 실시할 수 있다.
+하지만 단순회귀모형의 경우와 다르게 설명변수의 개수가 2개 이상이 되며, 복잡한 형태의 모형이 설정되는 경우도 많이 있기 때문에 다중회귀모형의 경우에는 함수 <code>lm()</code>에 지정되는 R 모형공식에 반응변수와 설명변수를 구분하는 <code>~</code> 기호 외에도 많은 기호가 사용된다.</p>
+<table>
+<caption>R 모형공식에서 사용되는 기호</caption>
+<colgroup>
+<col width="26%" />
+<col width="73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>기호</th>
+<th>사용법</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>물결표 (<code>~</code>)</td>
+<td>반응변수와 설명변수의 구분. 물결표의 왼쪽에는 반응변수, 오른쪽에는 설명변수를 둔다.</td>
+</tr>
+<tr class="even">
+<td>플러스 (<code>+</code>)</td>
+<td>모형에 포함된 설명변수의 구분. 반응변수 <code>y</code>와 설명변수 <code>x1</code>, <code>x2</code>, <code>x3</code>의 회귀모형은 <code>y ~ x1 + x2 + x3</code>로 표현된다.</td>
+</tr>
+<tr class="odd">
+<td>콜론 (<code>:</code>)</td>
+<td>설명변수 사이의 상호작용 표현. 반응변수 <code>y</code>와 설명변수 <code>x1</code>, <code>x2</code> 그리고 <code>x1</code>과 <code>x2</code>의 상호작용이 포함된 모형은 <code>y ~ x1 + x2 + x1:x2</code>로 표현된다.</td>
+</tr>
+<tr class="even">
+<td>별표 (<code>*</code>)</td>
+<td>주효과와 상호작용 효과를 포함한 모든 효과 표현. <code>y ~ x1 * x2 * x3</code>는 <code>y ~ x1 + x2 + x3 + x1:x2 + x1:x3 + x2:x3 + x1:x2:x3</code>를 의미한다.</td>
+</tr>
+<tr class="odd">
+<td>윗꺽쇠 (<code>^</code>)</td>
+<td>지정된 차수까지의 상호작용 표현. <code>y ~ (x1 + x2 + x3)^2</code>는 <code>y ~ x1 + x2 + x3 + x1:x2 + x1:x3 + x2:x3</code>을 의미한다.</td>
+</tr>
+<tr class="even">
+<td>점 (<code>.</code>)</td>
+<td>반응변수를 제외한 데이터 프레임에 있는 모든 변수. 만일 데이터 프레임에 <code>y</code>, <code>x1</code>, <code>x2</code>, <code>x3</code>가 있다면 <code>y ~ .</code> 은 <code>y ~ x1 + x2 + x3</code>을 의미한다.</td>
+</tr>
+<tr class="odd">
+<td>마이너스(<code>-</code>)</td>
+<td>회귀모형에서 제외되는 변수. <code>y ~ (x1 + x2 + x3)^2 – x2:x3</code>는 <code>y ~ x1 + x2 + x3 + x1:x2 + x1:x3</code>을 의미한다.</td>
+</tr>
+<tr class="even">
+<td><code>- 1</code>, <code>+ 0</code></td>
+<td>절편 제거. <code>y ~ x – 1</code> 혹은 <code>y ~ x + 0</code>은 원점을 지나는 회귀모형을 의미한다.</td>
+</tr>
+<tr class="odd">
+<td><code>I()</code></td>
+<td>괄호 안의 연산자를 수학 연산자로 인식. <code>y ~ x1 + I(x2+x3)</code>는 <span class="math inline">\(y=\beta_{0}+\beta_{1}x_{1}+\beta_{2}(x_{2}+x_{3})+\varepsilon\)</span> 모형을 의미한다.</td>
+</tr>
+</tbody>
+</table>
+<p>이제 <code>mpg</code>를 반응변수로, <code>wt</code>와 <code>qsec</code>을 설명변수로 하는 다중회귀모형을 적합해 보자.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="multiple-reg.html#cb25-1" tabindex="-1"></a>fit4<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> qsec, <span class="at">data =</span> mtcars)</span>
+<span id="cb25-2"><a href="multiple-reg.html#cb25-2" tabindex="-1"></a>fit4<span class="fl">.1</span></span>
+<span id="cb25-3"><a href="multiple-reg.html#cb25-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb25-4"><a href="multiple-reg.html#cb25-4" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb25-5"><a href="multiple-reg.html#cb25-5" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + qsec, data = mtcars)</span></span>
+<span id="cb25-6"><a href="multiple-reg.html#cb25-6" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb25-7"><a href="multiple-reg.html#cb25-7" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb25-8"><a href="multiple-reg.html#cb25-8" tabindex="-1"></a><span class="do">## (Intercept)           wt         qsec  </span></span>
+<span id="cb25-9"><a href="multiple-reg.html#cb25-9" tabindex="-1"></a><span class="do">##     19.7462      -5.0480       0.9292</span></span></code></pre></div>
+<p>적합된 모형식은 <span class="math inline">\(\widehat{\mbox{mpg}} = 19.74 - 5.047\mbox{ wt} + 0.929\mbox{ qsec}\)</span> 임을 알 수 있다.
+추정된 회귀계수에 대한 해석은 단순회귀모형의 경우와 비슷하지만 제한 사항이 추가된다.
+단순회귀모형에서는 하나의 설명변수만 있기 때문에 추정된 모형은 직선으로 표현되고, 따라서 해당 설명변수가 한 단위 증가했을 때 반응변수의 평균 변화량으로 회귀계수를 해석할 수 있었다.
+하지만 다중회귀모형에서는 추정된 회귀모형이 직선이 아닌 2차원 이상에서 정의되는 평면이 되기 때문에 조금 더 복잡한 상황이 되는데, 그것은 어느 한 설명변수의 효과를 측정하기 위해서는 회귀평면을 구성하고 있는 다른 설명변수의 값이 고정되어야 하기 때문이다.</p>
+<p>그림 <a href="multiple-reg.html#fig:ex4-1-1">4.1</a>에서는 <code>mpg</code>를 반응변수로, <code>wt</code>와 <code>qsec</code>을 설명변수로 하는 다중회귀모형으로 적합된 회귀평면이 작성되어 있다.
+변수 <code>wt</code>의 추정된 회귀계수 <span class="math inline">\(-5.047\)</span> 은 <code>qsec</code>을 일정한 수준으로 고정한 상태에서 <code>wt</code>가 한 단위 증가했을 때 <code>mpg</code>의 평균 변화량을 나타내는 것인데, 그림에서 회귀평면이 <code>wt</code> 축의 양의 방향으로 급격하게 기우는 모습을 볼 수 있다.
+또한 변수 <code>qsec</code>에 대한 추정된 회귀계수 <span class="math inline">\(0.929\)</span> 은 <code>wt</code>를 일정한 수준으로 고정한 상태에서 <code>qsec</code>이 한 단위 증가했을 때 <code>mpg</code>의 평균 변화량을 나타내는 것이며, 그림에서 회귀평면이 <code>qsec</code>의 양의 방향으로 완만하게 증가하는 모습을 볼 수 있다.</p>
+<div class="figure"><span style="display:block;" id="fig:ex4-1-1"></span>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-feb1dec120908ac82ed4" style="width:576px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-feb1dec120908ac82ed4">{"x":{"visdat":{"572a43c02485d":["function () ","plotlyVisDat"]},"cur_data":"572a43c02485d","attrs":{"572a43c02485d":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"z":{},"type":"surface","y":{},"x":{},"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"qsec"},"yaxis":{"title":"wt"},"zaxis":{"title":"mpg"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"mpg","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(68,1,84,1)"],["0.0416666666666667","rgba(70,19,97,1)"],["0.0833333333333333","rgba(72,32,111,1)"],["0.125","rgba(71,45,122,1)"],["0.166666666666667","rgba(68,58,128,1)"],["0.208333333333333","rgba(64,70,135,1)"],["0.25","rgba(60,82,138,1)"],["0.291666666666667","rgba(56,93,140,1)"],["0.333333333333333","rgba(49,104,142,1)"],["0.375","rgba(46,114,142,1)"],["0.416666666666667","rgba(42,123,142,1)"],["0.458333333333333","rgba(38,133,141,1)"],["0.5","rgba(37,144,140,1)"],["0.541666666666667","rgba(33,154,138,1)"],["0.583333333333333","rgba(39,164,133,1)"],["0.625","rgba(47,174,127,1)"],["0.666666666666667","rgba(53,183,121,1)"],["0.708333333333333","rgba(79,191,110,1)"],["0.75","rgba(98,199,98,1)"],["0.791666666666667","rgba(119,207,85,1)"],["0.833333333333333","rgba(147,214,70,1)"],["0.875","rgba(172,220,52,1)"],["0.916666666666667","rgba(199,225,42,1)"],["0.958333333333333","rgba(226,228,40,1)"],["1","rgba(253,231,37,1)"]],"showscale":true,"z":[[26.769999999999996,27.258947368421051,27.747894736842106,28.236842105263158,28.725789473684209,29.21473684210526,29.703684210526315,30.192631578947363,30.681578947368418,31.170526315789473,31.659473684210525,32.148421052631576,32.637368421052628,33.126315789473679,33.615263157894731,34.104210526315789,34.593157894736834,35.082105263157892,35.571052631578951,36.060000000000002],[25.441842105263156,25.930789473684211,26.419736842105266,26.908684210526317,27.397631578947369,27.88657894736842,28.375526315789475,28.864473684210523,29.353421052631578,29.842368421052633,30.331315789473685,30.82026315789474,31.309210526315791,31.798157894736843,32.287105263157898,32.776052631578949,33.265000000000001,33.753947368421052,34.242894736842103,34.731842105263155],[24.113684210526316,24.602631578947367,25.091578947368422,25.580526315789477,26.069473684210529,26.55842105263158,27.047368421052632,27.536315789473683,28.025263157894734,28.514210526315793,29.003157894736844,29.492105263157896,29.981052631578947,30.469999999999999,30.95894736842105,31.447894736842109,31.936842105263153,32.425789473684212,32.914736842105263,33.403684210526315],[22.785526315789472,23.274473684210527,23.763421052631578,24.25236842105263,24.741315789473681,25.230263157894736,25.719210526315791,26.208157894736839,26.697105263157894,27.186052631578946,27.674999999999997,28.163947368421056,28.652894736842107,29.141842105263159,29.63078947368421,30.119736842105262,30.608684210526313,31.097631578947365,31.586578947368423,32.075526315789475],[21.457368421052632,21.946315789473687,22.435263157894738,22.92421052631579,23.413157894736841,23.902105263157896,24.391052631578951,24.879999999999999,25.368947368421054,25.857894736842105,26.346842105263157,26.835789473684216,27.324736842105267,27.813684210526318,28.30263157894737,28.791578947368421,29.280526315789473,29.769473684210524,30.258421052631583,30.747368421052634],[20.129210526315788,20.618157894736839,21.107105263157894,21.596052631578949,22.085000000000001,22.573947368421052,23.062894736842104,23.551842105263155,24.040789473684207,24.529736842105265,25.018684210526317,25.507631578947368,25.99657894736842,26.485526315789471,26.974473684210523,27.463421052631581,27.952368421052626,28.441315789473684,28.930263157894736,29.419210526315787],[18.801052631578948,19.289999999999999,19.778947368421051,20.267894736842106,20.756842105263157,21.245789473684212,21.734736842105264,22.223684210526315,22.712631578947367,23.201578947368422,23.690526315789473,24.179473684210528,24.668421052631579,25.157368421052631,25.646315789473682,26.135263157894737,26.624210526315785,27.11315789473684,27.602105263157895,28.091052631578947],[17.472894736842104,17.961842105263159,18.45078947368421,18.939736842105262,19.428684210526313,19.917631578947368,20.406578947368423,20.895526315789471,21.384473684210526,21.873421052631578,22.362368421052629,22.851315789473688,23.340263157894739,23.829210526315791,24.318157894736842,24.807105263157894,25.296052631578945,25.784999999999997,26.273947368421055,26.762894736842107],[16.144736842105264,16.633684210526319,17.12263157894737,17.611578947368422,18.100526315789473,18.589473684210528,19.078421052631583,19.567368421052631,20.056315789473686,20.545263157894738,21.034210526315789,21.523157894736848,22.012105263157899,22.501052631578951,22.990000000000002,23.478947368421053,23.967894736842105,24.456842105263156,24.945789473684215,25.434736842105266],[14.816578947368422,15.305526315789475,15.794473684210528,16.283421052631581,16.772368421052633,17.261315789473684,17.750263157894739,18.239210526315787,18.728157894736842,19.217105263157897,19.706052631578949,20.195000000000004,20.683947368421055,21.172894736842107,21.661842105263158,22.150789473684213,22.639736842105261,23.128684210526316,23.617631578947371,24.106578947368423],[13.488421052631578,13.977368421052631,14.466315789473684,14.955263157894738,15.444210526315789,15.933157894736842,16.422105263157896,16.911052631578947,17.399999999999999,17.888947368421054,18.377894736842105,18.86684210526316,19.355789473684212,19.844736842105263,20.333684210526314,20.822631578947369,21.311578947368417,21.800526315789472,22.289473684210527,22.778421052631579],[12.160263157894738,12.649210526315791,13.138157894736844,13.627105263157897,14.116052631578949,14.605000000000002,15.093947368421055,15.582894736842105,16.071842105263158,16.560789473684213,17.049736842105265,17.53868421052632,18.027631578947371,18.516578947368423,19.005526315789474,19.494473684210529,19.983421052631577,20.472368421052632,20.961315789473687,21.450263157894739],[10.832105263157894,11.321052631578947,11.81,12.298947368421054,12.787894736842105,13.276842105263158,13.765789473684212,14.254736842105261,14.743684210526315,15.23263157894737,15.721578947368421,16.210526315789476,16.699473684210528,17.188421052631579,17.677368421052631,18.166315789473686,18.655263157894733,19.144210526315788,19.633157894736843,20.122105263157895],[9.5039473684210538,9.9928947368421071,10.48184210526316,10.970789473684214,11.459736842105265,11.948684210526318,12.437631578947371,12.926578947368421,13.415526315789474,13.904473684210529,14.393421052631581,14.882368421052636,15.371315789473687,15.860263157894739,16.34921052631579,16.838157894736845,17.327105263157893,17.816052631578948,18.305000000000003,18.793947368421055],[8.1757894736842101,8.6647368421052633,9.1536842105263165,9.6426315789473698,10.131578947368421,10.620526315789474,11.109473684210528,11.598421052631577,12.087368421052631,12.576315789473686,13.065263157894737,13.554210526315792,14.043157894736844,14.532105263157895,15.021052631578947,15.510000000000002,15.998947368421049,16.487894736842104,16.97684210526316,17.465789473684211],[6.8476315789473663,7.3365789473684195,7.8255263157894728,8.314473684210526,8.8034210526315775,9.2923684210526307,9.781315789473684,10.270263157894734,10.759210526315787,11.248157894736842,11.737105263157893,12.226052631578948,12.715,13.203947368421051,13.692894736842103,14.181842105263158,14.670789473684206,15.159736842105261,15.648684210526316,16.137631578947367],[5.5194736842105261,6.0084210526315793,6.4973684210526326,6.9863157894736858,7.4752631578947373,7.9642105263157905,8.4531578947368438,8.9421052631578934,9.4310526315789467,9.9200000000000017,10.408947368421053,10.897894736842108,11.38684210526316,11.875789473684211,12.364736842105263,12.853684210526318,13.342631578947366,13.831578947368421,14.320526315789476,14.809473684210527],[4.1913157894736823,4.6802631578947356,5.1692105263157888,5.6581578947368421,6.1471052631578935,6.6360526315789468,7.125,7.6139473684210497,8.1028947368421029,8.5918421052631579,9.0807894736842094,9.5697368421052644,10.058684210526316,10.547631578947367,11.036578947368419,11.525526315789474,12.014473684210522,12.503421052631577,12.992368421052632,13.481315789473683],[2.8631578947368457,3.3521052631578989,3.8410526315789522,4.3300000000000054,4.8189473684210569,5.3078947368421101,5.7968421052631633,6.285789473684213,6.7747368421052663,7.2636842105263213,7.7526315789473728,8.2415789473684278,8.7305263157894792,9.2194736842105307,9.7084210526315822,10.197368421052637,10.686315789473685,11.17526315789474,11.664210526315795,12.153157894736847],[1.5350000000000019,2.0239473684210552,2.5128947368421084,3.0018421052631616,3.4907894736842131,3.9797368421052663,4.4686842105263196,4.9576315789473693,5.4465789473684225,5.9355263157894775,6.424473684210529,6.913421052631584,7.4023684210526355,7.8913157894736869,8.3802631578947384,8.8692105263157934,9.3581578947368413,9.8471052631578964,10.336052631578951,10.825000000000003]],"type":"surface","y":[1,1.263157894736842,1.5263157894736841,1.7894736842105263,2.0526315789473681,2.3157894736842106,2.5789473684210527,2.8421052631578947,3.1052631578947367,3.3684210526315788,3.6315789473684208,3.8947368421052628,4.1578947368421053,4.4210526315789469,4.6842105263157894,4.9473684210526319,5.2105263157894735,5.4736842105263159,5.7368421052631575,6],"x":[13,13.526315789473685,14.052631578947368,14.578947368421053,15.105263157894736,15.631578947368421,16.157894736842106,16.684210526315788,17.210526315789473,17.736842105263158,18.263157894736842,18.789473684210527,19.315789473684212,19.842105263157894,20.368421052631579,20.894736842105264,21.421052631578945,21.94736842105263,22.473684210526315,23],"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+그림 4.1: 설명변수가 2개인 다중회귀모형에서 추정된 회귀평면
+</p>
+</div>
+<p><span class="math inline">\(\bullet\)</span> 예제 4.2: 행렬 <code>state.x77</code></p>
+<p>행렬 <code>state.x77</code>은 미국 50개 주와 관련된 8개 변수로 구성되었다. 변수 <code>Life Exp</code>와 <code>HS Grad</code>는 이름 중간에 빈칸이 있으며, 각 주의 이름이 행렬의 row name으로 입력되어 있음을 알 수 있다.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="multiple-reg.html#cb26-1" tabindex="-1"></a>state.x77[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]</span>
+<span id="cb26-2"><a href="multiple-reg.html#cb26-2" tabindex="-1"></a><span class="do">##            Population Income Illiteracy Life Exp Murder HS Grad Frost   Area</span></span>
+<span id="cb26-3"><a href="multiple-reg.html#cb26-3" tabindex="-1"></a><span class="do">## Alabama          3615   3624        2.1    69.05   15.1    41.3    20  50708</span></span>
+<span id="cb26-4"><a href="multiple-reg.html#cb26-4" tabindex="-1"></a><span class="do">## Alaska            365   6315        1.5    69.31   11.3    66.7   152 566432</span></span>
+<span id="cb26-5"><a href="multiple-reg.html#cb26-5" tabindex="-1"></a><span class="do">## Arizona          2212   4530        1.8    70.55    7.8    58.1    15 113417</span></span>
+<span id="cb26-6"><a href="multiple-reg.html#cb26-6" tabindex="-1"></a><span class="do">## Arkansas         2110   3378        1.9    70.66   10.1    39.9    65  51945</span></span>
+<span id="cb26-7"><a href="multiple-reg.html#cb26-7" tabindex="-1"></a><span class="do">## California      21198   5114        1.1    71.71   10.3    62.6    20 156361</span></span></code></pre></div>
+<p>변수 <code>Murder</code>를 반응변수로, 나머지 7개 변수를 설명변수로 하는 다중회귀모형을 설정해 보자.
+회귀분석을 원활하게 수행하기 위해서는 자료가 행렬이 아닌 데이터 프레임의 형태로 입력되어 있어야 한다.
+행렬 <code>state.x77</code>을 데이터 프레임으로 변환하면서, 빈칸이 있는 변수 이름을 수정하고 반응변수를 마지막 변수로 이동시키자.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="multiple-reg.html#cb27-1" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(state.x77) <span class="sc">|&gt;</span>  </span>
+<span id="cb27-2"><a href="multiple-reg.html#cb27-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Life_Exp =</span> <span class="st">`</span><span class="at">Life Exp</span><span class="st">`</span>, <span class="at">HS_Grad =</span> <span class="st">`</span><span class="at">HS Grad</span><span class="st">`</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb27-3"><a href="multiple-reg.html#cb27-3" tabindex="-1"></a>  <span class="fu">relocate</span>(Murder, <span class="at">.after =</span> <span class="fu">last_col</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb27-4"><a href="multiple-reg.html#cb27-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">3</span>)</span>
+<span id="cb27-5"><a href="multiple-reg.html#cb27-5" tabindex="-1"></a><span class="do">## # A tibble: 50 × 8</span></span>
+<span id="cb27-6"><a href="multiple-reg.html#cb27-6" tabindex="-1"></a><span class="do">##   Population Income Illiteracy Life_Exp HS_Grad Frost   Area Murder</span></span>
+<span id="cb27-7"><a href="multiple-reg.html#cb27-7" tabindex="-1"></a><span class="do">##        &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb27-8"><a href="multiple-reg.html#cb27-8" tabindex="-1"></a><span class="do">## 1       3615   3624        2.1     69.0    41.3    20  50708   15.1</span></span>
+<span id="cb27-9"><a href="multiple-reg.html#cb27-9" tabindex="-1"></a><span class="do">## 2        365   6315        1.5     69.3    66.7   152 566432   11.3</span></span>
+<span id="cb27-10"><a href="multiple-reg.html#cb27-10" tabindex="-1"></a><span class="do">## 3       2212   4530        1.8     70.6    58.1    15 113417    7.8</span></span>
+<span id="cb27-11"><a href="multiple-reg.html#cb27-11" tabindex="-1"></a><span class="do">## # ℹ 47 more rows</span></span></code></pre></div>
+<p>행렬을 tibble로 전환시켰기 때문에 각 주의 이름이 입력된 row name이 삭제되었는데, 만일 row name를 그대로 유지하고자 한다면 함수 <code>as_tibble()</code> 대신 <code>as.data.frame()</code>을 사용하면 된다.
+반응변수의 위치를 마지막으로 이동시킨 이유는 산점도 행렬을 작성하고 결과를 해석할 때 더 편리하기 때문이다.</p>
+<p>다중회귀모형에 의한 분석을 진행하기 전에 반드시 거쳐야 할 단계가 있는데, 그것은 모형에 포함될 변수들의 관계를 탐색하는 것이다.
+변수들 사이의 관계 탐색에 많이 사용되는 방법은 상관계수와 산점도행렬이다.
+산점도행렬과 같은 그래프에 의한 탐색은 필수적이라 할 수 있으며, 연속형 변수의 경우에는 두 변수끼리 짝을 지어 상관계수를 살펴보는 것도 필요하다.</p>
+<p>상관계수는 변수들 사이의 선형관계 정도를 확인할 때 사용할 수 있는데, 함수 <code>cor()</code>로 계산할 수 있다.
+사용법은 <code>cor(x, y = NULL, use = "everything", method = c("pearson", "kendall", "spearman"))</code>이다.
+<code>x</code>와 <code>y</code> 모두 벡터, 행렬 혹은 데이터 프레임이 가능한데, <code>x</code>만 주어지면 <code>x</code>에 포함된 모든 변수들 사이의 상관계수를 계산하게 되고, <code>y</code>도 주어지면 <code>x</code>에 속한 변수와 <code>y</code>에 속한 변수들을 하나씩 짝을 지어 상관계수를 계산하게 된다.</p>
+<p><code>use</code>는 결측값의 처리방식에 대한 것으로 선택할 수 있는 것은 디폴트인 <code>"everything"</code>과 <code>"all.obs"</code>, <code>"complete.obs"</code>, <code>"pairwise.complete.obs"</code>이 있으며, 해당 문자의 약칭으로도 사용이 가능하다.
+결측값이 존재하면 <code>use = "everything"</code>인 경우에는 <code>NA</code>가 계산결과로 출력되고, <code>use = "all"</code>인 경우에는 오류가 발생한다.
+또한 <code>use = "complete"</code>의 경우에는 <code>NA</code>가 있는 행은 모두 제거된 상태에서 상관계수가 계산되고, <code>use = "pairwise"</code>의 경우에는 상관계수가 계산되는 변수들만을 대상으로 <code>NA</code>가 있는 행을 제거하고 상관계수를 계산한다.</p>
+<p><code>method</code>는 계산하는 상관계수의 종류를 선택한다. 디폴트인 <code>"pearson"</code>은 Pearson의 상관계수를 지정하는 것으로 두 변수 사이의 선형관계 정도를 표현하는 가장 일반적으로 많이 사용되는 상관계수를 계산한다.
+두 번째 방법인 <code>"kendall"</code>은 Kendall의 순위상관계수 혹은 Kendall의 <span class="math inline">\(\tau\)</span> 를 지정하는 것으로서 concordant pair와 discordant pair를 이용하여 정의되는 비모수 상관계수를 계산하며, 순서형 자료에 주로 적용되는 방법이다.
+세 번째 방법인 <code>"spearman"</code>은 Spearman의 순위상관계수 혹은 Spearman의 <span class="math inline">\(\rho\)</span> 를 지정하는 것으로서 두 변수 사이의 관계가 단조증가 혹은 단조감소 함수로 얼마나 잘 설명될 수 있는지를 표현하는 비모수 상관계수를 계산한다.
+정규성 가정이 어긋나는 경우에 사용할 수 있다.</p>
+<p>데이터 프레임 <code>states</code>를 구성하고 있는 변수들의 상관계수를 구해보자.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="multiple-reg.html#cb28-1" tabindex="-1"></a><span class="fu">cor</span>(states)</span>
+<span id="cb28-2"><a href="multiple-reg.html#cb28-2" tabindex="-1"></a><span class="do">##             Population     Income  Illiteracy    Life_Exp     HS_Grad</span></span>
+<span id="cb28-3"><a href="multiple-reg.html#cb28-3" tabindex="-1"></a><span class="do">## Population  1.00000000  0.2082276  0.10762237 -0.06805195 -0.09848975</span></span>
+<span id="cb28-4"><a href="multiple-reg.html#cb28-4" tabindex="-1"></a><span class="do">## Income      0.20822756  1.0000000 -0.43707519  0.34025534  0.61993232</span></span>
+<span id="cb28-5"><a href="multiple-reg.html#cb28-5" tabindex="-1"></a><span class="do">## Illiteracy  0.10762237 -0.4370752  1.00000000 -0.58847793 -0.65718861</span></span>
+<span id="cb28-6"><a href="multiple-reg.html#cb28-6" tabindex="-1"></a><span class="do">## Life_Exp   -0.06805195  0.3402553 -0.58847793  1.00000000  0.58221620</span></span>
+<span id="cb28-7"><a href="multiple-reg.html#cb28-7" tabindex="-1"></a><span class="do">## HS_Grad    -0.09848975  0.6199323 -0.65718861  0.58221620  1.00000000</span></span>
+<span id="cb28-8"><a href="multiple-reg.html#cb28-8" tabindex="-1"></a><span class="do">## Frost      -0.33215245  0.2262822 -0.67194697  0.26206801  0.36677970</span></span>
+<span id="cb28-9"><a href="multiple-reg.html#cb28-9" tabindex="-1"></a><span class="do">## Area        0.02254384  0.3633154  0.07726113 -0.10733194  0.33354187</span></span>
+<span id="cb28-10"><a href="multiple-reg.html#cb28-10" tabindex="-1"></a><span class="do">## Murder      0.34364275 -0.2300776  0.70297520 -0.78084575 -0.48797102</span></span>
+<span id="cb28-11"><a href="multiple-reg.html#cb28-11" tabindex="-1"></a><span class="do">##                 Frost        Area     Murder</span></span>
+<span id="cb28-12"><a href="multiple-reg.html#cb28-12" tabindex="-1"></a><span class="do">## Population -0.3321525  0.02254384  0.3436428</span></span>
+<span id="cb28-13"><a href="multiple-reg.html#cb28-13" tabindex="-1"></a><span class="do">## Income      0.2262822  0.36331544 -0.2300776</span></span>
+<span id="cb28-14"><a href="multiple-reg.html#cb28-14" tabindex="-1"></a><span class="do">## Illiteracy -0.6719470  0.07726113  0.7029752</span></span>
+<span id="cb28-15"><a href="multiple-reg.html#cb28-15" tabindex="-1"></a><span class="do">## Life_Exp    0.2620680 -0.10733194 -0.7808458</span></span>
+<span id="cb28-16"><a href="multiple-reg.html#cb28-16" tabindex="-1"></a><span class="do">## HS_Grad     0.3667797  0.33354187 -0.4879710</span></span>
+<span id="cb28-17"><a href="multiple-reg.html#cb28-17" tabindex="-1"></a><span class="do">## Frost       1.0000000  0.05922910 -0.5388834</span></span>
+<span id="cb28-18"><a href="multiple-reg.html#cb28-18" tabindex="-1"></a><span class="do">## Area        0.0592291  1.00000000  0.2283902</span></span>
+<span id="cb28-19"><a href="multiple-reg.html#cb28-19" tabindex="-1"></a><span class="do">## Murder     -0.5388834  0.22839021  1.0000000</span></span></code></pre></div>
+<p>함수 <code>cor()</code>에 데이터 프레임을 입력하면 모든 변수들 사이의 상관계수가 행렬 형태로 계산되어 출력된다.
+상관계수행렬은 변수의 개수가 많아지면 변수 사이의 관계 파악이 어려워지는 문제가 있다.
+이런 경우에는 그래프로 표현하는 것이 더 효과적인 방법이 될 것이다.</p>
+<p>패키지 <code>GGally</code>의 함수 <code>ggcorr()</code>은 상관계수행렬을 그래프로 표현할 때 많이 사용되는 함수이다.
+사용법은 <code>ggcorr(data, method = c("pairwise", "pearson"), label = FALSE, label_round = 1, ...)</code>이다.
+<code>method</code>는 결측값 처리 방식과 계산되는 상관계수의 종류를 차례로 지정하는데, 디폴트는 <code>"pairwise"</code>와 <code>"pearson"</code>이다.
+<code>label</code>은 그래프에 상관계수를 표시할 것인지 여부를 결정하는 것이고, <code>label_round</code>는 표시되는 상관계수의 반올림 자릿수를 지정한다.</p>
+<p>데이터 프레임 <code>states</code>를 구성하고 하는 변수들의 상관계수를 그래프로 나타내 보자.
+숫자로만 구성되어 있는 상관계수행렬보다 훨씬 간편하게 변수 사이의 상관관계를 파악할 수 있다.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="multiple-reg.html#cb29-1" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb29-2"><a href="multiple-reg.html#cb29-2" tabindex="-1"></a><span class="fu">ggcorr</span>(states, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">label_round =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ex4-2-1"></span>
+<img src="_main_files/figure-html/ex4-2-1-1.png" alt="함수 `ggcorr()`에 의한 상관계수 그래프" width="768" />
+<p class="caption">
+그림 4.2: 함수 <code>ggcorr()</code>에 의한 상관계수 그래프
+</p>
+</div>
+<p>반응변수를 마지막 변수로 이동시켰기 때문에 반응변수와 다른 설명변수 사이의 상관계수를 편하게 확인할 수 있다.
+반응변수 <code>Murder</code>가 설명변수 <code>Illiteracy</code>와는 비교적 높은 양의 상관관계를, <code>Life_Exp</code>와는 비교적 높은 음의 상관관계를 보이고 있다.</p>
+<p>상관계수는 두 변수 사이의 선형관계 정도만을 측정하는 측도이다.
+변수 사이에 존재하는 ’있는 그대로’의 관계를 확인하는 가장 좋은 방법은 산점도행렬이다.
+함수 <code>GGally::ggpairs()</code>로 작성해 보자.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="multiple-reg.html#cb30-1" tabindex="-1"></a><span class="fu">ggpairs</span>(states, <span class="at">lower =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="st">&quot;smooth&quot;</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ex4-2-2"></span>
+<img src="_main_files/figure-html/ex4-2-2-1.png" alt="함수 `ggpairs()`에 의한 산점도행렬" width="768" />
+<p class="caption">
+그림 4.3: 함수 <code>ggpairs()</code>에 의한 산점도행렬
+</p>
+</div>
+<p>반응변수를 마지막 변수로 위치를 이동시켰기 때문에 산점도행렬의 마지막 행을 이루고 있는 모든 패널에서 <code>Murder</code>가 Y축 변수로 배치되고, 설명변수들이 각각 X축 변수로 배치되었다.</p>
+<p>이제 <code>states</code> 자료에 대한 회귀모형을 함수 <code>lm()</code>으로 적합해 보자.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="multiple-reg.html#cb31-1" tabindex="-1"></a>fit4<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(Murder <span class="sc">~</span> ., <span class="at">data =</span> states)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="multiple-reg.html#cb32-1" tabindex="-1"></a>fit4<span class="fl">.2</span></span>
+<span id="cb32-2"><a href="multiple-reg.html#cb32-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb32-3"><a href="multiple-reg.html#cb32-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb32-4"><a href="multiple-reg.html#cb32-4" tabindex="-1"></a><span class="do">## lm(formula = Murder ~ ., data = states)</span></span>
+<span id="cb32-5"><a href="multiple-reg.html#cb32-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb32-6"><a href="multiple-reg.html#cb32-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb32-7"><a href="multiple-reg.html#cb32-7" tabindex="-1"></a><span class="do">## (Intercept)   Population       Income   Illiteracy     Life_Exp      HS_Grad  </span></span>
+<span id="cb32-8"><a href="multiple-reg.html#cb32-8" tabindex="-1"></a><span class="do">##   1.222e+02    1.880e-04   -1.592e-04    1.373e+00   -1.655e+00    3.234e-02  </span></span>
+<span id="cb32-9"><a href="multiple-reg.html#cb32-9" tabindex="-1"></a><span class="do">##       Frost         Area  </span></span>
+<span id="cb32-10"><a href="multiple-reg.html#cb32-10" tabindex="-1"></a><span class="do">##  -1.288e-02    5.967e-06</span></span></code></pre></div>
+<p>함수 <code>lm()</code>으로 생성된 객체 <code>fit4.2</code>을 단순하게 출력시키면 추정된 회귀계수만 나타나지만, 사실 객체 <code>fit4.2</code>는 많은 양의 정보가 담겨 있는 리스트이며, 이것은 획득하기 위해서는 몇 가지 함수를 사용해야 한다.
+함수 목록은 아래 표에 정리되어 있으며, 사용하는 방법은 앞으로 살펴보겠다.</p>
+<table>
+<caption>함수 <code>lm()</code> 으로 생성된 객체에서 필요한 결과를 얻기 위해 유용하게 사용되는 함수</caption>
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>함수</th>
+<th>산출 결과</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>anova()</code></td>
+<td>추정된 회귀모형의 분산분석표 혹은 두 개 이상의 추정된 모형을 비교하기 위한 분산분석표</td>
+</tr>
+<tr class="even">
+<td><code>coefficients()</code></td>
+<td>추정된 회귀계수. <code>coef()</code>도 가능.</td>
+</tr>
+<tr class="odd">
+<td><code>confint()</code></td>
+<td>회귀계수의 신뢰구간. 95% 신뢰구간이 디폴트.</td>
+</tr>
+<tr class="even">
+<td><code>deviance()</code></td>
+<td>잔차제곱합(residual sum of squares; RSS), <span class="math inline">\(\sum (y_{i}-\hat{y}_{i})^{2}\)</span></td>
+</tr>
+<tr class="odd">
+<td><code>fitted()</code></td>
+<td>반응변수의 적합값, <span class="math inline">\(\hat{y}_{i}\)</span></td>
+</tr>
+<tr class="even">
+<td><code>residuals()</code></td>
+<td>회귀모형의 잔차, <span class="math inline">\(e_{i}=y_{i}-\hat{y}_{i}\)</span> . <code>resid()</code>도 가능.</td>
+</tr>
+<tr class="odd">
+<td><code>summary()</code></td>
+<td>회귀모형의 다양한 적합 결과</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="다항회귀모형" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> 다항회귀모형<a href="multiple-reg.html#다항회귀모형" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>식 <a href="multiple-reg.html#eq:multi-reg">(4.1)</a>에 정의된 다중회귀모형에서는 반응변수와 설명변수 사이의 관계가 선형이라고 가정하고 있다.
+하지만 두 변수의 관계가 그림 <a href="ch1.html#fig:1-3">1.3</a>와 같이 명확한 2차 함수 관계가 있을 경우에는 설명변수의 제곱항을 모형에 추가하는 다항회귀모형이 더 적절한 대안이 될 수 있다.</p>
+<p>단순회귀모형에 대한 <span class="math inline">\(p\)</span> 차 다항회귀모형은 다음과 같이 설정된다.</p>
+<p><span class="math display" id="eq:poly-reg-1">\[\begin{equation}
+Y = \beta_{0} + \beta_{1}X + \beta_{2}X^{2} + \cdots + \beta_{p}X^{p} + \varepsilon
+\tag{4.11}
+\end{equation}\]</span></p>
+<p>차수 <span class="math inline">\(p\)</span> 는 가능한 낮게 잡는 것이 좋은데, 그것은 너무 높은 차수의 항을 모형에 포함시키면 <span class="math inline">\(\left( \mathbf{X}^{T} \mathbf{X} \right)^{-1}\)</span> 가 불안정해질 수 있고, 따라서 회귀계수 추정에 문제가 생길 수 있기 때문이다.
+이 문제는 ’다중공선성’을 소개할 때 다시 살펴보겠다.</p>
+<p>일단 차수가 선택되면, 선택된 차수 이하의 모든 차수는 반드시 모형에 포함되어야 한다.
+예를 들어 <span class="math inline">\(Y=\beta_{0}+\beta_{1}X+\beta_{2}X^{2}+\varepsilon\)</span> 모형에서 어떠한 이유에서 <span class="math inline">\(X\)</span> 의 1차항을 제거한다면, 모형은 <span class="math inline">\(Y=\beta_{0}+\beta_{2}X^{2}+\varepsilon\)</span> 가 되는데, 이 모형은 Y축을 중심으로 좌우대칭을 이루어야 하는 지나치게 강한 가정을 갖게 된다.
+또한 만일 변수 <span class="math inline">\(X\)</span> 의 값을 <span class="math inline">\(a\)</span> 만큼 평행 이동시켜야 한다면, <span class="math inline">\(X\)</span> 가 <span class="math inline">\(X+a\)</span> 로 변경되어 다음과 같이 모형에 다시 1차항이 나타나게 된다.</p>
+<p><span class="math display">\[\begin{align*}
+Y &amp;= \beta_{0} + \beta_{2}(X+a)^{2} + \varepsilon \\
+&amp;= \beta_{0} + \beta_{2}(X^{2} + 2aX + a^{2}) + \varepsilon
+\end{align*}\]</span></p>
+<p>설명변수가 2개인 다중회귀모형에서 2차 다항회귀모형은 다음과 같은 형태가 될 수 있다.</p>
+<p><span class="math display" id="eq:poly-reg-2">\[\begin{equation}
+Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{1}^{2} + \beta_{4}X_{2}^{2} + \varepsilon
+\tag{4.12}
+\end{equation}\]</span></p>
+<p><span class="math inline">\(\bullet\)</span> 예제 4.3 : <code>women</code></p>
+<p>데이터 프레임 <code>women</code>에는 미국 30대 여성의 키(<code>height</code>)와 몸무게(<code>weight</code>)가 입력되어 있다.
+두 변수 <code>height</code>와 <code>weight</code>의 회귀모형을 설정해 보자.
+먼저 두 변수의 관계가 선형인지 여부를 그래프로 확인해 보자.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="multiple-reg.html#cb33-1" tabindex="-1"></a><span class="fu">ggplot</span>(women, <span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> weight)) <span class="sc">+</span> </span>
+<span id="cb33-2"><a href="multiple-reg.html#cb33-2" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb33-3"><a href="multiple-reg.html#cb33-3" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;loess&quot;</span>), <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="multiple-reg.html#cb33-4" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;linear&quot;</span>), <span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="multiple-reg.html#cb33-5" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:women-1"></span>
+<img src="_main_files/figure-html/women-1-1.png" alt="데이터 프레임 `women`의 변수 `height`와 `weight`의 산점도와 선형회귀직선 및 국소회귀곡선" width="576" />
+<p class="caption">
+그림 4.4: 데이터 프레임 <code>women</code>의 변수 <code>height</code>와 <code>weight</code>의 산점도와 선형회귀직선 및 국소회귀곡선
+</p>
+</div>
+<p>두 변수의 관계가 선형보다는 2차 곡선이 더 적합한 것으로 보인다.</p>
+<p>다항회귀모형은 함수 <code>poly()</code>를 이용하거나 또는 함수 <code>I()</code>를 이용해서 적합할 수 있다.
+함수 <code>poly()</code>는 함수 <code>lm()</code>과 함께 <code>lm(y ~ poly(x, degree = 1, raw = FALSE), data)</code>와 같이 사용할 수 있다.
+<code>degree</code>는 다항회귀모형의 차수를 지정하는 것으로 디폴트 값은 1차이고, <code>raw</code>는 직교다항회귀(orthogonal polynomial regression)의 사용 여부를 선택하는 것으로서 디폴트 값인 <code>FALSE</code>는 직교다항회귀에 의한 적합이 된다.
+따라서 일반적인 다항회귀모형을 사용하고자 한다면 반드시 <code>raw</code>에 <code>TRUE</code>를 지정해야 한다.
+차수가 높지 않은 일반적인 다항회귀모형을 적합하는 경우에는 함수 <code>I()</code>를 사용하는 것이 더 간편할 수 있다.
+함수 <code>lm()</code> 안에서 <code>lm(y ~ x + I(x^2), data)</code>와 같이 입력하면 2차 다항회귀모형을 적합하게 된다.</p>
+<p>반응변수 <code>weight</code>에 대한 설명변수 <code>height</code>의 2차 다항회귀모형을 적합해 보자.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="multiple-reg.html#cb34-1" tabindex="-1"></a>fit_w <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> height <span class="sc">+</span> <span class="fu">I</span>(height<span class="sc">^</span><span class="dv">2</span>), women)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="multiple-reg.html#cb35-1" tabindex="-1"></a>fit_w</span>
+<span id="cb35-2"><a href="multiple-reg.html#cb35-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb35-3"><a href="multiple-reg.html#cb35-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb35-4"><a href="multiple-reg.html#cb35-4" tabindex="-1"></a><span class="do">## lm(formula = weight ~ height + I(height^2), data = women)</span></span>
+<span id="cb35-5"><a href="multiple-reg.html#cb35-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb35-6"><a href="multiple-reg.html#cb35-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb35-7"><a href="multiple-reg.html#cb35-7" tabindex="-1"></a><span class="do">## (Intercept)       height  I(height^2)  </span></span>
+<span id="cb35-8"><a href="multiple-reg.html#cb35-8" tabindex="-1"></a><span class="do">##   261.87818     -7.34832      0.08306</span></span></code></pre></div>
+<p>적합된 회귀모형식은 <span class="math inline">\(\hat{y}_{i}=261.87 - 7.348x_{i} + 0.08x_{i}^{2}\)</span> 임을 알 수 있다.</p>
+</div>
+<div id="section-dummy" class="section level3 hasAnchor" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> 가변수 회귀모형<a href="multiple-reg.html#section-dummy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>선형회귀모형에서 반응변수는 유형이 반드시 연속형이어야 하며, 정규분포의 가정이 필요하다. 반면에 설명변수는 연속형 변수와 범주형 변수가 모두 가능한데, 연속형인 경우에는 정규분포의 가정은 필요 없으나 가능한 좌우대칭에 가까운 분포를 하는 것이 좋다. 범주형 변수 중 순서형 변수인 경우에는 연속형 변수처럼 변수의 값을 그대로 사용하는 것이 가능하지만, 명목형 변수의 경우에는 변수의 값을 그대로 사용하면 절대로 안 되고, 반드시 가변수(dummy variable)를 대신 사용해야 한다.</p>
+<p>가변수를 설정하는 방식은 몇 가지가 있는데, 그 중 회귀계수 <span class="math inline">\(\beta_{0}\)</span> 를 유지하는 방식을 살펴보자. 이 경우, 가변수는 0 또는 1의 값을 갖게 되며, 범주의 개수보다 하나 작은 개수의 가변수를 사용하게 된다. 예를 들어, “Yes”, “No”와 같은 2개의 범주를 갖는 범주형 변수와 연속형 변수 <span class="math inline">\(X\)</span> 를 설명변수로 하는 회귀모형은 다음과 같이 하나의 가변수를 갖게 된다.</p>
+<p><span class="math display" id="eq:dummy-1">\[\begin{equation}
+Y = \beta_{0} + \beta_{1}X + \beta_{2}D + \varepsilon
+\tag{4.13}
+\end{equation}\]</span></p>
+<p>가변수 <span class="math inline">\(D\)</span> 가 “Yes” 범주이면 1, “No” 범주이면 0을 값으로 갖는다면, 모집단 회귀직선은 다음과 같이 주어진다.
+<span class="math display">\[
+E(Y) =
+\begin{cases}
+\beta_{0} + \beta_{1}X &amp; \quad  \text{if   } D = 0 \\
+\beta_{0} + \beta_{2} + \beta_{1}X &amp; \quad  \text{if   } D = 1
+\end{cases}
+\]</span></p>
+<p><span class="math inline">\(D=0\)</span> 이 되는 범주를 ’기준범주’라고 하는데, 절편 <span class="math inline">\(\beta_{0}\)</span> 가 기준범주의 효과를 나타내고 있고, 가변수의 회귀계수 <span class="math inline">\(\beta_{2}\)</span> 는 기준범주와 “Yes” 범주의 효과 차이를 나타내고 있다.</p>
+<p>식 <a href="multiple-reg.html#eq:dummy-1">(4.13)</a>의 회귀모형에서는 반응변수 <span class="math inline">\(Y\)</span> 와 설병변수 <span class="math inline">\(X\)</span> 가 “Yes”와 “No” 범주에서 동일한 관계를 갖고 있다고 가정하고 있는데, 만일 각 범주에서 두 변수의 관계가 다를 수 있다면 기울기도 다르게 설정할 필요가 있다.</p>
+<p><span class="math display" id="eq:dummy-2">\[\begin{equation}
+Y = \beta_{0} + \beta_{1}X + \beta_{2}D + \beta_{3}DX + \varepsilon
+\tag{4.14}
+\end{equation}\]</span></p>
+<p>범주형 변수가 3개의 범주를 갖는 경우에는 2개의 가변수가 필요하게 된다.
+예를 들어 “high”, “medium”, “low”의 3가지 범주를 갖는 범주형 변수와 연속형 변수 <span class="math inline">\(X\)</span> 를 설명변수로 하는 회귀모형은 다음과 같은 형태를 갖게 된다.
+반응변수 <span class="math inline">\(Y\)</span> 와 설병변수 <span class="math inline">\(X\)</span> 가 세 범주에 동일한 관계를 갖고 있다고 가정하자.</p>
+<p><span class="math display">\[\begin{equation}
+Y = \beta_{0} + \beta_{1}X + \beta_{2}D_{1} + \beta_{3}D_{2} + \varepsilon
+\end{equation}\]</span></p>
+<p>단, <span class="math inline">\(D_{1}\)</span> 은 범주가 “high”이면 1, 아니면 0이고, <span class="math inline">\(D_{2}\)</span> 는 범주가 “medium”이면 1, 아니면 0이 되는 가변수이다. 이 경우, 기준범주는 “low”가 되며, <span class="math inline">\(\beta_{2}\)</span> 는 기준범주와 “high” 범주의 효과 차이를, <span class="math inline">\(\beta_{3}\)</span> 은 기준범주와 “medium” 범주의 효과 차이를 나타내고 있다.</p>
+<p><span class="math inline">\(\bullet\)</span> 예제 4.4 : <code>carData::Leinhardt</code></p>
+<p><code>carData::Leinhardt</code>는 1970년대 105개 나라의 신생아 사망률, 소득, 지역 및 원유 수출 여부 자료가 입력되어 있다.
+반응변수를 신생아 시망률(<code>infant</code>)로 하고, 나머지 변수인 소득(<code>income</code>), 원유 수출 여부(<code>oil</code>)과 지역(<code>region</code>)을 설명변수로 설정하자.
+변수 <code>oil</code>은 <code>'no'</code>와 <code>'yes'</code>의 2개 범주를 갖고 있고, 변수 <code>region</code>은 <code>'Africa'</code>, <code>'America'</code>, <code>'Asia'</code>, <code>'Europe'</code>의 4개 범주를 갖고 있다.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="multiple-reg.html#cb36-1" tabindex="-1"></a><span class="fu">data</span>(Leinhardt, <span class="at">package =</span> <span class="st">&quot;carData&quot;</span>)</span>
+<span id="cb36-2"><a href="multiple-reg.html#cb36-2" tabindex="-1"></a>Leinhardt <span class="sc">|&gt;</span> <span class="fu">head</span>()</span>
+<span id="cb36-3"><a href="multiple-reg.html#cb36-3" tabindex="-1"></a><span class="do">##           income infant   region oil</span></span>
+<span id="cb36-4"><a href="multiple-reg.html#cb36-4" tabindex="-1"></a><span class="do">## Australia   3426   26.7     Asia  no</span></span>
+<span id="cb36-5"><a href="multiple-reg.html#cb36-5" tabindex="-1"></a><span class="do">## Austria     3350   23.7   Europe  no</span></span>
+<span id="cb36-6"><a href="multiple-reg.html#cb36-6" tabindex="-1"></a><span class="do">## Belgium     3346   17.0   Europe  no</span></span>
+<span id="cb36-7"><a href="multiple-reg.html#cb36-7" tabindex="-1"></a><span class="do">## Canada      4751   16.8 Americas  no</span></span>
+<span id="cb36-8"><a href="multiple-reg.html#cb36-8" tabindex="-1"></a><span class="do">## Denmark     5029   13.5   Europe  no</span></span>
+<span id="cb36-9"><a href="multiple-reg.html#cb36-9" tabindex="-1"></a><span class="do">## Finland     3312   10.1   Europe  no</span></span></code></pre></div>
+<p>산점도행렬을 작성해 보자.
+변수 <code>income</code>과 <code>infant</code>의 분포가 오른쪽 꼬리가 매우 긴 형태를 갖고 있으며, <code>oil</code>이 <code>'yes'</code>인 자료가 매우 드물다는 것을 알 수 있다.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="multiple-reg.html#cb37-1" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb37-2"><a href="multiple-reg.html#cb37-2" tabindex="-1"></a><span class="fu">ggpairs</span>(Leinhardt)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ex4-4-1"></span>
+<img src="_main_files/figure-html/ex4-4-1-1.png" alt="`Leinhardt` 변수의 산점도 행렬" width="576" />
+<p class="caption">
+그림 4.5: <code>Leinhardt</code> 변수의 산점도 행렬
+</p>
+</div>
+<p>반응변수의 경우에 정규분포 가정이 있지만, 설명변수의 분포 형태에 대해서는 특별한 가정은 없다.
+하지만 꼬리가 지나치게 긴 분포의 경우에는 대략 좌우대칭이 될 수 있도록 변환을 시키는 것이 좋다.
+변수 <code>income</code>과 <code>infant</code>를 로그변환시키고 다시 산점도행렬을 작성해 보자.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="multiple-reg.html#cb38-1" tabindex="-1"></a>Leinhardt_ln <span class="ot">&lt;-</span> Leinhardt <span class="sc">|&gt;</span>  </span>
+<span id="cb38-2"><a href="multiple-reg.html#cb38-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ln_income =</span> <span class="fu">log</span>(income), <span class="at">ln_infant =</span> <span class="fu">log</span>(infant),</span>
+<span id="cb38-3"><a href="multiple-reg.html#cb38-3" tabindex="-1"></a>         <span class="at">.before =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb38-4"><a href="multiple-reg.html#cb38-4" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>income, <span class="sc">-</span>infant)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="multiple-reg.html#cb39-1" tabindex="-1"></a>Leinhardt_ln <span class="sc">|&gt;</span>  </span>
+<span id="cb39-2"><a href="multiple-reg.html#cb39-2" tabindex="-1"></a>  <span class="fu">ggpairs</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ex4-4-2"></span>
+<img src="_main_files/figure-html/ex4-4-2-1.png" alt="`Leinhardt_ln` 변수의 산점도 행렬" width="576" />
+<p class="caption">
+그림 4.6: <code>Leinhardt_ln</code> 변수의 산점도 행렬
+</p>
+</div>
+<p>변수 <code>ln_income</code>과 <code>oil</code>만을 설명변수로 하여 회귀모형을 적합해 보자.
+함수 <code>lm()</code>은 요인을 설명변수로 입력하면 자동으로 필요한 개수의 가변수를 생성한다.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="multiple-reg.html#cb40-1" tabindex="-1"></a><span class="fu">lm</span>(ln_infant <span class="sc">~</span> ln_income <span class="sc">+</span> oil, Leinhardt_ln)</span>
+<span id="cb40-2"><a href="multiple-reg.html#cb40-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb40-3"><a href="multiple-reg.html#cb40-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb40-4"><a href="multiple-reg.html#cb40-4" tabindex="-1"></a><span class="do">## lm(formula = ln_infant ~ ln_income + oil, data = Leinhardt_ln)</span></span>
+<span id="cb40-5"><a href="multiple-reg.html#cb40-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb40-6"><a href="multiple-reg.html#cb40-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb40-7"><a href="multiple-reg.html#cb40-7" tabindex="-1"></a><span class="do">## (Intercept)    ln_income       oilyes  </span></span>
+<span id="cb40-8"><a href="multiple-reg.html#cb40-8" tabindex="-1"></a><span class="do">##      7.1396      -0.5211       0.7900</span></span></code></pre></div>
+<p>변수 <code>oil</code>의 수준은 <code>'no'</code>와 <code>'yes'</code>의 두 가지이지만 모형에 포함된 가변수는 한 개이다.
+이것은 절편이 모형에 포함된 상태에서 요인의 수준 개수만큼 가변수를 포함시키면 회귀계수 전체를 추정할 수 없는 문제가 발생하기 때문이다.
+생략된 가변수는 알파벳 순서에서 첫 번째 범주인 <code>'no'</code>에 대한 것이며, 이 범주가 기준 범주가 된다.
+범주 <code>'yes'</code>에 대한 가변수의 회귀계수는 기준 범주와의 효과 차이를 나타낸 것이며, 양의 값으로 추정되었으므로 <code>'yes'</code> 범주의 신생아 사망률이 더 높다고 해석할 수 있다.
+하지만 이러한 해석은 산유국의 신생아 사망률이 더 높다는 의미가 되는 것이기 때문에 정확한 이유를 확인할 필요가 있다고 보인다.
+이 문제는 <a href="multiple-reg.html#section-multi-infer">4.2</a>절에서 예제로 다시 살펴보겠다.</p>
+<p>설명변수를 모두 포함한 회귀모형을 적합해 보자.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="multiple-reg.html#cb41-1" tabindex="-1"></a><span class="fu">lm</span>(ln_infant <span class="sc">~</span> ln_income <span class="sc">+</span> oil <span class="sc">+</span> region, Leinhardt_ln)</span>
+<span id="cb41-2"><a href="multiple-reg.html#cb41-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb41-3"><a href="multiple-reg.html#cb41-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb41-4"><a href="multiple-reg.html#cb41-4" tabindex="-1"></a><span class="do">## lm(formula = ln_infant ~ ln_income + oil + region, data = Leinhardt_ln)</span></span>
+<span id="cb41-5"><a href="multiple-reg.html#cb41-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb41-6"><a href="multiple-reg.html#cb41-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb41-7"><a href="multiple-reg.html#cb41-7" tabindex="-1"></a><span class="do">##    (Intercept)       ln_income          oilyes  regionAmericas      regionAsia  </span></span>
+<span id="cb41-8"><a href="multiple-reg.html#cb41-8" tabindex="-1"></a><span class="do">##         6.5521         -0.3398          0.6402         -0.5498         -0.7129  </span></span>
+<span id="cb41-9"><a href="multiple-reg.html#cb41-9" tabindex="-1"></a><span class="do">##   regionEurope  </span></span>
+<span id="cb41-10"><a href="multiple-reg.html#cb41-10" tabindex="-1"></a><span class="do">##        -1.0338</span></span></code></pre></div>
+<p>변수 <code>region</code>의 기준범주는 <code>'Africa'</code>가 이며, <code>region</code>에 대한 모든 가변수의 회귀계수가 음수로 추정되었다는 것은 다른 모든 지역이 <code>'Africa'</code> 지역보다 신생아 사망률이 더 낮다는 것을 의미한다.</p>
+</div>
+</div>
+<div id="section-multi-infer" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> 다중회귀모형의 추론<a href="multiple-reg.html#section-multi-infer" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><a href="multiple-reg.html#section-multi-model">4.1</a>절에서 우리는 다항회귀모형과 가변수 회귀모형 등 몇 가지 형태의 다중회귀모형을 살펴보았고, 최소제곱추정량에 의한 회귀계수의 추정 방법도 살펴보았다.
+지금부터는 회귀계수의 추론에 대해 살펴보도록 하자.
+반응변수와 설명변수에 대해 자료가 관측되면 회귀모형에 대한 다양한 추론을 할 수 있는데, 이러한 추론을 진행하기 위해서는 회귀계수의 추정량에 대한 표본분포를 알아야 한다.</p>
+<div id="회귀계수-추정량의-표본분포" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> 회귀계수 추정량의 표본분포<a href="multiple-reg.html#회귀계수-추정량의-표본분포" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>다중회귀모형은 다음과 같이 행렬의 형태로 나타내는 것이 일반적인 표현 방식이 된다.</p>
+<p><span class="math display">\[\begin{equation}
+\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+\end{equation}\]</span></p>
+<p>반응변수 벡터 <span class="math inline">\(\mathbf{Y}\)</span> 와 설명변수 관찰값 행렬 <span class="math inline">\(\mathbf{X}\)</span>, 모수 벡터 <span class="math inline">\(\boldsymbol{\beta}\)</span>, 오차항 벡터 <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> 의 정의는 식 <a href="multiple-reg.html#eq:reg-matrix-1">(4.2)</a> 에서 볼 수 있다.
+또한 오차항 <span class="math inline">\(\varepsilon_{i}, ~i=1,\ldots,n\)</span> 이 모두 평균이 <span class="math inline">\(0\)</span>, 분산이 <span class="math inline">\(\sigma^{2}\)</span> 이며, 서로 독립이라는 가정도 다음과 같이 행렬로 표현할 수 있다.</p>
+<p><span class="math display">\[
+E(\boldsymbol{\varepsilon}) =
+\begin{pmatrix}
+0 \\ 0 \\ \vdots \\ 0
+\end{pmatrix}
+\]</span></p>
+<p><span class="math display">\[
+Var(\boldsymbol{\varepsilon}) =
+\begin{pmatrix}
+\sigma^{2} &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \sigma^{2} &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \sigma^{2}
+\end{pmatrix}=
+\sigma^{2}~\mathbf{I}
+\]</span></p>
+<p>단, <span class="math inline">\(\mathbf{I}\)</span> 는 <span class="math inline">\(n\)</span> 차 단위행렬이다.</p>
+<p>오차항 벡터의 가정을 기반으로 반응변수 벡터 <span class="math inline">\(\mathbf{Y}\)</span> 의 평균과 분산은 다음과 같이 구할 수 있으며,</p>
+<p><span class="math display">\[\begin{equation}
+E(\mathbf{Y}) = E(\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}) = E(\mathbf{X}\boldsymbol{\beta}) = \mathbf{X}\boldsymbol{\beta}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+Var(\mathbf{Y}) = Var(\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}) = Var(\boldsymbol{\varepsilon}) = \sigma^{2}~\mathbf{I}
+\end{equation}\]</span></p>
+<p>오차항이 정규분포한다는 가정을 추가하면 반응변수 벡터 <span class="math inline">\(\mathbf{Y}\)</span> 의 분포는 다음과 같다.</p>
+<p><span class="math display">\[\begin{equation}
+\mathbf{Y} \sim N(\boldsymbol{\beta},~\sigma^{2}\mathbf{I})
+\end{equation}\]</span></p>
+<p>이제 모수 벡터 <span class="math inline">\(\boldsymbol{\beta}\)</span> 의 최소제곱추정량 <span class="math inline">\(\hat{\boldsymbol{\beta}} = (\mathbf{X}^{T}\mathbf{X})^{-1}\mathbf{X}^{T}\mathbf{Y}\)</span> 의 표본분포를 알아보자.
+먼저 추정량 벡터의 평균은 다음과 같이 구할 수 있다.</p>
+<p><span class="math display">\[\begin{align*}
+E(\hat{\boldsymbol{\beta}}) &amp;= E((\mathbf{X}^{T}\mathbf{X})^{-1}\mathbf{X}^{T}\mathbf{Y}) \\
+&amp;= (\mathbf{X}^{T}\mathbf{X})^{-1}\mathbf{X}^{T}E(\mathbf{Y}) \\
+&amp;= (\mathbf{X}^{T}\mathbf{X})^{-1}\mathbf{X}^{T}\mathbf{X}\boldsymbol{\beta} \\
+&amp;= \boldsymbol{\beta}
+\end{align*}\]</span></p>
+<p>추정량 벡터의 분산은 다음과 같이 구할 수 있다.</p>
+<p><span class="math display">\[\begin{align*}
+Var(\hat{\boldsymbol{\beta}})
+&amp;= Var((\mathbf{X}^{T}\mathbf{X})^{-1}\mathbf{X}^{T}\mathbf{Y}) \\
+&amp;= (\mathbf{X}^{T}\mathbf{X})^{-1}\mathbf{X}^{T}~Var(\mathbf{Y})~ ((\mathbf{X}^{T}\mathbf{X})^{-1}\mathbf{X}^{T})^{T} \\
+&amp;= (\mathbf{X}^{T}\mathbf{X})^{-1}\mathbf{X}^{T}~\sigma^{2}\mathbf{I}~ ((\mathbf{X}^{T}\mathbf{X})^{-1}\mathbf{X}^{T})^{T} \\
+&amp;= \sigma^{2} (\mathbf{X}^{T}\mathbf{X})^{-1}\mathbf{X}^{T} \mathbf{X} (\mathbf{X}^{T}\mathbf{X})^{-1} \\
+&amp;= \sigma^{2} (\mathbf{X}^{T}\mathbf{X})^{-1}
+\end{align*}\]</span></p>
+<p>또한 <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> 은 반응변수 벡터 <span class="math inline">\(\mathbf{Y}\)</span> 의 선형결합으로 표시되기 때문에 <span class="math inline">\(\mathbf{Y}\)</span> 와 같은 정규분포를 하게 된다. 따라서 추정량 벡터의 표본분포는 다음과 같이 주어진다.</p>
+<p><span class="math display" id="eq:multi-dist-lse-1">\[\begin{equation}
+\hat{\boldsymbol{\beta}} \sim N\left(\boldsymbol{\beta},~\sigma^{2} (\mathbf{X}^{T}\mathbf{X})^{-1}\right)
+\tag{4.15}
+\end{equation}\]</span></p>
+<p>또한 개별 추정량의 분포는 다음과 같이 주어진다.</p>
+<p><span class="math display" id="eq:multi-dist-lse-2">\[\begin{equation}
+\hat{\beta}_{j} \sim N(\beta_{j},~c_{j+1,j+1}~\sigma^{2}),~~j=0,1,\ldots,k
+\tag{4.16}
+\end{equation}\]</span>
+단, <span class="math inline">\(c_{i, j}\)</span>은 <span class="math inline">\((\mathbf{X}^{T}\mathbf{X})^{-1}\)</span> 행렬의 <span class="math inline">\(i\)</span> 번째 행, <span class="math inline">\(j\)</span> 번째 열 원소를 나타낸다.</p>
+<p>식 <a href="multiple-reg.html#eq:multi-dist-lse-1">(4.15)</a>에 주어진 추정량 벡터의 표본분포를 이용해서 추론을 실시하기 위해서는 오차항 분산인 <span class="math inline">\(\sigma^{2}\)</span> 에 대한 추정값이 반드시 필요하다.
+<a href="simple-reg.html#section-simple-sigma">2.2.3</a>절에서 단순회귀모형의 경우에 적용되는 오차항 분산의 추정량 <span class="math inline">\(MSE\)</span> 가 식 <a href="simple-reg.html#eq:mse-1">(2.17)</a>으로 유도되는 것을 살펴보았다.
+단순회귀모형의 경우 잔차제곱합 <span class="math inline">\(RSS\)</span>의 자유도가 <span class="math inline">\((n-2)\)</span> 가 된 이유는 <span class="math inline">\(\widehat{Y}_{i}\)</span> 을 얻기 위해 추정해야할 모수의 개수가 2개이기 때문이다.
+다중회귀모형에서는 추정해야 할 모수가 <span class="math inline">\(\beta_{0}, \beta_{1}, \ldots, \beta_{k}\)</span> 의 <span class="math inline">\((k+1)\)</span> 개가 있고, 따라서 <span class="math inline">\(RSS\)</span>의 자유도는 <span class="math inline">\((n-k-1)\)</span> 이 되어서 <span class="math inline">\(\sigma^{2}\)</span> 의 불편추정량 <span class="math inline">\(MSE\)</span> 는 다음과 같이 주어진다.</p>
+<p><span class="math display" id="eq:multi-mse-1">\[\begin{equation}
+\hat{\sigma}^{2} = \frac{RSS}{n-k-1} = MSE
+\tag{4.17}
+\end{equation}\]</span></p>
+<p>식 <a href="multiple-reg.html#eq:multi-mse-1">(4.17)</a>의 <span class="math inline">\(MSE\)</span> 는 <span class="math inline">\(k=1\)</span> 인 단순회귀모형의 경우도 포괄하는 일반적인 정의가 된다.</p>
+</div>
+<div id="section-multi-model-signif" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> 회귀모형의 유의성 검정<a href="multiple-reg.html#section-multi-model-signif" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>식 <a href="multiple-reg.html#eq:multi-reg">(4.1)</a>의 회귀모형에 포함된 설명변수 중 반응변수의 변동을 설명하는데 유의적인 변수가 적어도 하나라도 있는지 알아보는 검정이다. 귀무가설은 다음과 같고,</p>
+<p><span class="math display" id="eq:H0-1">\[\begin{equation}
+H_{0}:\beta_{1}=\beta_{2}=\cdots=\beta_{k}=0
+\tag{4.18}
+\end{equation}\]</span></p>
+<p>대립가설은 다음과 같다.</p>
+<p><span class="math display">\[\begin{equation}
+H_{1}: \text{at least one of }\beta_{j} \ne 0
+\end{equation}\]</span></p>
+<p>가설에 대한 검정통계량은 다음과 같다.</p>
+<p><span class="math display">\[\begin{equation}
+F = \frac{(TSS-RSS)/k}{RSS/(n-k-1)}
+\end{equation}\]</span></p>
+<p>귀무가설이 사실일 때 검정통게량의 분포는 <span class="math inline">\(F_{k,~n-k-1}\)</span> 이다.</p>
+<p>검정통계량의 구성을 살펴보자.
+<span class="math inline">\(TSS=\sum(y_{i}-\overline{y})^{2}\)</span> 는 반응변수의 총변량으로써 설명변수와는 관련이 없는 변량이다.
+<span class="math inline">\(RSS = \sum(y_{i}-\hat{y}_{i})^{2}\)</span> 는 잔차제곱합으로써 <span class="math inline">\(y_{i}\)</span> 를 <span class="math inline">\(\hat{y}_{i}\)</span> 으로 예측한 오차이며, 회귀모형으로 설명이 안 된 변량이라고 할 수 있다.
+따라서 총변량에서 설명이 안 된 변량을 제외한 <span class="math inline">\(TSS-RSS\)</span> 는 회귀모형으로 설명된 변량이라고 할 수 있다.</p>
+<p>검정통계량의 분모는 <span class="math inline">\(RSS\)</span>를 자신의 자유도 <span class="math inline">\((n-k-1)\)</span> 로 나눈 것인데, 이것은 회귀모형의 가정이 만족되는 경우에는 귀무가설의 사실 여부와 관계 없이 오차항의 분산인 <span class="math inline">\(\sigma^{2}\)</span>의 불편추정량이 된다.
+즉, <span class="math inline">\(E(RSS/(n-k-1))=\sigma^{2}\)</span> 가 된다.
+검정통계량의 분자인 <span class="math inline">\((TSS-RSS)/k\)</span> 는 <span class="math inline">\(H_{0}\)</span> 이 사실인 경우에는 <span class="math inline">\(\sigma^{2}\)</span> 의 불편추정량이 되지만, <span class="math inline">\(H_{0}\)</span> 이 사실이 아닌 경우에는 <span class="math inline">\(E((TSS-RSS)/k) &gt; \sigma^{2}\)</span> 가 된다.
+따라서 검정통계량이 1보다 상당히 큰 값이 되면 <span class="math inline">\(H_{0}\)</span>이 사실이 아닐 가능성이 높게 되며, 기각역은 자유도가 <span class="math inline">\((k, ~n-k-1)\)</span> 인 <span class="math inline">\(F\)</span> 분포에서 결정된다.</p>
+<p>가설 <a href="multiple-reg.html#eq:H0-1">(4.18)</a>이 기각되면 모형에 포함된 설명변수 중 유의한 변수가 있다는 것이므로, 개별 회귀계수에 대한 유의성 검정을 진행할 수 있다.
+그러나 만일 가설을 기각할 수 없다면 식 <a href="multiple-reg.html#eq:multi-reg">(4.1)</a>의 회귀모형으로는 반응변수의 변동을 제대로 설명할 수 없다는 것이 된다.
+이런 결과가 나오면, 다른 설명변수의 조합을 찾아 보거나, 또는 다른 형태의 회귀모형을 시도해 봐야 한다.</p>
+</div>
+<div id="개별회귀계수-유의성-검정" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> 개별회귀계수 유의성 검정<a href="multiple-reg.html#개별회귀계수-유의성-검정" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>식 <a href="multiple-reg.html#eq:multi-reg">(4.1)</a>에 정의된 회귀모형을 구성하고 있는 개별 설명변수의 유의성을 검정하는 절차이다.
+가설은 다음과 같다.</p>
+<p><span class="math display" id="eq:H0-2">\[\begin{equation}
+H_{0}: \beta_{j} = 0, \quad H_{1}: \beta_{j} \ne 0, \quad j = 1, \ldots, k
+\tag{4.19}
+\end{equation}\]</span></p>
+<p>검정통계량은 개별 회귀계수의 추정량 <span class="math inline">\(\hat{\beta}_{j}\)</span> 를 추정량의 표준오차로 나눈 것이다.</p>
+<p><span class="math display">\[\begin{equation}
+t = \frac{\hat{\beta}_{j}}{SE(\hat{\beta}_{j})}
+\end{equation}\]</span></p>
+<p>단, <span class="math inline">\(SE(\hat{\beta}_{j}) = \sqrt{c_{j+1,j+1}~MSE}\)</span> 이며, <span class="math inline">\(c_{j+1, j+1}\)</span> 은 <a href="multiple-reg.html#eq:multi-dist-lse-2">(4.16)</a>에 정의되어 있다.
+귀무가설이 사실일 때 검정통계량의 분포는 <span class="math inline">\(t_{n-k-1}\)</span> 이다.</p>
+<p>개별 회귀계수에 대한 검정은 양측검정이 되며, 따라서 회귀계수의 신뢰구간과 밀접한 관련이 있다. 개별 회귀계수에 대한 95% 신뢰구간은 회귀계수와 추정량과 추정량의 표준오차를 이용하여 대략적으로 다음과 같이 표시된다.</p>
+<p><span class="math display">\[\begin{equation}
+\hat{\beta}_{j} \pm 2 \cdot SE(\hat{\beta}_{j})
+\end{equation}\]</span></p>
+<p>만일 주어진 자료를 근거로 계산된 <span class="math inline">\(\beta_{j}\)</span> 의 95% 신뢰구간에 0이 포함되어 있다면, 같은 자료로 계산한 검정통계량의 값은 5% 유의수준으로 구성된 기각역에 들어갈 수 없게 되어서 귀무가설을 기각할 수 없게 된다.</p>
+</div>
+<div id="두-회귀모형의-비교" class="section level3 hasAnchor" number="4.2.4">
+<h3><span class="header-section-number">4.2.4</span> 두 회귀모형의 비교<a href="multiple-reg.html#두-회귀모형의-비교" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>반응변수의 변동을 설명하는데 식 <a href="multiple-reg.html#eq:multi-reg">(4.1)</a> 회귀모형의 설명변수를 모두 사용하는 것이 좋은지 아니면 일부분만을 사용하는 것이 더 좋은지 비교하는 절차이다.
+비교하는 두 모형은 확장모형( <span class="math inline">\(\Omega\)</span> )인 모형 <a href="multiple-reg.html#eq:multi-reg">(4.1)</a>과 특정 <span class="math inline">\(q\)</span> 개의 회귀계수에 대한 다음의 가설이 사실인 축소모형( <span class="math inline">\(\omega\)</span> )이다.</p>
+<p><span class="math display" id="eq:H0-3">\[\begin{equation}
+H_{0}: \beta_{k-q+1}=\beta_{k-q+2}=\cdots=\beta_{k}=0
+\tag{4.20}
+\end{equation}\]</span></p>
+<p>두 모형의 설명력 차이가 크지 않다면 ’모수절약의 원칙’에 의하여 축소모형을 선택하는 것이 더 좋을 것이다.
+모형의 설명력 비교는 잔차제곱합을 이용할 수 있는데, 만일 확장모형의 잔차제곱합, <span class="math inline">\(RSS_{\Omega}\)</span> 와 축소모형의 잔차제곱합, <span class="math inline">\(RSS_{\omega}\)</span> 의 차이가 크지 않다면, 축소모형의 설명력이 확장모형 만큼 좋다는 의미가 된다.</p>
+<p>검정통계량은 다음과 같이 구성된다.</p>
+<p><span class="math display">\[\begin{equation}
+F=\frac{(RSS_{\omega}-RSS_{\Omega})/q}{RSS_{\Omega}/(n-k-1)}
+\end{equation}\]</span></p>
+<p>귀무가설이 사실일 때 검정통게량의 분포는 <span class="math inline">\(F_{q,~n-k-1}\)</span> 이다.</p>
+<p><span class="math inline">\(\bullet\)</span> 예제 4.5 : 행렬 <code>state.x77</code></p>
+<p><a href="multiple-reg.html#section-multi-fitting">4.1.1</a>에서 다루었던 <code>state.x77</code> 자료에 대한 분석을 다시 실행해 보자.
+앞서 이루어진 분석은 다음과 같다.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="multiple-reg.html#cb42-1" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(state.x77) <span class="sc">|&gt;</span>  </span>
+<span id="cb42-2"><a href="multiple-reg.html#cb42-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Life_Exp =</span> <span class="st">`</span><span class="at">Life Exp</span><span class="st">`</span>, <span class="at">HS_Grad =</span> <span class="st">`</span><span class="at">HS Grad</span><span class="st">`</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb42-3"><a href="multiple-reg.html#cb42-3" tabindex="-1"></a>  <span class="fu">relocate</span>(Murder, <span class="at">.after =</span> <span class="fu">last_col</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="multiple-reg.html#cb43-1" tabindex="-1"></a>fit4<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(Murder <span class="sc">~</span> ., <span class="at">data =</span> states)</span></code></pre></div>
+<p>이제 <code>lm()</code>으로 생성된 객페 <code>fit4.2</code>를 대상으로 회귀모형 추론을 위한 몇 가지 함수를 적용해 보자.
+먼저 가장 빈번하게 사용되는 함수인 <code>summary()</code>의 결과를 확인해 보자.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="multiple-reg.html#cb44-1" tabindex="-1"></a><span class="fu">summary</span>(fit4<span class="fl">.2</span>)</span>
+<span id="cb44-2"><a href="multiple-reg.html#cb44-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb44-3"><a href="multiple-reg.html#cb44-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb44-4"><a href="multiple-reg.html#cb44-4" tabindex="-1"></a><span class="do">## lm(formula = Murder ~ ., data = states)</span></span>
+<span id="cb44-5"><a href="multiple-reg.html#cb44-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb44-6"><a href="multiple-reg.html#cb44-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb44-7"><a href="multiple-reg.html#cb44-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb44-8"><a href="multiple-reg.html#cb44-8" tabindex="-1"></a><span class="do">## -3.4452 -1.1016 -0.0598  1.1758  3.2355 </span></span>
+<span id="cb44-9"><a href="multiple-reg.html#cb44-9" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb44-10"><a href="multiple-reg.html#cb44-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb44-11"><a href="multiple-reg.html#cb44-11" tabindex="-1"></a><span class="do">##               Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb44-12"><a href="multiple-reg.html#cb44-12" tabindex="-1"></a><span class="do">## (Intercept)  1.222e+02  1.789e+01   6.831 2.54e-08 ***</span></span>
+<span id="cb44-13"><a href="multiple-reg.html#cb44-13" tabindex="-1"></a><span class="do">## Population   1.880e-04  6.474e-05   2.905  0.00584 ** </span></span>
+<span id="cb44-14"><a href="multiple-reg.html#cb44-14" tabindex="-1"></a><span class="do">## Income      -1.592e-04  5.725e-04  -0.278  0.78232    </span></span>
+<span id="cb44-15"><a href="multiple-reg.html#cb44-15" tabindex="-1"></a><span class="do">## Illiteracy   1.373e+00  8.322e-01   1.650  0.10641    </span></span>
+<span id="cb44-16"><a href="multiple-reg.html#cb44-16" tabindex="-1"></a><span class="do">## Life_Exp    -1.655e+00  2.562e-01  -6.459 8.68e-08 ***</span></span>
+<span id="cb44-17"><a href="multiple-reg.html#cb44-17" tabindex="-1"></a><span class="do">## HS_Grad      3.234e-02  5.725e-02   0.565  0.57519    </span></span>
+<span id="cb44-18"><a href="multiple-reg.html#cb44-18" tabindex="-1"></a><span class="do">## Frost       -1.288e-02  7.392e-03  -1.743  0.08867 .  </span></span>
+<span id="cb44-19"><a href="multiple-reg.html#cb44-19" tabindex="-1"></a><span class="do">## Area         5.967e-06  3.801e-06   1.570  0.12391    </span></span>
+<span id="cb44-20"><a href="multiple-reg.html#cb44-20" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb44-21"><a href="multiple-reg.html#cb44-21" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb44-22"><a href="multiple-reg.html#cb44-22" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb44-23"><a href="multiple-reg.html#cb44-23" tabindex="-1"></a><span class="do">## Residual standard error: 1.746 on 42 degrees of freedom</span></span>
+<span id="cb44-24"><a href="multiple-reg.html#cb44-24" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.8083, Adjusted R-squared:  0.7763 </span></span>
+<span id="cb44-25"><a href="multiple-reg.html#cb44-25" tabindex="-1"></a><span class="do">## F-statistic: 25.29 on 7 and 42 DF,  p-value: 3.872e-13</span></span></code></pre></div>
+<p>함수 <code>lm()</code>으로 생성된 객체에 함수 <code>summary()</code>를 적용시켜 얻은 결과물은 SAS나 SPSS에서 볼 수 있는 결과물과는 형식에서 차이가 있으나 많은 정보를 매우 효과적으로 보여주는 방식이라고 할 수 있다. 결과물을 하나씩 살펴보자.</p>
+<p>먼저 <code>Residuals:</code>에는 잔차의 분포를 엿볼 수 있는 요약통계가 계산되어 있다.
+가정이 만족된다면 잔차는 평균이 0인 정규분포를 보이게 되는데, 잔차의 요약 통계 결과 값으로 대략적인 판단을 할 수 있다.</p>
+<p><code>Coefficients:</code>에는 회귀계수의 추정값과 표준오차가 계산되어 있다.
+또한 개별 회귀계수의 유의성 검정인 <span class="math inline">\(H_{0}:\beta_{j} = 0, \quad H_{1}: \beta_{j} \ne 0\)</span> 에 대한 검정통계량의 값과 p-값이 계산되어 있다</p>
+<p><code>Residual standard error:</code>는 <span class="math inline">\(\sqrt{MSE}\)</span> 이며, <code>Multiple R-squared:</code>는 결정계수 <span class="math inline">\(R^{2}\)</span> 이고, <code>Adjusted R-squared:</code>는 수정결정계수의 값으로서, 모두 회귀모형의 평가 측도로 사용된다.
+회귀모형의 평가측도에 대해서는 <a href="multiple-reg.html#section-selection">4.3</a>절에서 살펴보겠다.</p>
+<p><code>F-statistic:</code>은 모든 회귀계수가 0이라는 가설, 즉 <span class="math inline">\(H_{0}:\beta_{1}=\beta_{2}=\cdots=\beta_{k}=0\)</span> 에 대한 검정통계량의 값과 자유도, 그리고 p-값이 계산되어 있다.</p>
+</div>
+</div>
+<div id="section-selection" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> 변수선택<a href="multiple-reg.html#section-selection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="simple-reg-infer.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="reg-diag.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

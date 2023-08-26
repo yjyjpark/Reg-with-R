@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 장 단순회귀모형 | R에 의한 회귀분석</title>
+  <meta name="description" content="2 장 단순회귀모형 | R에 의한 회귀분석" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 장 단순회귀모형 | R에 의한 회귀분석" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 장 단순회귀모형 | R에 의한 회귀분석" />
+  
+  
+  
+
+<meta name="author" content="박동련" />
+
+
+<meta name="date" content="2023-08-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch1.html"/>
+<link rel="next" href="ch3-infer.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>소개하기</a></li>
+<li class="chapter" data-level="1" data-path="ch1.html"><a href="ch1.html"><i class="fa fa-check"></i><b>1</b> 회귀모형</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ch1.html"><a href="ch1.html#반응변수와-설명변수-사이의-관계-설정"><i class="fa fa-check"></i><b>1.1</b> 반응변수와 설명변수 사이의 관계 설정</a></li>
+<li class="chapter" data-level="1.2" data-path="ch1.html"><a href="ch1.html#회귀모형의-설정"><i class="fa fa-check"></i><b>1.2</b> 회귀모형의 설정</a></li>
+<li class="chapter" data-level="1.3" data-path="ch1.html"><a href="ch1.html#회귀모형의-사용"><i class="fa fa-check"></i><b>1.3</b> 회귀모형의 사용</a></li>
+<li class="chapter" data-level="1.4" data-path="ch1.html"><a href="ch1.html#r의-역할"><i class="fa fa-check"></i><b>1.4</b> R의 역할</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch2-simple.html"><a href="ch2-simple.html"><i class="fa fa-check"></i><b>2</b> 단순회귀모형</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch2-simple.html"><a href="ch2-simple.html#단순회귀모형의-설정"><i class="fa fa-check"></i><b>2.1</b> 단순회귀모형의 설정</a></li>
+<li class="chapter" data-level="2.2" data-path="ch2-simple.html"><a href="ch2-simple.html#회귀계수의-최소제곱추정"><i class="fa fa-check"></i><b>2.2</b> 회귀계수의 최소제곱추정</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="ch2-simple.html"><a href="ch2-simple.html#모수-beta_0와-beta_1의-추정"><i class="fa fa-check"></i><b>2.2.1</b> 모수 <span class="math inline">\(\beta_{0}\)</span>와 <span class="math inline">\(\beta_{1}\)</span>의 추정</a></li>
+<li class="chapter" data-level="2.2.2" data-path="ch2-simple.html"><a href="ch2-simple.html#section-property-lse"><i class="fa fa-check"></i><b>2.2.2</b> 최소제곱추정량의 특성</a></li>
+<li class="chapter" data-level="2.2.3" data-path="ch2-simple.html"><a href="ch2-simple.html#오차분산-sigma2의-추정"><i class="fa fa-check"></i><b>2.2.3</b> 오차분산 <span class="math inline">\(\sigma^{2}\)</span>의 추정</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch3-infer.html"><a href="ch3-infer.html"><i class="fa fa-check"></i><b>3</b> 단순회귀모형의 추론</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch3-infer.html"><a href="ch3-infer.html#회귀계수-beta_1에-대한-추론"><i class="fa fa-check"></i><b>3.1</b> 회귀계수 <span class="math inline">\(\beta_{1}\)</span>에 대한 추론</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ch3-infer.html"><a href="ch3-infer.html#hatbeta_1의-표본분포"><i class="fa fa-check"></i><b>3.1.1</b> <span class="math inline">\(\hat{\beta}_{1}\)</span>의 표본분포</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ch3-infer.html"><a href="ch3-infer.html#section-ci-beta1"><i class="fa fa-check"></i><b>3.1.2</b> <span class="math inline">\(\beta_{1}\)</span>의 신뢰구간</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ch3-infer.html"><a href="ch3-infer.html#section-test-beta1"><i class="fa fa-check"></i><b>3.1.3</b> <span class="math inline">\(\beta_{1}\)</span>에 대한 가설검정</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ch3-infer.html"><a href="ch3-infer.html#회귀계수-beta_0에-대한-추론"><i class="fa fa-check"></i><b>3.2</b> 회귀계수 <span class="math inline">\(\beta_{0}\)</span>에 대한 추론</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch3-infer.html"><a href="ch3-infer.html#hatbeta_0-의-표본분포"><i class="fa fa-check"></i><b>3.2.1</b> <span class="math inline">\(\hat{\beta}_{0}\)</span> 의 표본분포</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch3-infer.html"><a href="ch3-infer.html#beta_0의-신뢰구간"><i class="fa fa-check"></i><b>3.2.2</b> <span class="math inline">\(\beta_{0}\)</span>의 신뢰구간</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch3-infer.html"><a href="ch3-infer.html#beta_0에-대한-가설검정"><i class="fa fa-check"></i><b>3.2.3</b> <span class="math inline">\(\beta_{0}\)</span>에 대한 가설검정</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch3-infer.html"><a href="ch3-infer.html#반응변수의-평균-eyx_o에-대한-신뢰구간-추정"><i class="fa fa-check"></i><b>3.3</b> 반응변수의 평균, <span class="math inline">\(E(Y|X_{o})\)</span>에 대한 신뢰구간 추정</a></li>
+<li class="chapter" data-level="3.4" data-path="ch3-infer.html"><a href="ch3-infer.html#반응변수의-개별-관측값-예측"><i class="fa fa-check"></i><b>3.4</b> 반응변수의 개별 관측값 예측</a></li>
+<li class="chapter" data-level="3.5" data-path="ch3-infer.html"><a href="ch3-infer.html#단순회귀모형에서-두-변수-사이의-연관성-측정-상관계수"><i class="fa fa-check"></i><b>3.5</b> 단순회귀모형에서 두 변수 사이의 연관성 측정: 상관계수</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch4-multiple.html"><a href="ch4-multiple.html"><i class="fa fa-check"></i><b>4</b> 다중회귀모형</a></li>
+<li class="chapter" data-level="5" data-path="ch5-diag.html"><a href="ch5-diag.html"><i class="fa fa-check"></i><b>5</b> 모형의 적합성</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R에 의한 회귀분석</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch2-simple" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2 장</span> 단순회귀모형<a href="ch2-simple.html#ch2-simple" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>회귀모형의 가장 기본적인 형태로써 한 개의 설명변수로 반응변수의 변동을 설명하려는 단순회귀모형에 대해서 살펴보도록 하자. 특히 두 변수의 관계가 직선인 경우에 대해서만 다루겠다.</p>
+<div id="단순회귀모형의-설정" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> 단순회귀모형의 설정<a href="ch2-simple.html#단순회귀모형의-설정" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>설명변수가 하나이고, 반응변수와의 관계가 직선인 경우에 회귀모형은 다음과 같이 설정된다.</p>
+<span class="math display" id="eq:simple-1">\[\begin{equation}
+Y_{i} = \beta_{0} + \beta_{1}X_{i} + \varepsilon_{i}, ~~i=1,2,\ldots,n
+\tag{2.1}
+\end{equation}\]</span>
+<p>여기에서 <span class="math inline">\(Y_{i}\)</span> 는 반응변수의 <span class="math inline">\(i\)</span> 번째 값, <span class="math inline">\(X_{i}\)</span> 는 설명변수의 <span class="math inline">\(i\)</span> 번째 값을 표시한다. 절편 <span class="math inline">\(\beta_{0}\)</span> 와 <span class="math inline">\(\beta_{1}\)</span> 은 모수(parameter)이며, 따라서 알려지지 않은 상수(constant)이다. 오차항 <span class="math inline">\(\varepsilon_{i}\)</span> 는 반응변수의 변동 중 설명변수로 설명할 수 없는 부분을 나타내는 확률변수인데, <span class="math inline">\(n\)</span> 개의 오차항이 모두 평균이 0, 분산은 <span class="math inline">\(\sigma^{2}\)</span> 이며, 서로 독립이라고 가정한다. 또한 설명변수의 값 <span class="math inline">\(X_{i}\)</span> 는 분석자에 의해서 값이 통제될 수 있는 변량으로써 확률변수가 아닌 상수라고 가정한다.</p>
+<p>이러한 가정에서 단순회귀모형의 특성을 다음과 같이 유도할 수 있다.</p>
+<ul>
+<li><p><span class="math inline">\(Y_{i}\)</span> 는 상수인 <span class="math inline">\(\beta_{0}+\beta_{1}X_{i}\)</span>와 확률변수인 <span class="math inline">\(\varepsilon_{i}\)</span>의 합으로 구성되어 있다. 따라서 <span class="math inline">\(Y_{i}\)</span>는 확률변수이다.</p></li>
+<li><p>설명변수의 값이 <span class="math inline">\(X_{i}\)</span>로 주어졌을 때, 확률변수 <span class="math inline">\(Y_{i}\)</span>의 평균은 다음과 같다.</p></li>
+</ul>
+<span class="math display">\[\begin{align*}
+E(Y_{i}|X_{i}) &amp; =  E(\beta_{0} + \beta_{1}X_{i} + \varepsilon_{i}) \\
+               &amp; =  \beta_{0} + \beta_{1}X_{i} + E(\varepsilon_{i}) \\
+               &amp; =  \beta_{0} + \beta_{1}X_{i}
+\end{align*}\]</span>
+<p>위 수식에서 <span class="math inline">\(\beta_{0}+\beta_{1}X_{i}\)</span>는 상수이기 때문에 기대값은 동일한 값이 되고, <span class="math inline">\(E(\varepsilon_{i})=0\)</span> 은 가정에 의한 결과이다.</p>
+<ul>
+<li>설명변수의 값이 <span class="math inline">\(X_{i}\)</span>로 주어졌을 때, 확률변수 <span class="math inline">\(Y_{i}\)</span>의 분산은 다음과 같다.</li>
+</ul>
+<span class="math display">\[\begin{align*}
+Var(Y_{i}|X_{i}) &amp; = Var(\beta_{0} + \beta_{1}X_{i} + \varepsilon_{i}) \\
+                 &amp; = Var(\beta_{0} + \beta_{1}X_{i}) + Var(\varepsilon_{i}) \\
+                 &amp; = \sigma^{2}
+\end{align*}\]</span>
+<p>위 수식에서 <span class="math inline">\(\beta_{0}+\beta_{1}X_{i}\)</span>는 상수이기 때문에 분산은 0이고 되고, <span class="math inline">\(Var(\varepsilon_{i}) = \sigma^{2}\)</span> 는 가정에 의한 결과이다.</p>
+<ul>
+<li><p>위 결과를 종합하면 설명변수의 값이 <span class="math inline">\(X_{i}\)</span>로 주어졌을 때, 확률변수 <span class="math inline">\(Y_{i}\)</span>는 평균이 <span class="math inline">\(\beta_{0}+\beta_{1}X_{i}\)</span>이고 분산이 <span class="math inline">\(\sigma^{2}\)</span>이 된다. 즉, 반응변수의 평균은 설명변수의 값에 따라 절편이 <span class="math inline">\(\beta_{0}\)</span>이고 기울기가 <span class="math inline">\(\beta_{1}\)</span>인 직선을 따라 움직인다는 것을 알 수 있는데, 이 직선을 ’모집단 회귀직선’이라고 한다. 또한 반응변수의 평균은 설명변수의 값에 따라 변하지만, 분산은 항상 일정한 값을 갖는다는 것을 알 수 있다.</p></li>
+<li><p><span class="math inline">\(n\)</span>개의 오차항 <span class="math inline">\(\varepsilon_{1}, \ldots, \varepsilon_{n}\)</span>들이 서로 독립이라고 가정했기 때문에 반응변수도 서로 독립이 된다. 따라서 <span class="math inline">\(Y_{i}\)</span>와 <span class="math inline">\(Y_{j}\)</span>는 <span class="math inline">\(i \ne j\)</span> 라면, 서로 독립이기 때문에 두 변수의 공분산은 <span class="math inline">\(Cov(Y_{i}, Y_{j})=0\)</span> 이 된다.</p></li>
+</ul>
+<p>두 확률변수 <span class="math inline">\(X\)</span>와 <span class="math inline">\(Y\)</span>의 공분산 <span class="math inline">\(Cov(X,Y)\)</span>는 다음과 같이 정의된다.</p>
+<p><span class="math display" id="eq:cov">\[\begin{align}
+Cov(X,Y) &amp; = E\left((X-E(X))(Y-E(Y)) \right) \\
+         &amp; = E(XY) - E(X)E(Y) \tag{2.2}
+\end{align}\]</span></p>
+<p>만일 확률변수 <span class="math inline">\(X\)</span>와 <span class="math inline">\(Y\)</span>가 서로 독립이면, <span class="math inline">\(E(XY)=E(X)E(Y)\)</span>의 관계가 성립한다.
+따라서 서로 독립인 두 확률변수의 공분산은 식 <a href="ch2-simple.html#eq:cov">(2.2)</a>에 의해서 0이 됨을 알 수 있다.</p>
+<p>공분산 <span class="math inline">\(Cov(X,Y)\)</span> 는 변수 <span class="math inline">\(X\)</span>와 <span class="math inline">\(Y\)</span> 사이에 존재하는 선형 관련성을 측정하는 통계량이다.
+식 <a href="ch2-simple.html#eq:cov">(2.2)</a>에서 볼 수 있듯이 공분산은 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span>의 평균값을 나타낸다.
+만일 <span class="math inline">\((X,Y)\)</span>의 자료 중 <span class="math inline">\(X-E(X)&gt;0\)</span>이고 <span class="math inline">\(Y-E(Y)&gt;0\)</span>을 만족하거나 <span class="math inline">\(X-E(X)&lt;0\)</span>이고 <span class="math inline">\(Y-E(Y)&lt;0\)</span>인 조건을 만족하는 자료가 많게 되면 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span>의 값은 대부분 양수의 값이 되며,
+따라서 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span>의 평균값인 두 변수의 공분산은 0보다 큰 값을 갖게 된다.
+하지만 <span class="math inline">\((X,Y)\)</span>의 자료 중 <span class="math inline">\(X-E(X)\)</span>와 <span class="math inline">\(Y-E(Y)\)</span>의 부호가 서로 반대가 되는 자료가 많게 되면 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span>의 값은 대부분 음수의 값이 되며,
+따라서 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span>의 평균값인 두 변수의 공분산은 0보다 작은 값을 갖게 된다.</p>
+<p>그런데 <span class="math inline">\((X,Y)\)</span>의 자료 중 <span class="math inline">\(X-E(X)\)</span>와 <span class="math inline">\(Y-E(Y)\)</span>의 부호가 같은 자료들이 많다는 것은 그림 <a href="ch2-simple.html#fig:cov-1">2.1</a>에서 1구역과 3구역에 대부분의 자료가 있다는 것을 의미하고 있기 때문에 한 변수의 값이 증가하거나 감소하면 다른 변수의 값도 함께 증가하거나 감소하는 ’양의 관계’에 있다는 것을 알 수 있다.
+또한 <span class="math inline">\((X,Y)\)</span>의 자료 중 <span class="math inline">\(X-E(X)\)</span>와 <span class="math inline">\(Y-E(Y)\)</span>의 부호가 반대인 자료들이 많다는 것은 그림 <a href="ch2-simple.html#fig:cov-1">2.1</a>에서 2구역과 4구역에 대부분의 자료가 있다는 것을 의미하는 것이고,
+따라서 한 변수의 값이 증가하거나 감소하면 다른 변수의 값은 정반대의 방향으로 움직이는 ’음의 관계’에 있다는 것을 알 수 있다.</p>
+<p>이러한 관련성으로 두 변수의 공분산이 큰 양수 값이면 두 변수의 관계는 강한 양의 관계가 있음을 알 수 있으며, 큰 음수의 값을 취하고 있으면 강한 음의 관계가 있음을 알 수 있다.
+그러나 공분산의 값은 변수가 취하는 값 자체의 절대적 크기에도 영향을 받고 있기 때문에 스케일이 다른 자료에 대한 비교는 의미가 없게 된다.
+이 문제는 공분산을 두 변수의 표준편차를 나누는 것으로 해결될 수 있으며, 이것이 상관계수가 된다.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:cov-1"></span>
+<img src="_main_files/figure-html/cov-1-1.png" alt="두 변수 X와 Y의 공분산 구성요소" width="576" />
+<p class="caption">
+그림 2.1: 두 변수 X와 Y의 공분산 구성요소
+</p>
+</div>
+</div>
+<div id="회귀계수의-최소제곱추정" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> 회귀계수의 최소제곱추정<a href="ch2-simple.html#회귀계수의-최소제곱추정" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>식 <a href="ch2-simple.html#eq:simple-1">(2.1)</a>을 이용해서 <span class="math inline">\(Y\)</span> 의 변동을 설명하고 예측하려면, 값이 알려져 있지 않는 모수 <span class="math inline">\(\beta_{0}\)</span> 와 <span class="math inline">\(\beta_{1}\)</span> 을 추정해야 한다. 두 변수 <span class="math inline">\(Y\)</span> 와 <span class="math inline">\(X\)</span> 에 대해 관측된 <span class="math inline">\(n\)</span> 개의 자료를 <span class="math inline">\((y_{1},x_{1})\)</span>, <span class="math inline">\((y_{2}, x_{2})\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\((y_{n}, x_{n})\)</span> 이라고 하자. 두 모수 <span class="math inline">\(\beta_{0}\)</span> 와 <span class="math inline">\(\beta_{1}\)</span> 의 추정은 <span class="math inline">\(n\)</span> 개의 자료를 가장 잘 설명할 수 있는 직선을 구하는 과정이라고 할 수 있는데, ’자료를 가장 잘 설명하는 직선’이란 자료와 직선 사이에 간격이 가장 작은 직선이라고 볼 수 있다. 최소제곱추정법은 이런 개념을 활용한 추정법이며, 선형회귀모형에서 가장 널리 사용되는 회귀계수의 추정방법이다.</p>
+<div id="모수-beta_0와-beta_1의-추정" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> 모수 <span class="math inline">\(\beta_{0}\)</span>와 <span class="math inline">\(\beta_{1}\)</span>의 추정<a href="ch2-simple.html#모수-beta_0와-beta_1의-추정" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>두 모수의 추정값을 <span class="math inline">\(\hat{\beta}_{0}\)</span> 과 <span class="math inline">\(\hat{\beta}_{1}\)</span> 라고 하면, <span class="math inline">\(X\)</span> 변수의 <span class="math inline">\(i\)</span> 번째 관찰값에 대한 <span class="math inline">\(Y\)</span> 변수의 <span class="math inline">\(i\)</span> 번째 예측값은 <span class="math inline">\(\hat{y}_{i} = \hat{\beta}_{0} + \hat{\beta}_{1}x_{i}\)</span> 가 된다. <span class="math inline">\(Y\)</span> 변수의 관찰값인 <span class="math inline">\(y_{i}\)</span> 와 예측값인 <span class="math inline">\(\hat{y}_{i}\)</span> 의 차이인 <span class="math inline">\(y_{i}-\hat{y}_{i}\)</span> 는 자료와 회귀직선 사이의 거리가 되는데, 이것을 잔차(residual)라고 하며, <span class="math inline">\(e_{i}\)</span> 로 표시한다.</p>
+<p>따라서 <span class="math inline">\(\hat{\beta}_{0}\)</span> 과 <span class="math inline">\(\hat{\beta}_{1}\)</span> 은 다음에 주어지는 잔차의 제곱합(Residual sum of squares; RSS)을 최소화시키도록 구해야 한다.</p>
+<span class="math display" id="eq:simple-rss">\[\begin{equation}
+RSS = \sum_{i=1}^{n} \left( y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{i} \right)^{2}
+\tag{2.3}
+\end{equation}\]</span>
+<p>식 <a href="ch2-simple.html#eq:simple-rss">(2.3)</a>의 RSS를 최소화 시키는 추정값 <span class="math inline">\(\hat{\beta}_{0}\)</span> 과 <span class="math inline">\(\hat{\beta}_{1}\)</span> 을 구하기 위해서, RSS를 <span class="math inline">\(\hat{\beta}_{0}\)</span> 과 <span class="math inline">\(\hat{\beta}_{1}\)</span> 에 대하여 각각 편미분을 실시해서 얻은 두 개의 방정식은 다음과 같다.</p>
+<span class="math display" id="eq:lse-1">\[\begin{align}
+\frac{\partial RSS}{\partial \hat{\beta}_{0}} &amp; = -2 \sum_{i=1}^{n}(y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{i})  = 0\\
+\frac{\partial RSS}{\partial \hat{\beta}_{1}} &amp; = -2 \sum_{i=1}^{n}x_{i}(y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{i})  = 0 \tag{2.4}
+\end{align}\]</span>
+<p>식 <a href="ch2-simple.html#eq:lse-1">(2.4)</a>을 정리하면 다음과 같다.</p>
+<span class="math display" id="eq:lse-2">\[\begin{align}
+\sum_{i=1}^{n}y_{i} &amp; = n \hat{\beta}_{0} + \hat{\beta}_{1} \sum_{i=1}^{n}x_{i} \\
+\sum_{i=1}^{n}x_{i}y_{i} &amp; = \hat{\beta}_{0}\sum_{i=1}^{n}x_{i} + \hat{\beta}_{1}\sum_{i=1}^{n}x_{i}^{2} \tag{2.5}
+\end{align}\]</span>
+<p>식 <a href="ch2-simple.html#eq:lse-2">(2.5)</a>를 <span class="math inline">\(\hat{\beta}_{0}\)</span> 과 <span class="math inline">\(\hat{\beta}_{1}\)</span> 에 대하여 정리하면 각각 다음의 결과를 얻게 된다.</p>
+<span class="math display" id="eq:lse-3">\[\begin{align}
+\hat{\beta}_{1} &amp;= \frac{\sum_{i=1}^{n}(x_{i}-\overline{x})(y_{i}-\overline{y})}{\sum_{i=1}^{n}(x_{i}-\overline{x})^{2}} \\
+\hat{\beta}_{0} &amp;= \overline{y}-\hat{\beta}_{1}\overline{x} \tag{2.6}
+\end{align}\]</span>
+<p>단, <span class="math inline">\(\overline{y}\)</span> 와 <span class="math inline">\(\overline{x}\)</span> 는 표본평균이다.</p>
+<p>추정된 회귀직선의 기울기인 <span class="math inline">\(\hat{\beta}_{1}\)</span>의 의미는 설명변수를 한 단위 증가시켰을 때 반응변수의 평균 변화량의 추정값이 되어서, <span class="math inline">\(\hat{\beta}_{1}&gt;0\)</span>이면 설명변수 값의 증가가 반응변수 값의 증가로 연결되는 관계를 의미하고, 반면에 <span class="math inline">\(\hat{\beta}_{1}&lt;0\)</span>이면 설명변수 값의 증가가 반응변수 값의 감소로 연결되는 관계를 의미한다. 절편인 <span class="math inline">\(\hat{\beta}_{0}\)</span> 은 설명변수의 값이 0일 때, 반응변수의 평균값의 추정값이 되는데, 만일 설명변수의 값 범위에 0이 포함되지 않는다면 특별한 의미를 부여하기는 어렵다.</p>
+<p>식 <a href="ch2-simple.html#eq:simple-1">(2.1)</a>에 포함된 오차항 <span class="math inline">\(\varepsilon_{i}\)</span>는 자료를 통해서 관측될 수 없는 변량이다. 하지만 회귀모형에서는 오차항에 대해 몇 가지 가정을 하고 있으며, 이 가정이 만족되지 않는 자료를 대상으로 식 <a href="ch2-simple.html#eq:simple-1">(2.1)</a>의 회귀모형을 적용시켜 분석하게 되면, 그 결과에 심각한 문제가 발생할 수 있다. 따라서 가정 만족 여부를 확인하는 것은 매우 중요한 분석 과정이 되는데, 이 경우 오차항 대신 사용할 수 있는 것이 잔차이다. 잔차분석에 대해서는 <a href="#ch4-diag"><strong>??</strong></a>장에서 살펴보겠다.</p>
+<p><span class="math inline">\(\bullet\)</span> 예제 2.1: 모집단 회귀직선과 추정된 회귀직선</p>
+<p>모집단 회귀직선과 오차항의 분포는 일반적으로 알려져 있지 않지만, 회귀모형의 의미를 살펴보기 위해서 <span class="math inline">\(E(Y|X)=5+2X\)</span> 라고 가정하고, 오차항 <span class="math inline">\(\varepsilon\)</span>은 평균이 0이고 분산이 1인 표준정규분포라고 가정하자.</p>
+<ol style="list-style-type: decimal">
+<li><p>설명변수의 값이 1, 3, 2, 7, 12, 6, 1, 3, 6, 6, 7로 주어졌을 때, 표준정규분포에서 발생시킨 오차값을 추가해서 반응변수의 값을 생성해 보자.</p></li>
+<li><p>단순선형회귀모형을 자료에 적합시켜서 절편과 기울기를 추정하고 모집단 회귀직선과 비교해 보자.</p></li>
+</ol>
+<p>주어진 설명변수의 값에 대해 정규 난수를 추가한 반응변수 값을 생성해서 데이터 프레임으로 만들어 보자. 표준정규분포에서 난수 생성은 함수 <code>rnorm()</code>으로 수행할 수 있다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="ch2-simple.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="ch2-simple.html#cb2-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span>
+<span id="cb2-3"><a href="ch2-simple.html#cb2-3" tabindex="-1"></a>df2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">12</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">7</span>),</span>
+<span id="cb2-4"><a href="ch2-simple.html#cb2-4" tabindex="-1"></a>                <span class="at">y =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(x))</span>
+<span id="cb2-5"><a href="ch2-simple.html#cb2-5" tabindex="-1"></a>                )</span></code></pre></div>
+<p>생성된 모의자료는 다음과 같다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="ch2-simple.html#cb3-1" tabindex="-1"></a>df2<span class="fl">.1</span></span>
+<span id="cb3-2"><a href="ch2-simple.html#cb3-2" tabindex="-1"></a><span class="do">## # A tibble: 11 × 2</span></span>
+<span id="cb3-3"><a href="ch2-simple.html#cb3-3" tabindex="-1"></a><span class="do">##        x     y</span></span>
+<span id="cb3-4"><a href="ch2-simple.html#cb3-4" tabindex="-1"></a><span class="do">##    &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb3-5"><a href="ch2-simple.html#cb3-5" tabindex="-1"></a><span class="do">##  1     1  5.52</span></span>
+<span id="cb3-6"><a href="ch2-simple.html#cb3-6" tabindex="-1"></a><span class="do">##  2     3 12.6 </span></span>
+<span id="cb3-7"><a href="ch2-simple.html#cb3-7" tabindex="-1"></a><span class="do">##  3     2  8.04</span></span>
+<span id="cb3-8"><a href="ch2-simple.html#cb3-8" tabindex="-1"></a><span class="do">##  4     7 18.1 </span></span>
+<span id="cb3-9"><a href="ch2-simple.html#cb3-9" tabindex="-1"></a><span class="do">##  5    12 27.0 </span></span>
+<span id="cb3-10"><a href="ch2-simple.html#cb3-10" tabindex="-1"></a><span class="do">##  6     6 16.7 </span></span>
+<span id="cb3-11"><a href="ch2-simple.html#cb3-11" tabindex="-1"></a><span class="do">##  7     1  6.68</span></span>
+<span id="cb3-12"><a href="ch2-simple.html#cb3-12" tabindex="-1"></a><span class="do">##  8     3 10.4 </span></span>
+<span id="cb3-13"><a href="ch2-simple.html#cb3-13" tabindex="-1"></a><span class="do">##  9     6 16.9 </span></span>
+<span id="cb3-14"><a href="ch2-simple.html#cb3-14" tabindex="-1"></a><span class="do">## 10     6 17.4 </span></span>
+<span id="cb3-15"><a href="ch2-simple.html#cb3-15" tabindex="-1"></a><span class="do">## 11     7 18.2</span></span></code></pre></div>
+<p>선형화귀모형의 적합은 함수 <code>lm()</code>으로 할 수 있으며, 일반적인 사용법은 <code>lm(formula, data, ...)</code>이다. <code>formula</code>는 설정된 회귀모형을 나타내는 R 모형 공식으로써, 단순회귀모형의 경우에는 <code>y ~ x</code>와 같이 물결표(<code>~</code>)의 왼쪽에는 반응변수, 오른쪽에는 설명변수를 두면 된다. R 모형 공식에 대해서는 다중회귀모형에서 더 자세하게 살펴보겠다. <code>data</code>는 회귀분석에 사용될 데이터 프레임을 지정하는 것으로써, 이 예제에서는 위에서 생성한 데이터 프레임 <code>df2.1</code>를 지정하면 된다.</p>
+<p>모의자료가 있는 데이터 프레임 <code>df2.1</code>를 대상으로 단순회귀모형을 함수 <code>lm()</code>으로 적합시켜보자. 적합 결과는 <span class="math inline">\(\hat{y} = 4.94 + 1.911x\)</span> 임을 알 수 있다.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="ch2-simple.html#cb4-1" tabindex="-1"></a>fit2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df2<span class="fl">.1</span>)</span>
+<span id="cb4-2"><a href="ch2-simple.html#cb4-2" tabindex="-1"></a>fit2<span class="fl">.1</span></span>
+<span id="cb4-3"><a href="ch2-simple.html#cb4-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-4"><a href="ch2-simple.html#cb4-4" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb4-5"><a href="ch2-simple.html#cb4-5" tabindex="-1"></a><span class="do">## lm(formula = y ~ x, data = df2.1)</span></span>
+<span id="cb4-6"><a href="ch2-simple.html#cb4-6" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-7"><a href="ch2-simple.html#cb4-7" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb4-8"><a href="ch2-simple.html#cb4-8" tabindex="-1"></a><span class="do">## (Intercept)            x  </span></span>
+<span id="cb4-9"><a href="ch2-simple.html#cb4-9" tabindex="-1"></a><span class="do">##       4.940        1.911</span></span></code></pre></div>
+<p>함수 <code>lm()</code>으로 생성된 객체 <code>fit2.1</code>을 단순하게 출력시키면 추정된 회귀계수만 나타나지만, 사실 객체 <code>fit2.1</code>은 다음과 같이 많은 양의 정보가 담겨 있는 리스트 객체이다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="ch2-simple.html#cb5-1" tabindex="-1"></a><span class="fu">names</span>(fit2<span class="fl">.1</span>)</span>
+<span id="cb5-2"><a href="ch2-simple.html#cb5-2" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;         </span></span>
+<span id="cb5-3"><a href="ch2-simple.html#cb5-3" tabindex="-1"></a><span class="do">##  [5] &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;            &quot;df.residual&quot;  </span></span>
+<span id="cb5-4"><a href="ch2-simple.html#cb5-4" tabindex="-1"></a><span class="do">##  [9] &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</span></span></code></pre></div>
+<p>사용자마다 필요한 정보가 서로 다를 수 있기 때문에 SAS나 SPSS에서와 같이 모든 결과물을 한 번에 출력하는 것은 좋은 방법이 아닐 수 있다. 객체 <code>fit2.1</code>에 담겨 있는 필요한 정보를 획득하기 위해서는 해당하는 함수를 사용해야 하며, 앞으로 차근차근 살펴보겠다.</p>
+<p>모집단 회귀직선 및 생성된 모의자료, 그리고 추정된 회귀직선을 함께 나타낸 그래프가 그림 <a href="ch2-simple.html#fig:ex2-1">2.2</a>이다. 추정된 회귀직선은 모집단 회귀직선과 매우 비숫하지만 완벽하게 일치하지 않음을 알 수 있다.</p>
+<div class="figure"><span style="display:block;" id="fig:ex2-1"></span>
+<img src="_main_files/figure-html/ex2-1-1.png" alt="예제 2.1에서 사용된 모의자료와 회귀직선" width="576" />
+<p class="caption">
+그림 2.2: 예제 2.1에서 사용된 모의자료와 회귀직선
+</p>
+</div>
+<p><span class="math inline">\(\bullet\)</span> 예제 2.2: 매출액에 대한 광고효과 분석</p>
+<p>피자 전문 체인점 영업부서에서는 매출액에 대한 광고효과를 분석하기 위하여 유사한 인구분포를 갖는 20개 판매지역의 매출액 규모와 광고비 지출에 대한 자료를 수집하였다. 수집된 자료는 파일 <code>ex2-2.csv</code>에 입력되었고, 자료의 단위는 100만원이다.</p>
+<ol style="list-style-type: decimal">
+<li><p>매출액 규모와 광고비 지출 사이의 산점도를 작성하고, 두 변수 사이의 관계를 살펴보자.</p></li>
+<li><p>최소제곱법에 의한 단순회귀직선을 추정하고, 추정된 <span class="math inline">\(\hat{\beta}_{1}\)</span>의 의미를 해석해 보자.</p></li>
+</ol>
+<p>자료가 콤마로 구분된 CSV 파일을 함수 <code>readr::read_csv()</code>로 불러와서 두 변수의 산점도를 작성해 보자.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="ch2-simple.html#cb6-1" tabindex="-1"></a>df2<span class="fl">.2</span> <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;Data/ex2-2.csv&quot;</span>)</span>
+<span id="cb6-2"><a href="ch2-simple.html#cb6-2" tabindex="-1"></a>df2<span class="fl">.2</span></span>
+<span id="cb6-3"><a href="ch2-simple.html#cb6-3" tabindex="-1"></a><span class="do">## # A tibble: 20 × 2</span></span>
+<span id="cb6-4"><a href="ch2-simple.html#cb6-4" tabindex="-1"></a><span class="do">##    sales advertisement</span></span>
+<span id="cb6-5"><a href="ch2-simple.html#cb6-5" tabindex="-1"></a><span class="do">##    &lt;dbl&gt;         &lt;dbl&gt;</span></span>
+<span id="cb6-6"><a href="ch2-simple.html#cb6-6" tabindex="-1"></a><span class="do">##  1   425            23</span></span>
+<span id="cb6-7"><a href="ch2-simple.html#cb6-7" tabindex="-1"></a><span class="do">##  2   370            21</span></span>
+<span id="cb6-8"><a href="ch2-simple.html#cb6-8" tabindex="-1"></a><span class="do">##  3   200            16</span></span>
+<span id="cb6-9"><a href="ch2-simple.html#cb6-9" tabindex="-1"></a><span class="do">##  4   580            34</span></span>
+<span id="cb6-10"><a href="ch2-simple.html#cb6-10" tabindex="-1"></a><span class="do">##  5   620            32</span></span>
+<span id="cb6-11"><a href="ch2-simple.html#cb6-11" tabindex="-1"></a><span class="do">##  6   650            36</span></span>
+<span id="cb6-12"><a href="ch2-simple.html#cb6-12" tabindex="-1"></a><span class="do">##  7   700            40</span></span>
+<span id="cb6-13"><a href="ch2-simple.html#cb6-13" tabindex="-1"></a><span class="do">##  8   490            37</span></span>
+<span id="cb6-14"><a href="ch2-simple.html#cb6-14" tabindex="-1"></a><span class="do">##  9   610            35</span></span>
+<span id="cb6-15"><a href="ch2-simple.html#cb6-15" tabindex="-1"></a><span class="do">## 10   290            20</span></span>
+<span id="cb6-16"><a href="ch2-simple.html#cb6-16" tabindex="-1"></a><span class="do">## 11   320            20</span></span>
+<span id="cb6-17"><a href="ch2-simple.html#cb6-17" tabindex="-1"></a><span class="do">## 12   350            21</span></span>
+<span id="cb6-18"><a href="ch2-simple.html#cb6-18" tabindex="-1"></a><span class="do">## 13   400            23</span></span>
+<span id="cb6-19"><a href="ch2-simple.html#cb6-19" tabindex="-1"></a><span class="do">## 14   517            21</span></span>
+<span id="cb6-20"><a href="ch2-simple.html#cb6-20" tabindex="-1"></a><span class="do">## 15   545            30</span></span>
+<span id="cb6-21"><a href="ch2-simple.html#cb6-21" tabindex="-1"></a><span class="do">## 16   590            32</span></span>
+<span id="cb6-22"><a href="ch2-simple.html#cb6-22" tabindex="-1"></a><span class="do">## 17   711            39</span></span>
+<span id="cb6-23"><a href="ch2-simple.html#cb6-23" tabindex="-1"></a><span class="do">## 18   650            37</span></span>
+<span id="cb6-24"><a href="ch2-simple.html#cb6-24" tabindex="-1"></a><span class="do">## 19   740            41</span></span>
+<span id="cb6-25"><a href="ch2-simple.html#cb6-25" tabindex="-1"></a><span class="do">## 20   660            38</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="ch2-simple.html#cb7-1" tabindex="-1"></a><span class="fu">ggplot</span>(df2<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">x =</span> advertisement, <span class="at">y =</span> sales)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="ch2-simple.html#cb7-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="ch2-simple.html#cb7-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;비모수적 회귀곡선&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="ch2-simple.html#cb7-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;회귀직선&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="ch2-simple.html#cb7-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ex2-2"></span>
+<img src="_main_files/figure-html/ex2-2-1.png" alt="예제 2.2 자료의 산점도와 비모수적 회귀곡선" width="576" />
+<p class="caption">
+그림 2.3: 예제 2.2 자료의 산점도와 비모수적 회귀곡선
+</p>
+</div>
+<p>비모수적 회귀곡선은 두 변수의 관계를 가장 잘 나타내는 곡선을 추정하는 기능을 가지고 있다. 그림 <a href="ch2-simple.html#fig:ex2-2">2.3</a>에 작성된 비모수적 회귀곡선은 대체로 직선의 형태를 취하고 있음을 알 수 있으며, 함께 표시된 회귀직선과 큰 차이가 없는 것을 알 수 있다. 이것으로 두 변수의 관계를 직선으로 설정하는 데에 큰 무리가 없음을 알 수 있다.</p>
+<p>함수 <code>lm()</code>으로 단순회귀직선을 추정해 보자.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="ch2-simple.html#cb8-1" tabindex="-1"></a>fit2<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(sales <span class="sc">~</span> advertisement, <span class="at">data =</span> df2<span class="fl">.2</span>)</span>
+<span id="cb8-2"><a href="ch2-simple.html#cb8-2" tabindex="-1"></a>fit2<span class="fl">.2</span></span>
+<span id="cb8-3"><a href="ch2-simple.html#cb8-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb8-4"><a href="ch2-simple.html#cb8-4" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb8-5"><a href="ch2-simple.html#cb8-5" tabindex="-1"></a><span class="do">## lm(formula = sales ~ advertisement, data = df2.2)</span></span>
+<span id="cb8-6"><a href="ch2-simple.html#cb8-6" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb8-7"><a href="ch2-simple.html#cb8-7" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb8-8"><a href="ch2-simple.html#cb8-8" tabindex="-1"></a><span class="do">##   (Intercept)  advertisement  </span></span>
+<span id="cb8-9"><a href="ch2-simple.html#cb8-9" tabindex="-1"></a><span class="do">##        -6.944         17.713</span></span></code></pre></div>
+<p>적합 결과는 <span class="math inline">\(\hat{y} = -6.994 + 17.713x\)</span> 임을 알 수 있다. 추정된 직선의 기울기 <span class="math inline">\(\hat{\beta}_{1}=17.713\)</span> 의 의미는 광고비 지출을 한 단위인 100만원 증가시키면 평균 매출액의 규모가 17.713백만원 증가한다는 것이 된다.</p>
+</div>
+<div id="section-property-lse" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> 최소제곱추정량의 특성<a href="ch2-simple.html#section-property-lse" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>식 <a href="ch2-simple.html#eq:simple-1">(2.1)</a>에서 설정된 단순회귀모형에서 모수 <span class="math inline">\(\beta_{0}\)</span>와 <span class="math inline">\(\beta_{1}\)</span>의 최소제곱추정량인 <span class="math inline">\(\hat{\beta}_{0}\)</span>과 <span class="math inline">\(\hat{\beta}_{1}\)</span>은 몇 가지 중요한 통계적 특성을 갖는다.</p>
+<p>첫 번째 특성은 식 <a href="ch2-simple.html#eq:lse-3">(2.6)</a>의 <span class="math inline">\(\hat{\beta}_{0}\)</span>과 <span class="math inline">\(\hat{\beta}_{1}\)</span>은 반응변수 <span class="math inline">\(Y_{i}\)</span>의 선형결합으로 표시된다는 것이다. 먼저 <span class="math inline">\(\hat{\beta}_{1}\)</span>의 경우를 살펴보자.</p>
+<span class="math display" id="eq:lse-p1">\[\begin{align}
+\hat{\beta}_{1} &amp; = \frac{\sum_{i=1}^{n}(X_{i}-\overline{X})(Y_{i}-\overline{Y})}{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}} \\
+&amp; = \frac{\sum_{i=1}^{n}(X_{i}-\overline{X})Y_{i}-\sum_{i=1}^{n}(X_{i}-\overline{X})\overline{Y}}{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}} \\
+&amp; = \frac{\sum_{i=1}^{n}(X_{i}-\overline{X})Y_{i}}{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}} \\
+&amp; = \sum_{i=1}^{n}\left(\frac{X_{i}-\overline{X}}{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}\right)Y_{i} \\
+&amp; = \sum_{i=1}^{n}c_{i}Y_{i} \tag{2.7}
+\end{align}\]</span>
+<p>단, <span class="math inline">\(c_{i} = (X_{i}-\overline{X})/\sum(X_{i}-\overline{X})^{2}\)</span>.</p>
+<p><span class="math inline">\(\hat{\beta}_{0}\)</span>의 경우에는 <span class="math inline">\(\overline{Y}-\hat{\beta}_{1}\overline{X}\)</span>의 표현식에서 <span class="math inline">\(\hat{\beta}_{1}\)</span>이 <span class="math inline">\(Y_{i}\)</span>의 선형결합이기 때문에 자연스럽게 <span class="math inline">\(Y_{i}\)</span>의 선형결합으로 표시됨을 알 수 있다.</p>
+<p>두 번째 특성은 최소제곱추정량이 불편추정량(unbiased estimator)이라는 것이다. 불편추정량이란 추정량의 기대값이 추정하려는 모수와 일치하는 추정량을 의미한다. 먼저 <span class="math inline">\(\hat{\beta}_{1}\)</span>의 기대값을 구해보자.</p>
+<span class="math display" id="eq:lse-p2">\[\begin{align}
+E\left(\hat{\beta}_{1}\right) &amp; = E\left(\sum_{i=1}^{n}c_{i}Y_{i}\right) \\
+&amp; = \sum_{i=1}^{n}c_{i}E(Y_{i}) \\
+&amp; = \sum_{i=1}^{n}c_{i}E(\beta_{0}+\beta_{i}X_{i}) \\
+&amp; = \beta_{0}\sum_{i=1}^{n}c_{i}+\beta_{1}\sum_{i=1}^{n}c_{i}X_{i}
+\tag{2.8}
+\end{align}\]</span>
+<p><span class="math inline">\(\sum c_{i}\)</span>의 값은 다음과 같이 구할 수 있다.</p>
+<span class="math display" id="eq:sum-ci">\[\begin{equation}
+\sum_{i=1}^{n} c_{i} = \frac{\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)}{\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)^{2}} = 0
+\tag{2.9}
+\end{equation}\]</span>
+<p>또한 <span class="math inline">\(\sum c_{i}X_{i}\)</span>의 값은 다음과 같이 구할 수 있다.</p>
+<span class="math display" id="eq:sum-cixi">\[\begin{align}
+\sum_{i=1}^{n}c_{i}X_{i} &amp; = \frac{\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)X_{i}}{\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)^{2}} \\
+&amp; = \frac{\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)\left(X_{i}-\overline{X}\right)}{\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)^{2}} \\
+&amp; = \frac{\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)^{2}}{\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)^{2}} \\
+&amp; = 1
+\tag{2.10}
+\end{align}\]</span>
+<p>식 <a href="ch2-simple.html#eq:lse-p2">(2.8)</a>의 마지막 식에서 식 <a href="ch2-simple.html#eq:sum-ci">(2.9)</a>와 식 <a href="ch2-simple.html#eq:sum-cixi">(2.10)</a>의 결과를 적용하면 다음의 결과를 얻게 된다.</p>
+<span class="math display" id="eq:unbiased-beta1">\[\begin{equation}
+E\left(\hat{\beta}_{1}\right) = \beta_{1}
+\tag{2.11}
+\end{equation}\]</span>
+<p>이제 <span class="math inline">\(\hat{\beta}_{0}\)</span>의 기대값을 유도해서 불편추정량임을 보이자.</p>
+<span class="math display" id="eq:unbiased-beta0">\[\begin{align}
+E\left(\hat{\beta}_{0}\right) &amp; = E\left(\overline{Y}-\hat{\beta}_{1}\overline{X}\right) \\
+&amp; = \frac{1}{n}\sum_{i=1}^{n}E(Y_{i})-\overline{X}E\left(\hat{\beta}_{1}\right) \\
+&amp; = \frac{1}{n}\sum_{i=1}^{n}(\beta_{0}+\beta_{1}X_{i}) - \overline{X}\beta_{1} \\
+&amp; = \beta_{0}+\beta_{1}\overline{X}-\overline{X}\beta_{1} \\
+&amp; = \beta_{0}
+\tag{2.12}
+\end{align}\]</span>
+<p>불편추정량인 <span class="math inline">\(\hat{\beta}_{0}\)</span>과 <span class="math inline">\(\hat{\beta}_{1}\)</span>의 분산을 유도해 보자. 식 <a href="ch2-simple.html#eq:lse-p1">(2.7)</a>으로 <span class="math inline">\(\hat{\beta}_{1}\)</span>은 <span class="math inline">\(\sum c_{i}Y_{i}\)</span>로 표시할 수 있는데, <span class="math inline">\(Y_{i}\)</span>가 서로 독립이기 때문에 <span class="math inline">\(\hat{\beta}_{1}\)</span>의 분산은 다음과 같이 유도할 수 있다.</p>
+<span class="math display" id="eq:variance-beta1">\[\begin{align}
+Var\left(\hat{\beta}_{1}\right) &amp; = \sum_{i=1}^{n}c_{i}^{2}Var(Y_{i}) \\
+&amp; = \sigma^{2}\sum_{i=1}^{n}c_{i}^{2} \\
+&amp; = \sigma^{2}\sum_{i=1}^{n}\left(\frac{(X_{i}-\overline{X})}{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}\right)^{2} \\
+&amp; = \sigma^{2}\frac{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}{\left(\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}\right)^{2}} \\
+&amp; = \frac{\sigma^{2}}{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}
+\tag{2.13}
+\end{align}\]</span>
+<p><span class="math inline">\(\hat{\beta}_{0}\)</span>의 분산은 다음과 같이 유도할 수 있다.</p>
+<span class="math display" id="eq:variance-beta0">\[\begin{align}
+Var\left(\hat{\beta}_{0}\right) &amp; = Var\left(\overline{Y}-\hat{\beta}_{1}\overline{X}\right) \\
+&amp; = Var\left(\overline{Y}\right) + \overline{X}^{2}Var\left(\hat{\beta}_{1}\right)-2\overline{X}Cov\left(\overline{Y},\hat{\beta}_{1}\right) \\
+&amp; = \frac{\sigma^{2}}{n} + \overline{X}^{2}\frac{\sigma^{2}}{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}} \\
+&amp; = \sigma^{2}\left(\frac{1}{n}+\frac{\overline{X}^{2}}{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}\right)
+\tag{2.14}
+\end{align}\]</span>
+<p><span class="math inline">\(\overline{Y}\)</span>와 <span class="math inline">\(\hat{\beta}_{1}\)</span>의 공분산이 0임을 보이는 것은 연습문제로 남겨두겠다.</p>
+<p>지금까지 살펴본 최소제곱추정량의 특성과 관련된 중요한 결과가 바로 가우스-마코프(Gauss-Markov) 정리이다.
+가우스-마코프 정리는 최소제곱추정량으로 회귀계수를 추정해서 사용할 수 있는 근거를 제시하고 있다.</p>
+<div class="theorem">
+<p><span id="thm:unnamed-chunk-11" class="theorem"><strong>정리 2.1  (Gauss-Markov 정리) </strong></span>오차항의 평균이 0, 분산이 <span class="math inline">\(\sigma^{2}\)</span>이며 서로 독립을 가정한 회귀모형에서 최소제곱추정량은 최량선형불편추정량(Best Linear Unbiased Estimator: BLUE)이다.
+즉, 최소제곱추정량은 <span class="math inline">\(Y_{i}\)</span>의 선형결합으로 표시되는 모든 불편추정량 중에 최소 분산을 갖는다.</p>
+</div>
+<p><span class="math inline">\(\bullet\)</span> 최소제곱추정량으로 추정된 회귀직선의 특성</p>
+<p>최소제곱추정량으로 추정된 회귀직선은 다음과 같은 몇 가지 유용한 특성을 가지고 있다.</p>
+<ol style="list-style-type: decimal">
+<li>절편을 포함한 회귀모형에서 잔차의 합은 항상 0이다.
+이 특성은 식 <a href="ch2-simple.html#eq:simple-rss">(2.3)</a>의 RSS를 <span class="math inline">\(\hat{\beta}_{0}\)</span>으로 편미분한 식 <a href="ch2-simple.html#eq:lse-1">(2.4)</a>의 첫 번째 방정식에서 바로 확인할 수 있다.</li>
+</ol>
+<p><span class="math display" id="eq:sum-resid">\[\begin{equation}
+\sum_{i=1}^{n}(y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{i}) = \sum_{i=1}^{n}(y_{i}-\hat{y}_{i}) = \sum_{i=1}^{n}e_{i} = 0
+\tag{2.15}
+\end{equation}\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>관측값 <span class="math inline">\(y_{i}\)</span>의 합과 추정값 <span class="math inline">\(\hat{y}_{i}\)</span>의 합은 동일하다.
+이 특성은 식 <a href="ch2-simple.html#eq:sum-resid">(2.15)</a>에서 확인할 수 있다.</p></li>
+<li><p>추정된 회귀직선은 항상 표본평균점 <span class="math inline">\((\overline{x}, \overline{y})\)</span>을 항상 통과한다.
+이 특성은 다음의 수식으로 확인할 수 있다.
+마지막 수식에서 <span class="math inline">\(x=\overline{x}\)</span> 가 되면, <span class="math inline">\(\hat{y}=\overline{y}\)</span> 가 되기 때문에 추정된 회귀직선은 <span class="math inline">\((\overline{x}, \overline{y})\)</span>을 항상 통과하게 된다.</p></li>
+</ol>
+<p><span class="math display">\[\begin{align*}
+\hat{y} &amp; = \hat{\beta}_{0} + \hat{\beta}_{1}x \\
+&amp; = (\overline{y}-\hat{\beta}_{1}\overline{x}) + \hat{\beta}_{1}x \\
+&amp; = \overline{y} + \hat{\beta}_{1}(x-\overline{x})
+\end{align*}\]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li>잔차의 <span class="math inline">\(x_{i}\)</span>에 대한 가중합은 0이다.
+이 특성은 식 <a href="ch2-simple.html#eq:simple-rss">(2.3)</a>의 RSS를 <span class="math inline">\(\hat{\beta}_{1}\)</span>으로 편미분한 식 <a href="ch2-simple.html#eq:lse-1">(2.4)</a>의 두 번째 방정식에서 바로 확인할 수 있다.</li>
+</ol>
+<p><span class="math display">\[\begin{align*}
+\sum_{i=1}^{n}x_{i}(y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{i}) &amp; = \sum_{i=1}^{n}x_{i}y_{i}-\sum_{i=1}^{n}x_{i}(\hat{\beta}_{0}+\hat{\beta}_{1}x_{i}) \\
+&amp; = \sum_{i=1}^{n}x_{i}y_{i} - \sum_{i=1}^{n}x_{i}\hat{y}_{i} \\
+&amp; = \sum_{i=1}^{n}x_{i}(y_{i}-\hat{y}_{i}) \\
+&amp; = \sum_{i=1}^{n}x_{i}e_{i} = 0
+\end{align*}\]</span></p>
+<ol start="5" style="list-style-type: decimal">
+<li>잔차의 <span class="math inline">\(\hat{y}_{i}\)</span>에 대한 가중합은 0이다.
+이 특성은 다음의 수식으로 확인할 수 있다.</li>
+</ol>
+<p><span class="math display">\[\begin{align*}
+\sum_{i=1}^{n}\hat{y}_{i}e_{i} &amp; = \sum_{i=1}^{n}(\hat{\beta}_{0} + \hat{\beta}_{1}x_{i})e_{i} \\
+&amp; = \hat{\beta}_{0}\sum_{i=1}^{n}e_{i} + \hat{\beta}_{1}\sum_{i=1}^{n}x_{i}e_{i} \\
+&amp; = 0
+\end{align*}\]</span></p>
+</div>
+<div id="오차분산-sigma2의-추정" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> 오차분산 <span class="math inline">\(\sigma^{2}\)</span>의 추정<a href="ch2-simple.html#오차분산-sigma2의-추정" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>회귀계수 <span class="math inline">\(\beta_{0}\)</span>과 <span class="math inline">\(\beta_{1}\)</span>의 구간추정 및 가설검정을 실시하는 경우와 설명변수의 주어진 값에 대한 반응변수 값의 예측구간 추정 등을 실시하는 경우에는 오차항의 분산인 <span class="math inline">\(\sigma^{2}\)</span>의 추정값이 반드시 필요하다.</p>
+<p>식 <a href="ch1.html#eq:reg-model">(1.1)</a>의 회귀모형에서 회귀모형 <span class="math inline">\(f(X)\)</span>의 실제 형태는 일반적으로 알려져 있지 않으며,
+주어진 자료를 근거로 식 <a href="ch1.html#eq:simple-reg">(1.2)</a>와 같은 함수형태를 가정하게 된다.
+이 때 가정한 함수형태의 적절성 여부와 관계 없이 오차항의 분산을 정확하게 추정할 수 있다면 가장 이상적인 상황이 될 것이다.
+그러나 이것은 하나의 <span class="math inline">\(X\)</span> 변수의 값에 대하여 여러 개의 <span class="math inline">\(Y\)</span> 변수의 값이 있는 경우에만 가능한 상황이며, 현실적으로는 접하기 어려운 상황이 된다.</p>
+<p>따라서 일반적으로 사용하는 방법은 잔차의 분산으로 오차항의 분산을 추정하는 것이다.
+잔차의 평균은 0이기 때문에 잔차의 분산은 잔차제곱합(residual sum of squares; RSS)으로 표현된다.</p>
+<p><span class="math display" id="eq:rss">\[\begin{equation}
+RSS = \sum_{i=1}^{n}\left(Y_{i}-\hat{Y}_{i}\right)^{2}
+\tag{2.16}
+\end{equation}\]</span></p>
+<p>회귀모형의 추론 과정에는 잔차제곱합과 같은 형태의 몇 가지 제곱합이 사용된다.
+이러한 제곱합은 모두 ’자유도’를 갖게 되는데, 각 제곱합의 자유도는 다음 두 가지 방법 중 적용 가능한 방법으로 구할 수 있다.</p>
+<ol style="list-style-type: decimal">
+<li><p>변수의 합이 주어진 경우: 예를 들어 <span class="math inline">\(X_{1}+X_{2}+X_{3}=0\)</span> 이라는 조건에서 자유롭게 값을 선택할 수 있는 변수의 개수는 2개가 된다. 그것은 만일 <span class="math inline">\(X_{1}\)</span>과 <span class="math inline">\(X_{2}\)</span>의 값이 선택되면 <span class="math inline">\(X_{3}\)</span>의 값은 자동으로 구해지기 때문이다. 표본분산의 경우 적용되는 제곱합의 형태는 <span class="math inline">\(\sum_{i=1}^{n}(Y_{i}-\overline{Y})^{2}\)</span>이 되는데, <span class="math inline">\(\sum_{i=1}^{n}(Y_{i}-\overline{Y})=0\)</span> 이라는 조건이 있기 때문에 자유도는 <span class="math inline">\(n-1\)</span>이 된다.</p></li>
+<li><p>추정량이 포함된 경우: 자유도는 통계학에서 일종의 화폐와 같은 역할을 한다. 수집되는 각 자료마다 하나의 자유도가 추가되는 반면에, 모수에 대한 추정에 이루어질 때마다 하나의 자유도가 차감되는 것이다. 식 <a href="ch2-simple.html#eq:rss">(2.16)</a>의 잔차제곱합에서는 <span class="math inline">\(n\)</span>개의 <span class="math inline">\(Y_{i}\)</span>가 수집되지만 <span class="math inline">\(\hat{Y}_{i}\)</span>를 얻기 위해서는 두 모수 <span class="math inline">\(\beta_{0}\)</span>와 <span class="math inline">\(\beta_{1}\)</span>에 대한 추정이 이루어져 2개의 자유도를 잃게 된다. 따라서 잔차제곱합의 자유도는 <span class="math inline">\(n-2\)</span>가 된다.</p></li>
+</ol>
+<p>식 <a href="ch2-simple.html#eq:rss">(2.16)</a>의 잔차제곱합 <span class="math inline">\(RSS\)</span>의 기대값은 <span class="math inline">\(E(RSS)=(n-2)\sigma^{2}\)</span>가 되는데,
+이것은 <span class="math inline">\(RSS/\sigma^{2}\)</span> 가 자유도가 <span class="math inline">\(n-2\)</span> 인 카이제곱 분포를 하고 있으며, 카이제곱 분포를 하는 확률변수의 기대값은 자유도가 된다는 결과에 의해서 <span class="math inline">\(E(RSS/\sigma^{2})=n-2\)</span> 가 되기 때문이다.
+따라서 오차항의 분산인 <span class="math inline">\(\sigma^{2}\)</span>의 불편추정량은 다음과 같이 정의된다.</p>
+<p><span class="math display" id="eq:mse-1">\[\begin{equation}
+\hat{\sigma}^{2} = \frac{RSS}{n-2} = MSE
+\tag{2.17}
+\end{equation}\]</span></p>
+<p><span class="math inline">\(\sigma^{2}\)</span> 의 추정량인 <span class="math inline">\(MSE\)</span>는 잔차제곱평균이라고 하며, <span class="math inline">\(\sigma\)</span> 의 추정량인 <span class="math inline">\(\sqrt{MSE}\)</span>는 회귀 표준오차(standard error of regression)라고 한다. 추정량 <span class="math inline">\(MSE\)</span>는 잔차를 기반으로 오차항의 분산을 추정하는 것이기 때문에 식 <a href="ch1.html#eq:simple-reg">(1.2)</a>에서 가정한 함수 형태가 적절해야 하는 것은 필수적이다. 또한 오차항의 가정 사항도 모두 만족되어야 <span class="math inline">\(\sigma^{2}\)</span>의 좋은 추정량이 될 수 있다. 만일 이러한 가정 사항이 만족되지 않는다면, <span class="math inline">\(\sigma^{2}\)</span>의 추정량으로서 <span class="math inline">\(MSE\)</span>의 유용성은 매우 떨어진다고 할 수 있다.</p>
+<p><span class="math inline">\(\bullet\)</span> 예제 2.3: 매출액에 대한 광고효과 분석</p>
+<p>예제 2.2의 자료 <code>ex2-2.csv</code>에 대하여 다음의 분석을 실시해 보자.</p>
+<ol style="list-style-type: decimal">
+<li><p>예제 2.2에서 구한 회귀직선으로 주어진 광고비 지출자료에 대한 평균적인 매출액을 추정하고, 잔차를 구하자.</p></li>
+<li><p><span class="math inline">\(\sigma\)</span> 의 추정값인 회귀 표준오차를 구해 보자.</p></li>
+</ol>
+<p>예제 2.2에서 이루어진 분석을 다시 실행해 보자.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="ch2-simple.html#cb9-1" tabindex="-1"></a>df2<span class="fl">.2</span> <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;Data/ex2-2.csv&quot;</span>)</span>
+<span id="cb9-2"><a href="ch2-simple.html#cb9-2" tabindex="-1"></a>fit2<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(sales <span class="sc">~</span> advertisement, <span class="at">data =</span> df2<span class="fl">.2</span>)</span></code></pre></div>
+<p>함수 <code>lm()</code>으로 생성된 리스트 객체 <code>fit2.2</code>에는 <code>"fitted.values"</code>와 <code>"residuals"</code>라는 이름으로 주어진 설명변수 값에 대한 반응변수의 추정값과 잔차가 입력되어 있다.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="ch2-simple.html#cb10-1" tabindex="-1"></a><span class="fu">cbind</span>(df2<span class="fl">.2</span>, <span class="at">Yhat =</span> fit2<span class="fl">.2</span><span class="sc">$</span>fitted, <span class="at">resid =</span> fit2<span class="fl">.2</span><span class="sc">$</span>resid)</span>
+<span id="cb10-2"><a href="ch2-simple.html#cb10-2" tabindex="-1"></a><span class="do">##    sales advertisement     Yhat       resid</span></span>
+<span id="cb10-3"><a href="ch2-simple.html#cb10-3" tabindex="-1"></a><span class="do">## 1    425            23 400.4524   24.547619</span></span>
+<span id="cb10-4"><a href="ch2-simple.html#cb10-4" tabindex="-1"></a><span class="do">## 2    370            21 365.0266    4.973389</span></span>
+<span id="cb10-5"><a href="ch2-simple.html#cb10-5" tabindex="-1"></a><span class="do">## 3    200            16 276.4622  -76.462185</span></span>
+<span id="cb10-6"><a href="ch2-simple.html#cb10-6" tabindex="-1"></a><span class="do">## 4    580            34 595.2941  -15.294118</span></span>
+<span id="cb10-7"><a href="ch2-simple.html#cb10-7" tabindex="-1"></a><span class="do">## 5    620            32 559.8683   60.131653</span></span>
+<span id="cb10-8"><a href="ch2-simple.html#cb10-8" tabindex="-1"></a><span class="do">## 6    650            36 630.7199   19.280112</span></span>
+<span id="cb10-9"><a href="ch2-simple.html#cb10-9" tabindex="-1"></a><span class="do">## 7    700            40 701.5714   -1.571429</span></span>
+<span id="cb10-10"><a href="ch2-simple.html#cb10-10" tabindex="-1"></a><span class="do">## 8    490            37 648.4328 -158.432773</span></span>
+<span id="cb10-11"><a href="ch2-simple.html#cb10-11" tabindex="-1"></a><span class="do">## 9    610            35 613.0070   -3.007003</span></span>
+<span id="cb10-12"><a href="ch2-simple.html#cb10-12" tabindex="-1"></a><span class="do">## 10   290            20 347.3137  -57.313725</span></span>
+<span id="cb10-13"><a href="ch2-simple.html#cb10-13" tabindex="-1"></a><span class="do">## 11   320            20 347.3137  -27.313725</span></span>
+<span id="cb10-14"><a href="ch2-simple.html#cb10-14" tabindex="-1"></a><span class="do">## 12   350            21 365.0266  -15.026611</span></span>
+<span id="cb10-15"><a href="ch2-simple.html#cb10-15" tabindex="-1"></a><span class="do">## 13   400            23 400.4524   -0.452381</span></span>
+<span id="cb10-16"><a href="ch2-simple.html#cb10-16" tabindex="-1"></a><span class="do">## 14   517            21 365.0266  151.973389</span></span>
+<span id="cb10-17"><a href="ch2-simple.html#cb10-17" tabindex="-1"></a><span class="do">## 15   545            30 524.4426   20.557423</span></span>
+<span id="cb10-18"><a href="ch2-simple.html#cb10-18" tabindex="-1"></a><span class="do">## 16   590            32 559.8683   30.131653</span></span>
+<span id="cb10-19"><a href="ch2-simple.html#cb10-19" tabindex="-1"></a><span class="do">## 17   711            39 683.8585   27.141457</span></span>
+<span id="cb10-20"><a href="ch2-simple.html#cb10-20" tabindex="-1"></a><span class="do">## 18   650            37 648.4328    1.567227</span></span>
+<span id="cb10-21"><a href="ch2-simple.html#cb10-21" tabindex="-1"></a><span class="do">## 19   740            41 719.2843   20.715686</span></span>
+<span id="cb10-22"><a href="ch2-simple.html#cb10-22" tabindex="-1"></a><span class="do">## 20   660            38 666.1457   -6.145658</span></span></code></pre></div>
+<p>회귀모형의 다양한 추정 결과는 함수 <code>lm()</code>으로 생성된 객체를 함수 <code>summary()</code>에 입력하면 얻을 수 있다. 자세한 사용 방법은 <a href="ch3-infer.html#ch3-infer">3</a>장에서 살펴볼 것이지만, 여기에서는 함수 <code>summary()</code>의 결과 중 <span class="math inline">\(\sigma\)</span> 의 추정값만을 출력해 보자.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="ch2-simple.html#cb11-1" tabindex="-1"></a><span class="fu">summary</span>(fit2<span class="fl">.2</span>)<span class="sc">$</span>sigma</span>
+<span id="cb11-2"><a href="ch2-simple.html#cb11-2" tabindex="-1"></a><span class="do">## [1] 60.41388</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch3-infer.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

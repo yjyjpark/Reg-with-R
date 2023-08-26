@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 장 회귀모형 | R에 의한 회귀분석</title>
+  <meta name="description" content="1 장 회귀모형 | R에 의한 회귀분석" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 장 회귀모형 | R에 의한 회귀분석" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 장 회귀모형 | R에 의한 회귀분석" />
+  
+  
+  
+
+<meta name="author" content="박동련" />
+
+
+<meta name="date" content="2023-08-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="simple-reg.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>소개하기</a></li>
+<li class="chapter" data-level="1" data-path="ch1.html"><a href="ch1.html"><i class="fa fa-check"></i><b>1</b> 회귀모형</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ch1.html"><a href="ch1.html#반응변수와-설명변수-사이의-관계-설정"><i class="fa fa-check"></i><b>1.1</b> 반응변수와 설명변수 사이의 관계 설정</a></li>
+<li class="chapter" data-level="1.2" data-path="ch1.html"><a href="ch1.html#회귀모형의-설정"><i class="fa fa-check"></i><b>1.2</b> 회귀모형의 설정</a></li>
+<li class="chapter" data-level="1.3" data-path="ch1.html"><a href="ch1.html#회귀모형의-사용"><i class="fa fa-check"></i><b>1.3</b> 회귀모형의 사용</a></li>
+<li class="chapter" data-level="1.4" data-path="ch1.html"><a href="ch1.html#r의-역할"><i class="fa fa-check"></i><b>1.4</b> R의 역할</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="simple-reg.html"><a href="simple-reg.html"><i class="fa fa-check"></i><b>2</b> 단순회귀모형</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="simple-reg.html"><a href="simple-reg.html#단순회귀모형의-설정"><i class="fa fa-check"></i><b>2.1</b> 단순회귀모형의 설정</a></li>
+<li class="chapter" data-level="2.2" data-path="simple-reg.html"><a href="simple-reg.html#회귀계수의-최소제곱추정"><i class="fa fa-check"></i><b>2.2</b> 회귀계수의 최소제곱추정</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="simple-reg.html"><a href="simple-reg.html#모수-beta_0와-beta_1의-추정"><i class="fa fa-check"></i><b>2.2.1</b> 모수 <span class="math inline">\(\beta_{0}\)</span>와 <span class="math inline">\(\beta_{1}\)</span>의 추정</a></li>
+<li class="chapter" data-level="2.2.2" data-path="simple-reg.html"><a href="simple-reg.html#section-property-lse"><i class="fa fa-check"></i><b>2.2.2</b> 최소제곱추정량의 특성</a></li>
+<li class="chapter" data-level="2.2.3" data-path="simple-reg.html"><a href="simple-reg.html#section-simple-sigma"><i class="fa fa-check"></i><b>2.2.3</b> 오차분산 <span class="math inline">\(\sigma^{2}\)</span>의 추정</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html"><i class="fa fa-check"></i><b>3</b> 단순회귀모형의 추론</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#회귀계수-beta_1에-대한-추론"><i class="fa fa-check"></i><b>3.1</b> 회귀계수 <span class="math inline">\(\beta_{1}\)</span>에 대한 추론</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#hatbeta_1의-표본분포"><i class="fa fa-check"></i><b>3.1.1</b> <span class="math inline">\(\hat{\beta}_{1}\)</span>의 표본분포</a></li>
+<li class="chapter" data-level="3.1.2" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#section-ci-beta1"><i class="fa fa-check"></i><b>3.1.2</b> <span class="math inline">\(\beta_{1}\)</span>의 신뢰구간</a></li>
+<li class="chapter" data-level="3.1.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#section-test-beta1"><i class="fa fa-check"></i><b>3.1.3</b> <span class="math inline">\(\beta_{1}\)</span>에 대한 가설검정</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#회귀계수-beta_0에-대한-추론"><i class="fa fa-check"></i><b>3.2</b> 회귀계수 <span class="math inline">\(\beta_{0}\)</span>에 대한 추론</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#hatbeta_0-의-표본분포"><i class="fa fa-check"></i><b>3.2.1</b> <span class="math inline">\(\hat{\beta}_{0}\)</span> 의 표본분포</a></li>
+<li class="chapter" data-level="3.2.2" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#beta_0의-신뢰구간"><i class="fa fa-check"></i><b>3.2.2</b> <span class="math inline">\(\beta_{0}\)</span>의 신뢰구간</a></li>
+<li class="chapter" data-level="3.2.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#beta_0에-대한-가설검정"><i class="fa fa-check"></i><b>3.2.3</b> <span class="math inline">\(\beta_{0}\)</span>에 대한 가설검정</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-평균-eyx_o에-대한-신뢰구간-추정"><i class="fa fa-check"></i><b>3.3</b> 반응변수의 평균, <span class="math inline">\(E(Y|X_{o})\)</span>에 대한 신뢰구간 추정</a></li>
+<li class="chapter" data-level="3.4" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-개별-관측값-예측"><i class="fa fa-check"></i><b>3.4</b> 반응변수의 개별 관측값 예측</a></li>
+<li class="chapter" data-level="3.5" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#단순회귀모형에서-두-변수-사이의-연관성-측정-상관계수"><i class="fa fa-check"></i><b>3.5</b> 단순회귀모형에서 두 변수 사이의 연관성 측정: 상관계수</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> 다중회귀모형</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-model"><i class="fa fa-check"></i><b>4.1</b> 다중회귀모형의 설정</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-fitting"><i class="fa fa-check"></i><b>4.1.1</b> 회귀계수의 추정</a></li>
+<li class="chapter" data-level="4.1.2" data-path="multiple-reg.html"><a href="multiple-reg.html#다항회귀모형"><i class="fa fa-check"></i><b>4.1.2</b> 다항회귀모형</a></li>
+<li class="chapter" data-level="4.1.3" data-path="multiple-reg.html"><a href="multiple-reg.html#section-dummy"><i class="fa fa-check"></i><b>4.1.3</b> 가변수 회귀모형</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-infer"><i class="fa fa-check"></i><b>4.2</b> 다중회귀모형의 추론</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="multiple-reg.html"><a href="multiple-reg.html#회귀계수-추정량의-표본분포"><i class="fa fa-check"></i><b>4.2.1</b> 회귀계수 추정량의 표본분포</a></li>
+<li class="chapter" data-level="4.2.2" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-model-signif"><i class="fa fa-check"></i><b>4.2.2</b> 회귀모형의 유의성 검정</a></li>
+<li class="chapter" data-level="4.2.3" data-path="multiple-reg.html"><a href="multiple-reg.html#개별회귀계수-유의성-검정"><i class="fa fa-check"></i><b>4.2.3</b> 개별회귀계수 유의성 검정</a></li>
+<li class="chapter" data-level="4.2.4" data-path="multiple-reg.html"><a href="multiple-reg.html#두-회귀모형의-비교"><i class="fa fa-check"></i><b>4.2.4</b> 두 회귀모형의 비교</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#section-selection"><i class="fa fa-check"></i><b>4.3</b> 변수선택</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="reg-diag.html"><a href="reg-diag.html"><i class="fa fa-check"></i><b>5</b> 회귀모형의 진단</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R에 의한 회귀분석</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch1" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1 장</span> 회귀모형<a href="ch1.html#ch1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>사회현상, 자연현상, 경영현상이나 경제현상 등을 측정한 변수들의 변동은 그 현상과 관련된 여러 변수들과 관련이 있다고 볼 수 있다.
+어떤 현상을 과학적 시각으로 셜명하기 위해서는 해당 현상과 관련이 있는 변수들 사이의 관계를 설명하기 위한 적절한 모형을 설정해야 할 것이다.
+회귀분석(regression analysis)이란 특정 현상과 그 현상에 영향을 주거나 혹은 관련이 있는 변수들 사이의 관계를 분석하고 모형화하기 위한 통계적 기법이다.
+회귀분석에서는 변수들 사이의 함수관계를 이론적 근거나 경험적 판단에 의해서 설정하고,
+관측된 자료에 의해서 함수관계를 추정해서 변수들 사이의 관계를 설명하거나 예측하는데 사용된다.
+따라서 회귀분석은 사회과학, 공학, 물리학, 생물학, 경영학, 경제학, 의학 등 거의 모든 학문 분야에서 가장 널리 사용되고 있는 통계적 분석 방법인 것이다.</p>
+<p>회귀모형을 설정할 때 우리가 관심이 있는 특정 현상의 변동을 나타내는 변수를 종속변수(dependent variable) 혹은 반응변수(response variable)라고 하며, 일반적으로 <span class="math inline">\(Y\)</span>로 표시한다.
+반응변수가 나타내는 특정 현상에 연관되어 있을 것으로 판단되는 변수를 독립변수(independent variable) 혹은 설명변수(explanatory variable)라고 하고, 일반적으로 <span class="math inline">\(X\)</span>로 표시한다.
+만일 설명변수의 수가 <span class="math inline">\(k\)</span>개 있다고 하면 <span class="math inline">\(X_{1}, X_{2}, \ldots, X_{k}\)</span>로 표시한다.</p>
+<p>예를 들어, 회사 마케팅 부서에서 특정 제품의 매출액 변동을 예측할 수 있는 모형을 설정하고자 할 때 제품의 매출액 변동에 영향을 줄 수 있는 변수들로 광고비 지출액, 가격수준, 기술수준, 디자인 선호수준, 소득수준, 영엽사원의 수, 경쟁제품의 수 등을 생각할 수 있는데,
+이 경우에 반응변수는 제품의 매출액이 되고, 광고비 지출액 등 나머지 변수들은 설명변수가 된다.</p>
+<p>또 다른 예로써 투자자문회사에서 고객의 투자행위에 대한 예측모형을 개발할 때 투자행위에 영향을 미칠 수 있는 변수들로 연소득 수준, 미래 경제상황지수, 시장 이자율 등을 이용하게 되는데, 여기에서 반응변수는 고개들의 투자액이 되고, 연소득 수준 등은 설명변수가 된다.</p>
+<p>회귀모형은 모형에 포힘되는 설명변수가 한 개인 경우에는 단순회귀모형(simple regression model)이라고 하고, 두 개 이상의 설명변수가 모형에 포함되는 경우에는 다중회귀모형(multiple regression model)이라고 한다.</p>
+<div id="반응변수와-설명변수-사이의-관계-설정" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> 반응변수와 설명변수 사이의 관계 설정<a href="ch1.html#반응변수와-설명변수-사이의-관계-설정" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>반응변수와 설명변수 사이의 관계는 일반적으로 결정적 관계(deterministic relation)와 확률적 관계(stochastic relation)로 구분해 볼 수 있다.
+결정적 관계는 반응변수와 설명변수 사이에 정확한 수학적 함수관계가 성립되는 경우를 의미하는 것으로 <span class="math inline">\(Y=f(X)\)</span>와 같이 표시할 수 있다.
+여기에서 함수 <span class="math inline">\(f\)</span> 는 직선, 곡선 혹은 더 복잡한 형태의 함수식이 될 수 있다.
+결정적 관계에서는 설명변수의 값이 주어지면, 함수 <span class="math inline">\(f\)</span> 에 의하여 대응되는 반응변수의 값이 유일하게 결정된다.
+예를 들어, 제품의 판매단가가 2만원 일 때 판매개수(<span class="math inline">\(X\)</span>)와 매출액(<span class="math inline">\(Y\)</span>) 사이의 관계는 <span class="math inline">\(Y=2X\)</span>로 표현되는 결정적 관계가 성립한다.</p>
+<p>반면에 확률적 관계는 설명변수로 반응변수의 변동을 100% 설명할 수 없는 관계를 의미한다.
+예를 들어, 특정 제품의 매출액(<span class="math inline">\(Y\)</span>)과 광고비 지출액(<span class="math inline">\(X\)</span>) 사이의 관계를 생각해 보자.
+일반적으로 광고비 지출을 증가시키면 매출액이 증가하겠지만, 광고비 지출액만으로 매출액의 변동을 100% 설명하는 것은 불가능하다.
+가격수준, 기술수준, 디자인 선호수준, 소득수준 등 매출액의 변동에 영향을 줄 수 있는 다른 많은 변수를 포함시키더라도 매출액 변동을 100% 설명하는 것은 불가능하다고 할 수 있다.</p>
+<p>이와 같이 설명할 수 없는 반응변수의 변동이 항상 존재하는 경우에는 반응변수와 설명변수의 관계를 다음과 같이 오차항 <span class="math inline">\(\varepsilon\)</span>를 포함시켜서 표현할 수 있다.</p>
+<p><span class="math display" id="eq:reg-model">\[\begin{equation}
+Y = f(X) + \varepsilon
+\tag{1.1}
+\end{equation}\]</span></p>
+<p>오차항 <span class="math inline">\(\varepsilon\)</span>는 모형 <span class="math inline">\(f(X)\)</span>로 설명되지 않는 반응변수의 변동을 나타낸다.</p>
+<p>모형 <span class="math inline">\(f(X)\)</span>에 대해서는 직선 혹은 곡선 등의 함수형태를 가정하는 방법이 있다.
+반응변수와 설명변수의 관계가 설정된 함수형태를 항상 따른다는 것은 매우 강한 제약 조건이 될 수 있으나, 반응변수와 설명변수 사이에 존재하는 참 관계를 잘 나타낼 수 있다면 매우 효과적인 분석 모형이 될 것이다.</p>
+<p>실제로 참 관계는 매우 복잡한 형태가 될 수 있으며, 대부분의 경우 정확한 모습은 미리 알 수 없다.<br />
+만일 참 관계가 그림 <a href="ch1.html#fig:1-4">1.1</a>와 같다면, 선형식으로 충분히 근사될 수 있을 것이다.</p>
+<div class="figure"><span style="display:block;" id="fig:1-4"></span>
+<img src="_main_files/figure-html/1-4-1.png" alt="복잡한 관계에 대한 선형회귀 근사" width="576" />
+<p class="caption">
+그림 1.1: 복잡한 관계에 대한 선형회귀 근사
+</p>
+</div>
+<p>이 책에서는 모형 <span class="math inline">\(f(X)\)</span>에 대해서 함수형태를 가정하는 방법만 다룰 예정이다.
+함수형태를 가정하기 위한 가장 단순한 방법은 두 변수의 산점도를 작성하는 것이다.
+예를 들어, 두 변수의 산점도가 그림 <a href="ch1.html#fig:1-2">1.2</a>와 같다면 함수 <span class="math inline">\(f\)</span>를 직선 형태로 가정할 수 있을 것이고,
+그림 <a href="ch1.html#fig:1-3">1.3</a>와 같다면, 2차 함수 관계로 가정할 수 있을 것이다.</p>
+<div class="figure"><span style="display:block;" id="fig:1-2"></span>
+<img src="_main_files/figure-html/1-2-1.png" alt="직선 관계 함수" width="576" />
+<p class="caption">
+그림 1.2: 직선 관계 함수
+</p>
+</div>
+<div class="figure"><span style="display:block;" id="fig:1-3"></span>
+<img src="_main_files/figure-html/1-3-1.png" alt="이차 관계 함수" width="576" />
+<p class="caption">
+그림 1.3: 이차 관계 함수
+</p>
+</div>
+<p>모형 <span class="math inline">\(f(X)\)</span>에 대해 특별한 함수 형태를 가정하지 않는 방법도 있다.
+국소회귀(local regression)와 같은 비모수적 회귀모형(non-parametric regression model)에서 일반적으로 적용되는 방법이다.
+이 책에서는 구체적인 내용을 다루지 않고 있다.</p>
+</div>
+<div id="회귀모형의-설정" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> 회귀모형의 설정<a href="ch1.html#회귀모형의-설정" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>본 절에서는 반응변수와 설명변수 사이의 관계를 모형화하는 기법인 회귀모형의 설정에 대하여 살펴보겠다.
+만일 특정 제품의 매출액과 광고비 지출액의 관계가 그림 <a href="ch1.html#fig:1-2">1.2</a>와 같다고 하면, 두 변수의 관계는 다음과 같이 표현할 수 있다.</p>
+<p><span class="math display" id="eq:simple-reg">\[\begin{equation}
+Y = \beta_{0} + \beta_{1}X + \varepsilon
+\tag{1.2}
+\end{equation}\]</span></p>
+<p>반응변수와 설명변수에 대한 회귀모형을 식 <a href="ch1.html#eq:simple-reg">(1.2)</a>와 같이 설정하면,
+회귀직선은 두 변수 사이의 참 관계(true relation)에 대한 근사(approximation)를 의미한다.
+식 <a href="ch1.html#eq:simple-reg">(1.2)</a>에서 <span class="math inline">\(\beta_{0}\)</span>와 <span class="math inline">\(\beta_{1}\)</span>은 두 변수의 관계를 규정하는 ’모집단 회귀직선’의 Y축 절편과 직선의 기울기를 각각 나타내는 있는 모수(parameter)이며, 회귀계수(regression coefficient)라고 불린다.
+그림 <a href="ch1.html#fig:1-2">1.2</a>에서 자료들은 직선 위에 위치하지 않고 있는데, 이와 같은 반응변수의 관측값과 직선(<span class="math inline">\(\beta_{0}+\beta_{1}X\)</span>)의 차이를 나타내기 위하여 오차항 <span class="math inline">\(\varepsilon\)</span>이 포함되었다.
+오차항은 광고비 지출 이외의 다른 변수들의 영향이나 측정 오차 등을 포함하는 통계적 오차가 된다.</p>
+<p>식 <a href="ch1.html#eq:simple-reg">(1.2)</a>를 단순선형회귀모형(simple linear regression model)이라고 부른다.
+여기에서 ’단순’은 모형에 설명변수가 하나만 있다는 것을 의미하고,
+’선형’은 모형에 포함된 모수 사이의 관계가 선형임을 의미한다.</p>
+<p>설명변수의 개수를 <span class="math inline">\(k\)</span>로 늘린 회귀모형은 다음과 같이 설정할 수 있다.</p>
+<p><span class="math display" id="eq:multiple-reg">\[\begin{equation}
+Y = \beta_{0} + \beta_{1}X_{1} + \cdots + \beta_{k}X_{k} + \varepsilon
+\tag{1.3}
+\end{equation}\]</span></p>
+<p>식 <a href="ch1.html#eq:multiple-reg">(1.3)</a>을 다중선형회귀모형(multiple linear regression model)이라고 부른다.
+여기에서 ’다중’은 모형에 포함된 설명변수의 개수가 두 개 이상인 경우를 의미한다.</p>
+<p>회귀분석의 중요한 목적 중 하나는 회귀모형에 포함된 모수를 추정하는 것이다.
+이러한 절차를 모형의 적합(fitting)이라고 하며, <a href="simple-reg.html#simple-reg">2</a>장에서는 회귀분석에서 가장 많이 사용되는 추정 방법인 최고제곱추정 방법이 소개될 것이다.
+예를 들어 그림 <a href="ch1.html#fig:1-2">1.2</a>에 주어진 자료를 이용해서 구한 최소제곱추정에 의한 회귀직선식은 다음과 같이 주어진다.</p>
+<p><span class="math display">\[\begin{equation}
+\hat{Y}=2.1 + 4.9X
+\end{equation}\]</span></p>
+<p>여기에서 <span class="math inline">\(\hat{Y}\)</span>은 광고비 지출액이 <span class="math inline">\(X\)</span>일 때 대응되는 평균 매출액의 추정값이 된다.</p>
+<p>일반적으로 추정된 회귀식은 설명변수가 관측된 범위 내에서만 적용하는 것이 바람직하다.
+예를 들면, 그림 <a href="ch1.html#fig:1-5">1.4</a>에서 두 변수 <span class="math inline">\(Y\)</span>와 <span class="math inline">\(X\)</span>에 대한 자료가 <span class="math inline">\(x_{1} \leq X \leq x_{2}\)</span>의 범위에서 수집되었다고 하자.
+이 범위에서 참 관계는 직선으로 근사될 수 있을 것이다.
+그러나 <span class="math inline">\(X \geq x_{2}\)</span>의 범위에서 반응변수의 값을 선형 근사 관계를 근거로 예측하고자 한다면 심각한 신뢰성 문제가 발생하게 된다.
+설명변수가 관측된 범위를 벗어난 구역에 대한 예측은 가능한 시도하지 않는 것이 좋겠지만,
+시도를 해야만 하는 상황이라면 매우 조심해서 예측 결과를 적용해야 할 것이다.</p>
+<div class="figure"><span style="display:block;" id="fig:1-5"></span>
+<img src="_main_files/figure-html/1-5-1.png" alt="회귀모형의 유효성 문제" width="576" />
+<p class="caption">
+그림 1.4: 회귀모형의 유효성 문제
+</p>
+</div>
+</div>
+<div id="회귀모형의-사용" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> 회귀모형의 사용<a href="ch1.html#회귀모형의-사용" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>회귀모형은 다음과 같은 목적으로 사용될 수 있다.</p>
+<ul>
+<li>자료의 기술(Data description)</li>
+</ul>
+<p>자료들의 특징이나 변수들 사이의 관계 등을 명확하게 밝히는 것이 분석 목적이 되는 경우가 있다.
+이런 경우에는 두 변수 사이의 함수형태를 가정하지 않는 비모수적 회귀모형이 효과적인 분석 방식이 될 수 있다.
+그림 <a href="ch1.html#fig:1-6-a">1.5</a>는 2014년 호주 빅토리아주에서 측정된 일일 최고 기온과 전기 사용량의 산점도와 두 변수에 대한 비모수적 회귀모형의 적합 결과를 나타낸 그래프이다.
+명확한 2차 곡선의 관계가 잘 드러난 예제이다.</p>
+<div class="figure"><span style="display:block;" id="fig:1-6-a"></span>
+<img src="_main_files/figure-html/1-6-a-1.png" alt="자료의 기술 목적으로 사용된 회귀모형의 예" width="576" />
+<p class="caption">
+그림 1.5: 자료의 기술 목적으로 사용된 회귀모형의 예
+</p>
+</div>
+<ul>
+<li>예측(Prediction)</li>
+</ul>
+<p>새롭게 관측되는 자료에 대한 가장 정확한 예측값을 생성하는 것이 분석의 목적이 되는 경우가 많이 있다.
+예를 들어 특정 제품의 매출액을 정확하게 예측하는 것은 모든 기업의 중요한 업무라 하겠다.
+만일 반응변수인 매출액과 광고비, 가격수준, 기술수준, 디자인 선호수준, 소득수준 등의 설명변수 사이의 참 관계가 식 <a href="ch1.html#eq:simple-reg">(1.2)</a> 혹은 식 <a href="ch1.html#eq:multiple-reg">(1.3)</a>의 모형으로 잘 설명이 된다면, 회귀모형은 매우 효과적인 예측모형으로 사용될 수 있을 것이다.</p>
+<p>이 책에서는 예측모형으로써 회귀모형의 특성 등에 대하여 상세하게 살펴볼 것이다.</p>
+</div>
+<div id="r의-역할" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> R의 역할<a href="ch1.html#r의-역할" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>최종 회귀모형을 얻기 위해서는 많은 분석 단계를 거쳐야 한다.
+자료의 특성을 잘 보여줄 수 있는 그래프 작성이 가능해야 하며,
+반복적인 처리를 통해서 적합 과정의 문제를 발견할 수 있어야 하고,
+효과적인 예측을 실시할 수 있어야 한다.
+따라서 성공적인 분석을 실시하기 위해서는 고급통계분석에 가장 적절한 프로그래밍 언어를 선택해야 한다.</p>
+<p>이 책에서는 R을 사용하여 회귀분석의 모든 과정을 자세하게 소개할 것이다.
+기본적인 R 사용법이나 패키지 <code>dplyr</code>과 <code>ggplot2</code>에 대해서는 책을 읽는 분들이 어느 정도 익숙하다는 가정을 하고 있다.
+또한 책에 제공된 R code에는 프롬프트(<code>&gt;</code> 또는 <code>+</code>)를 제거하였고,
+console 창에 출력되는 결과물은 <code>##</code>으로 시작되도록 하였다.</p>
+<p>이 책을 작성할 때의 R 세션 정보는 다음과 같다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="ch1.html#cb1-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb1-2"><a href="ch1.html#cb1-2" tabindex="-1"></a><span class="do">## R version 4.3.1 (2023-06-16 ucrt)</span></span>
+<span id="cb1-3"><a href="ch1.html#cb1-3" tabindex="-1"></a><span class="do">## Platform: x86_64-w64-mingw32/x64 (64-bit)</span></span>
+<span id="cb1-4"><a href="ch1.html#cb1-4" tabindex="-1"></a><span class="do">## Running under: Windows 11 x64 (build 22621)</span></span>
+<span id="cb1-5"><a href="ch1.html#cb1-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-6"><a href="ch1.html#cb1-6" tabindex="-1"></a><span class="do">## Matrix products: default</span></span>
+<span id="cb1-7"><a href="ch1.html#cb1-7" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-8"><a href="ch1.html#cb1-8" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-9"><a href="ch1.html#cb1-9" tabindex="-1"></a><span class="do">## locale:</span></span>
+<span id="cb1-10"><a href="ch1.html#cb1-10" tabindex="-1"></a><span class="do">## [1] LC_COLLATE=Korean_Korea.utf8  LC_CTYPE=Korean_Korea.utf8   </span></span>
+<span id="cb1-11"><a href="ch1.html#cb1-11" tabindex="-1"></a><span class="do">## [3] LC_MONETARY=Korean_Korea.utf8 LC_NUMERIC=C                 </span></span>
+<span id="cb1-12"><a href="ch1.html#cb1-12" tabindex="-1"></a><span class="do">## [5] LC_TIME=Korean_Korea.utf8    </span></span>
+<span id="cb1-13"><a href="ch1.html#cb1-13" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-14"><a href="ch1.html#cb1-14" tabindex="-1"></a><span class="do">## time zone: Asia/Seoul</span></span>
+<span id="cb1-15"><a href="ch1.html#cb1-15" tabindex="-1"></a><span class="do">## tzcode source: internal</span></span>
+<span id="cb1-16"><a href="ch1.html#cb1-16" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-17"><a href="ch1.html#cb1-17" tabindex="-1"></a><span class="do">## attached base packages:</span></span>
+<span id="cb1-18"><a href="ch1.html#cb1-18" tabindex="-1"></a><span class="do">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span id="cb1-19"><a href="ch1.html#cb1-19" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-20"><a href="ch1.html#cb1-20" tabindex="-1"></a><span class="do">## other attached packages:</span></span>
+<span id="cb1-21"><a href="ch1.html#cb1-21" tabindex="-1"></a><span class="do">##  [1] expsmooth_2.3   fma_2.5         forecast_8.21   fpp2_2.5       </span></span>
+<span id="cb1-22"><a href="ch1.html#cb1-22" tabindex="-1"></a><span class="do">##  [5] lubridate_1.9.2 forcats_1.0.0   stringr_1.5.0   dplyr_1.1.2    </span></span>
+<span id="cb1-23"><a href="ch1.html#cb1-23" tabindex="-1"></a><span class="do">##  [9] purrr_1.0.1     readr_2.1.4     tidyr_1.3.0     tibble_3.2.1   </span></span>
+<span id="cb1-24"><a href="ch1.html#cb1-24" tabindex="-1"></a><span class="do">## [13] ggplot2_3.4.3   tidyverse_2.0.0</span></span>
+<span id="cb1-25"><a href="ch1.html#cb1-25" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-26"><a href="ch1.html#cb1-26" tabindex="-1"></a><span class="do">## loaded via a namespace (and not attached):</span></span>
+<span id="cb1-27"><a href="ch1.html#cb1-27" tabindex="-1"></a><span class="do">##  [1] gtable_0.3.3      xfun_0.39         bslib_0.5.1       lattice_0.21-8   </span></span>
+<span id="cb1-28"><a href="ch1.html#cb1-28" tabindex="-1"></a><span class="do">##  [5] tzdb_0.4.0        quadprog_1.5-8    vctrs_0.6.3       tools_4.3.1      </span></span>
+<span id="cb1-29"><a href="ch1.html#cb1-29" tabindex="-1"></a><span class="do">##  [9] generics_0.1.3    curl_5.0.2        parallel_4.3.1    fansi_1.0.4      </span></span>
+<span id="cb1-30"><a href="ch1.html#cb1-30" tabindex="-1"></a><span class="do">## [13] highr_0.10        xts_0.13.1        pkgconfig_2.0.3   Matrix_1.6-1     </span></span>
+<span id="cb1-31"><a href="ch1.html#cb1-31" tabindex="-1"></a><span class="do">## [17] lifecycle_1.0.3   compiler_4.3.1    farver_2.1.1      munsell_0.5.0    </span></span>
+<span id="cb1-32"><a href="ch1.html#cb1-32" tabindex="-1"></a><span class="do">## [21] htmltools_0.5.5   sass_0.4.7        yaml_2.3.7        pillar_1.9.0     </span></span>
+<span id="cb1-33"><a href="ch1.html#cb1-33" tabindex="-1"></a><span class="do">## [25] crayon_1.5.2      jquerylib_0.1.4   cachem_1.0.8      nlme_3.1-163     </span></span>
+<span id="cb1-34"><a href="ch1.html#cb1-34" tabindex="-1"></a><span class="do">## [29] fracdiff_1.5-2    tidyselect_1.2.0  digest_0.6.33     stringi_1.7.12   </span></span>
+<span id="cb1-35"><a href="ch1.html#cb1-35" tabindex="-1"></a><span class="do">## [33] bookdown_0.35     splines_4.3.1     labeling_0.4.2    tseries_0.10-54  </span></span>
+<span id="cb1-36"><a href="ch1.html#cb1-36" tabindex="-1"></a><span class="do">## [37] fastmap_1.1.1     grid_4.3.1        colorspace_2.1-0  cli_3.6.1        </span></span>
+<span id="cb1-37"><a href="ch1.html#cb1-37" tabindex="-1"></a><span class="do">## [41] magrittr_2.0.3    utf8_1.2.3        withr_2.5.0       scales_1.2.1     </span></span>
+<span id="cb1-38"><a href="ch1.html#cb1-38" tabindex="-1"></a><span class="do">## [45] timechange_0.2.0  TTR_0.24.3        rmarkdown_2.24    quantmod_0.4.24  </span></span>
+<span id="cb1-39"><a href="ch1.html#cb1-39" tabindex="-1"></a><span class="do">## [49] nnet_7.3-19       timeDate_4022.108 zoo_1.8-12        hms_1.1.3        </span></span>
+<span id="cb1-40"><a href="ch1.html#cb1-40" tabindex="-1"></a><span class="do">## [53] urca_1.3-3        evaluate_0.21     knitr_1.43        lmtest_0.9-40    </span></span>
+<span id="cb1-41"><a href="ch1.html#cb1-41" tabindex="-1"></a><span class="do">## [57] mgcv_1.9-0        rlang_1.1.1       Rcpp_1.0.11       glue_1.6.2       </span></span>
+<span id="cb1-42"><a href="ch1.html#cb1-42" tabindex="-1"></a><span class="do">## [61] rstudioapi_0.15.0 jsonlite_1.8.7    R6_2.5.1</span></span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simple-reg.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
