@@ -1,0 +1,20 @@
+---
+title: "R에 의한 회귀분석"
+author: "박동련"
+date: "`r Sys.Date()`"
+output:
+  bookdown::gitbook: default
+site: bookdown::bookdown_site
+documentclass: book
+---
+
+# 소개하기 {.unnumbered}
+
+```{r include=FALSE}
+knitr::opts_chunk$set(prompt=FALSE, comment = "##", collapse = TRUE, message=FALSE, fig.width=6, fig.height=4)
+```
+
+```{r, echo=FALSE}
+library(tidyverse)
+```
+
