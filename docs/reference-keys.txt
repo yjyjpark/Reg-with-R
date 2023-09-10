@@ -79,6 +79,7 @@ eq:multi-dist-lse-1
 eq:multi-dist-lse-2
 eq:multi-mse-1
 eq:H0-1
+eq:tss-partition
 eq:H0-2
 eq:H0-3
 ch1
