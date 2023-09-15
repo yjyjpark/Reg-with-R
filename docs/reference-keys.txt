@@ -79,9 +79,13 @@ eq:multi-dist-lse-1
 eq:multi-dist-lse-2
 eq:multi-mse-1
 eq:H0-1
+eq:e-rss
+eq:e-tss-rss
 eq:tss-partition
 eq:H0-2
 eq:H0-3
+eq:full-model
+eq:rse
 ch1
 반응변수와-설명변수-사이의-관계-설정
 회귀모형의-설정
@@ -116,4 +120,6 @@ section-multi-model-signif
 개별회귀계수-유의성-검정
 두-회귀모형의-비교
 section-selection
+section-fit-measure
+평가-측도에-의한-변수선택
 reg-diag
