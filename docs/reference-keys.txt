@@ -84,8 +84,13 @@ eq:e-tss-rss
 eq:tss-partition
 eq:H0-2
 eq:H0-3
+fig:Lein-1
+fig:c-1
+fig:c-2
 eq:full-model
 eq:rse
+fig:states-1
+fig:states-2
 ch1
 반응변수와-설명변수-사이의-관계-설정
 회귀모형의-설정
@@ -122,4 +127,5 @@ section-multi-model-signif
 section-selection
 section-fit-measure
 평가-측도에-의한-변수선택
+shrinkage-방법
 reg-diag

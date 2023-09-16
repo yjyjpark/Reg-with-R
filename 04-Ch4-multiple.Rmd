@@ -144,7 +144,7 @@ $$
 
 
 
-$\bullet$ 예제 4.1 : 다중회귀모형의 회귀계수 추정
+$\bullet$ 예제: 다중회귀모형의 회귀계수 추정
 
 데이터 프레임 `mtcars`는 1974년 $\textit{Motor Trend US}$ 에 실린 32 종류 자동차 모델의 연비와 관련된 자료가 입력되어 있다. 
 
@@ -176,8 +176,8 @@ str(mtcars)
 이제 `mpg`를 반응변수로, `wt`와 `qsec`을 설명변수로 하는 다중회귀모형을 적합해 보자. 
 
 ```{r}
-fit4.1 <- lm(mpg ~ wt + qsec, data = mtcars)
-fit4.1
+fit_m <- lm(mpg ~ wt + qsec, data = mtcars)
+fit_m
 ```
 
 적합된 모형식은 $\widehat{\mbox{mpg}} = 19.74 - 5.047\mbox{ wt} + 0.929\mbox{ qsec}$ 임을 알 수 있다.
@@ -200,7 +200,7 @@ plot_ly() |> add_surface(y = ~wt, x = ~qsec, z = ~mpg)
 ```
 
 
-$\bullet$ 예제 4.2: 행렬 `state.x77`
+$\bullet$ 예제: 행렬 `state.x77`
 
 행렬 `state.x77`은 미국 50개 주와 관련된 8개 변수로 구성되었다. 변수 `Life Exp`와 `HS Grad`는 이름 중간에 빈칸이 있으며, 각 주의 이름이 행렬의 row name으로 입력되어 있음을 알 수 있다.
 
@@ -278,14 +278,14 @@ ggpairs(states, lower = list(continuous = "smooth"))
 이제 `states` 자료에 대한 회귀모형을 함수 `lm()`으로 적합해 보자.
 
 ```{r}
-fit4.2 <- lm(Murder ~ ., data = states)
+fit_s <- lm(Murder ~ ., data = states)
 ```
 
 ```{r}
-fit4.2
+fit_s
 ```
 
-함수 `lm()`으로 생성된 객체 `fit4.2`을 단순하게 출력시키면 추정된 회귀계수만 나타나지만, 사실 객체 `fit4.2`는 많은 양의 정보가 담겨 있는 리스트이며, 이것은 획득하기 위해서는 몇 가지 함수를 사용해야 한다. 
+함수 `lm()`으로 생성된 객체 `fit_s`을 단순하게 출력시키면 추정된 회귀계수만 나타나지만, 사실 객체 `fit_s`는 많은 양의 정보가 담겨 있는 리스트이며, 이것은 획득하기 위해서는 몇 가지 함수를 사용해야 한다. 
 함수 목록은 아래 표에 정리되어 있으며, 사용하는 방법은 앞으로 살펴보겠다. 
 
 
@@ -335,7 +335,7 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{1}^{2} + \beta_{4}
 \end{equation}
 
 
-$\bullet$ 예제 4.3 : `women`
+$\bullet$ 예제: `women`
 
 데이터 프레임 `women`에는 미국 30대 여성의 키(`height`)와 몸무게(`weight`)가 입력되어 있다. 
 두 변수 `height`와 `weight`의 회귀모형을 설정해 보자. 
@@ -397,11 +397,26 @@ $$
 $D=0$ 이 되는 범주를 '기준범주'라고 하는데, 절편 $\beta_{0}$ 가 기준범주의 효과를 나타내고 있고, 가변수의 회귀계수 $\beta_{2}$ 는 기준범주와 "Yes" 범주의 효과 차이를 나타내고 있다. 
 
 식 \@ref(eq:dummy-1)의 회귀모형에서는 반응변수 $Y$ 와 설병변수 $X$ 가 "Yes"와 "No" 범주에서 동일한 관계를 갖고 있다고 가정하고 있는데, 만일 각 범주에서 두 변수의 관계가 다를 수 있다면 기울기도 다르게 설정할 필요가 있다.
+만일 기울기가 그룹별로 다르다고 가정한다면 가변수와 다른 설명변수의 상호작용 효과를 추가해야 한다. 
+식 \@ref(eq:dummy-1)의 회귀모형에 가변수와 연속형 변수의 상호작용 효과가 추가된 모형은 다음과 같이 표현된다.
 
 \begin{equation}
 Y = \beta_{0} + \beta_{1}X + \beta_{2}D + \beta_{3}DX + \varepsilon
 (#eq:dummy-2)
 \end{equation}
+
+이 경우에 모집단 회귀직선은 다음과 같다.
+
+$$
+E(Y) =
+\begin{cases}
+\beta_{0} + \beta_{1}X & \quad  \text{if   } D = 0 \\
+(\beta_{0} + \beta_{2}) + (\beta_{1}+\beta_{3})X & \quad  \text{if   } D = 1
+\end{cases}
+$$
+
+연속형 설명변수와 가변수의 상호작용 효과를 모형에 추가하는 것이 더 포괄적인 모형을 구축하는 방법이지만, 설명변수가 많은 경우에는 지나치게 많은 변수가 모형에 추가될 수 있어서 분석에 큰 부담이 될 수 있다. 
+반드시 필요한 상호작용 효과를 선별해서 추가하는 것이 바람직하다.
 
 범주형 변수가 3개의 범주를 갖는 경우에는 2개의 가변수가 필요하게 된다. 
 예를 들어 "high", "medium", "low"의 3가지 범주를 갖는 범주형 변수와 연속형 변수 $X$ 를 설명변수로 하는 회귀모형은 다음과 같은 형태를 갖게 된다.
@@ -413,7 +428,7 @@ Y = \beta_{0} + \beta_{1}X + \beta_{2}D_{1} + \beta_{3}D_{2} + \varepsilon
 
 단, $D_{1}$ 은 범주가 "high"이면 1, 아니면 0이고, $D_{2}$ 는 범주가 "medium"이면 1, 아니면 0이 되는 가변수이다. 이 경우, 기준범주는 "low"가 되며, $\beta_{2}$ 는 기준범주와 "high" 범주의 효과 차이를, $\beta_{3}$ 은 기준범주와 "medium" 범주의 효과 차이를 나타내고 있다.
 
-$\bullet$ 예제 4.4 : `carData::Leinhardt`
+$\bullet$ 예제: `carData::Leinhardt`
 
 `carData::Leinhardt`는 1970년대 105개 나라의 신생아 사망률, 소득, 지역 및 원유 수출 여부 자료가 입력되어 있다. 
 반응변수를 신생아 시망률(`infant`)로 하고, 나머지 변수인 소득(`income`), 원유 수출 여부(`oil`)과 지역(`region`)을 설명변수로 설정하자. 
@@ -617,18 +632,17 @@ E(RSS/(n-k-1))=\sigma^{2}
 
 이것은 $RSS/\sigma^{2}$ 이 자유도가 $(n-k-1)$ 인 $\chi^{2}$ 분포를 하기 때문에 성립된다.
 
-반면에, 검정통계량의 분자는 $(TSS-RSS)$ 을 자신의 자유도인 $k$ 로 나눈 것으로서, 이 통계량은 $H_{0}$ 이 사실인 경우에는 $\sigma^{2}$ 의 불편추정량이 되지만, $H_{0}$ 이 사실이 아닌 경우에는 $\sigma^{2}$ 을 과대 추정하는 특성이 있다.
-즉, $H_{0}$이 사실이 아니면 다음과 같이 된다. 
+반면에, 검정통계량의 분자는 $(TSS-RSS)$ 을 자신의 자유도인 $k$ 로 나눈 것으로서, 이 통계량은 $H_{0}$ 이 사실인 경우에는 $\sigma^{2}$ 의 불편추정량이 되는데, 이것은 $H_{0}$이 사실인 경우에 $(TSS-RSS)/\sigma^{2}$ 이 자유도가 $k$ 인 $\chi^{2}$ 분포를 하기 때문이다.
+그러나 $H_{0}$ 이 사실이 아닌 경우에는 $\sigma^{2}$ 을 과대 추정하는 특성이 있다.
+따라서 $H_{0}$이 사실이 아니면 다음과 같이 된다. 
 
 \begin{equation}
 E((TSS-RSS)/k) > \sigma^{2}
 (#eq:e-tss-rss)
 \end{equation}
 
-이것은 $H_{0}$이 사실인 경우에 $(TSS-RSS)/\sigma^{2}$ 이 자유도가 $k$ 인 $\chi^{2}$ 분포를 하기 때문에 성립된다.
-
 식 \@ref(eq:e-rss)와 식 \@ref(eq:e-tss-rss)에 의해서 만일 검정통계량이 1보다 상당히 큰 값이 되면 $H_{0}$이 사실이 아닐 가능성이 높게 되는 것을 알 수 있다. 
-검정통계량은 $H_{0}$이 사실인 경우 $\chi^{2}$ 분포를 하는 두 통계량의 비율이 되기 때문에 $F$ 분포를 하게 되며,  자유도는 $(k, ~n-k-1)$ 를 갖게 된다. 
+$H_{0}$이 사실인 경우 검정통계량은 $\chi^{2}$ 분포를 하는 두 통계량의 비율이 되기 때문에 $F$ 분포를 하게 되며,  자유도는 $(k, ~n-k-1)$ 를 갖게 된다. 
 
 가설 \@ref(eq:H0-1)이 기각되면 모형에 포함된 설명변수 중 유의한 변수가 있다는 것이므로, 개별 회귀계수에 대한 유의성 검정을 진행할 수 있다. 
 그러나 만일 가설을 기각할 수 없다면 식 \@ref(eq:multi-reg)의 회귀모형으로는 반응변수의 변동을 제대로 설명할 수 없다는 것이 된다. 
@@ -712,27 +726,26 @@ F=\frac{(RSS_{\omega}-RSS_{\Omega})/q}{RSS_{\Omega}/(n-k-1)}
 귀무가설이 사실일 때 검정통게량의 분포는 $F_{q,~n-k-1}$ 이다.
 
 
-$\bullet$ 예제 4.5 : 행렬 `state.x77`
+$\bullet$ 예제: 행렬 `state.x77`
 
-\@ref(section-multi-fitting)에서 다루었던 `state.x77` 자료에 대한 분석을 다시 실행해 보자.
-앞서 이루어진 분석은 다음과 같다. 
+\@ref(section-multi-fitting)절에서 다루었던 `state.x77` 자료에 대한 분석을 다시 실행해 보자.
+앞서 이루어진 주된 분석은 다음과 같다. 
 
 ```{r}
 states <- as_tibble(state.x77) |>  
-  rename(Life_Exp = `Life Exp`, HS_Grad = `HS Grad`) |>  
-  relocate(Murder, .after = last_col())
+  rename(Life_Exp = `Life Exp`, HS_Grad = `HS Grad`) 
 ```
 
 
 ```{r}
-fit4.2 <- lm(Murder ~ ., data = states)
+fit_s <- lm(Murder ~ ., data = states)
 ```
 
-이제 `lm()`으로 생성된 객페 `fit4.2`를 대상으로 회귀모형 추론을 위한 몇 가지 함수를 적용해 보자.
+이제 `lm()`으로 생성된 객페 `fit_s`를 대상으로 회귀모형 추론을 위한 몇 가지 함수를 적용해 보자.
 먼저 가장 빈번하게 사용되는 함수인 `summary()`의 결과를 확인해 보자. 
 
 ```{r}
-summary(fit4.2)
+summary(fit_s)
 ```
 
 함수 `lm()`으로 생성된 객체에 함수 `summary()`를 적용시켜 얻은 결과물은 SAS나 SPSS에서 볼 수 있는 결과물과는 형식에서 차이가 있으나 많은 정보를 매우 효과적으로 보여주는 방식이라고 할 수 있다. 결과물을 하나씩 살펴보자.
@@ -747,6 +760,156 @@ summary(fit4.2)
 회귀모형의 평가측도에 대해서는 \@ref(section-selection)절에서 살펴보겠다. 
 
 `F-statistic:`은 모든 회귀계수가 0이라는 가설, 즉 $H_{0}:\beta_{1}=\beta_{2}=\cdots=\beta_{k}=0$ 에 대한 검정통계량의 값과 자유도, 그리고 p-값이 계산되어 있다.
+
+함수 `summary()`로 얻어지는 결과물로 회귀모형에 대한 중요한 추론이 가능함을 알 수 있다. 
+한 가지 SAS나 SPSS에 익숙한 사용자들에게 아쉬울 수 있는 점은 아마도 회귀모형의 분산분석표가 출력되지 않는다는 것일 텐데, 이것은 함수 `anova()`를 사용함으로써 해결할 수 있다.
+
+```{r}
+anova(fit_s)
+```
+
+함수 `anova()`는 두 회귀모형을 비교할 때에도 사용되는 함수이다. 
+비교되는 두 모형은 확장모형과 확장모형의 부분집합인 축소모형이어야 한다. 
+확장모형의 부분집합이라는 것은 확장모형의 일부 회귀계수가 0이 되는 모형을 의미하는 것으로써, 확장모형에 없는 설명변수가 축소모형에 포함되면 정상적인 비교가 이루어질 수 없다.
+
+`states` 자료에서 모든 설명변수가 포함된 확장모형 `fit_s`과 변수 `Income`, `Illiteracy`, `HS_Grad`의 회귀계수가 0인 축소모형 `fit_s2`를 비교해 보자. 
+함수 `anova()`에 의한 비교 방법은 `anova(fit_s2, fit_s)`과 같이 축소모형이 먼저 지정되어야 한다.
+
+```{r}
+fit_s2 <- lm(Murder ~ Population + Life_Exp + Frost + Area, states)
+anova(fit_s2, fit_s)
+```
+
+함수 `anova()`로 검정이 실시된 귀무가설은 변수 `Income`, `Illiteracy`, `HS_Grad`의 회귀계수가 0이라는 것인데, p-값이 `r anova(fit_s2, fit_s)[["Pr(>F)"]][2] |> round(3)`으로 계산되어 귀무가설을 기각할 수 없게 되었다. 
+두 모형의 설명력에는 차이가 없다는 것이므로, 모수 절약의 원칙에 따라 축소모형을 선택하는 것이 더 좋다고 하겠다.
+
+회귀계수의 신뢰구간은 함수 `confint()`로 계산할 수 있다. 95% 신뢰구간이 디폴트로 계산되며, 만일 신뢰수준을 변경하고자 한다면 옵션 `level`에 원하는 신뢰수준을 입력하면 된다. 객체 `fit1`에 포함되어 있는 회귀계수의 95% 신뢰구간은 다음과 같이 계산된다.
+
+```{r}
+confint(fit_s)
+```
+
+회귀계수의 95% 신뢰구간에 0이 포함됐다는 것은 5% 유의수준에서 가설 $H_{0}:\beta_{j}=0, \quad H_{1}:\beta_{j} \ne 0$ 의 귀무가설을 기각할 수 없음을 의미한다. 따라서 95% 신뢰구간에 0이 포함된 변수 `Income`, `HS_Grad`, `Frost`, `Area`는 5% 유의수준에서 비유적인 변수인 것이다.
+
+$\bullet$ 예제: `carData::Leinhardt`
+
+\@ref(section-dummy)절에서 살펴본 `carData::Leinhardt`의 예제에서 `infant`와 `income`을 로그 변환하여 `Leinhardt_ln`을 생성하였다.
+`Leinhardt_ln` 자료에서 반응변수 `ln_infant`에 대해 설명변수`ln_income`과`oil`의 회귀모형을 설정하되`oil`이`"no"`인 그룹과`"yes"`인 그룹에서`ln_infant`와 `ln_income`의 관계가 같지 않다고 가정해 보자.
+
+```{r}
+data(Leinhardt, package = "carData")
+Leinhardt_ln <-  Leinhardt |> 
+  mutate(ln_income = log(income), ln_infant = log(infant),
+         .before = 1) |>  
+  select(-income, -infant)
+```
+
+회귀모형에 두 설명변수의 상호작용 효과를 추가해 보자.
+
+```{r}
+fit_L <- lm(ln_infant ~ ln_income*oil, Leinhardt_ln)
+summary(fit_L)
+```
+
+모든 회귀계수가 유의적임을 알 수 있는데, 상호작용 효과항이 유의하다는 것은 산유국 여부가 절편 및 기울기 차이에 유의한 영향을 주고 있다는 의미가 된다.
+
+세 변수의 관계를 그래프를 이용해서 조금 더 깊게 탐색해 보자.
+
+```{r Lein-1, fig.cap="변수 `oil`의 두 그룹에서 `ln_infant`와 `ln_income`의 산점도", warning=FALSE}
+Leinhardt_ln |> 
+    ggplot(aes(x = ln_income, y = ln_infant)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = FALSE) +
+    facet_wrap(vars(oil))
+```
+
+`oil`이 `"no"`인 그룹에서 `ln_infant`와 `ln_income`는 음의 관계를 가지고 있다.
+소득이 증가하면 신생아 사망률이 감소하는 것은 당연한 것으로 보인다. 
+그러나 `oil`이 `"yes"`인 그룹에서는 양의 관계를 보여주고 있는데, 이것은 소득 수준이 상당히 높은 두 나라의 신생아 사망률이 지나치게 높기 때문에 발생한 현상으로 보인다. 
+즉, 두 나라의 자료는 전혀 다른 얘기를 하고 있는 것으로 보인다. 두 점이 어떤 나라의 자료인지 확인해 보자.
+
+```{r}
+Leinhardt_ln |>  
+  filter(oil == "yes") |>  
+  slice_max(ln_infant, n = 2)
+```
+
+소득이 상당히 높지만 다른 나라의 경우와는 너무도 다르게 신생아 사망률이 지나치게 높은 두 나라의 자료는 제외되어야 할 것 같다. 두 자료를 제외하고 다시 회귀모형을 적합해 보자.
+
+```{r}
+Leinhardt_ln |>  
+  rownames_to_column(var = "country") |>  
+  filter(!(country %in% c("Saudi.Arabia", "Libya"))) |>  
+  lm(ln_infant ~ ln_income*oil, data = _) |>  
+  summary()
+```
+
+두 자료를 제외한 상태에서는 산유국 여부가 더 이상 유의한 변수가 아닌 것으로 나타났다.
+
+
+$\bullet$ 예제 : `modeldata::crickets`
+
+패키지 `modeldata`의 데이터 프레임 `crickets`에는 기온과 귀뚜라미 울음소리 횟수의 관계를 탐색하기 위해 관측한 자료가 입력되어 있다. 
+변수 `temp`는 기온, `rate`는 귀뚜라미의 분당 울음소리 횟수이며, `species`는 귀뚜라미 종류이다. 
+
+```{r}
+data(crickets, package = "modeldata")
+str(crickets)
+```
+
+세 변수의 관계 탐색을 위한 그래프를 작성해 보자.
+변수 `temp`와 `rate`의 단순 산점도와 `species`의 효과를 살펴볼 수 있는 산점도를 모두 작성해 보자. 
+
+```{r c-1, fig.width=8, fig.cap="`crickets` 자료의 세 변수 관계 탐색"}
+library(patchwork)
+p1 <- ggplot(crickets, aes(x = temp, y = rate)) +
+  geom_point()
+p2 <- ggplot(crickets, aes(x = temp, y = rate, color = species)) +
+  geom_point()
+p1 + p2
+```
+
+변수 `temp`와 `rate` 사이에는 명확한 양의 관계가 있는데, `species`의 두 범주 사이에는 효과 차이가 있는 것으로 보인다. 
+가변수를 사용한 선형회귀모형을 사용하는 것이 적절한 것으로 보이는데, 두 범주에서 변수 `temp`와 `rate`의 관계가 동일한지 여부를 확인하기 위해서 그림 \@ref(fig:c-1)의 오른쪽 그래프에 회귀직선을 추가해 보자. 
+
+```{r c-2, fig.cap="`crickets` 자료의 세 변수 관계 탐색"}
+ggplot(crickets, aes(x = temp, y = rate, color = species)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Temperature (C)", y = "Chirp Rate (per minute)")
+```
+
+그림 \@ref(fig:c-2)에서 두 직선의 기울기는 큰 차이가 없는 것으로 보인다. 
+따라서 `temp`와 `species`의 상호작용 효과는 필요 없는 것으로 보이는데, 이것을 검정을 통해 확인해 보자. 
+식 \@ref(eq:dummy-1)의 모형으로 `fit.main`을 적합하고, 식 \@ref(eq:dummy-2)의 모형으로 `fit.inter`을 적합해 보자. 
+
+```{r}
+fit.main <- lm(rate ~ temp + species, data = crickets)
+fit.inter <- lm(rate ~ temp * species, data = crickets)
+```
+
+모형 `fit.main`은 `fit.inter`에서 상호작용 효과만 제외된 모형으므로 `fit.inter`의 축소모형이 된다. 
+따라서 상호작용 효과의 유의성 여부는 함수 `anova()`를 사용해서 두 모형을 비교해서 획인할 수 있다. 
+
+```{r}
+anova(fit.main, fit.inter)
+```
+
+검정 결과 p-값이 0.2542로 계산되어서, 두 모형의 설명력에는 차이가 없는 것으로 볼 수 있다.
+따라서 축소모형인 `fit.main`을 선택하게 되고, 상호작용 효과는 비유의적이라고 결론내릴 수 있다.  
+
+물론 모형 `fit.inter`의 개별회귀계수 검정으로도 동일한 가설을 검정할 수 있다. 
+
+```{r}
+summary(fit.inter)$coef
+```
+
+모형 `fit.main`의 적합 결과를 확인해 보자. 
+
+```{r}
+summary(fit.main)
+```
+
 
 
 ## 변수선택 {#section-selection}
@@ -774,6 +937,8 @@ Y = \beta_{0} + \beta_{1}X_{1} + \cdots + \beta_{k}X_{k} + \varepsilon
 따라서 이 책에서는 두 번째와 세 번째 변수선택 방법만을 살펴보겠다.
 
 두 번째와 세 번째 변수선택 방법을 알아보기 전에 회귀모형의 평가 측도에 대해 먼저 살펴보도록 하자.
+
+
 
 ### 회귀모형의 평가 측도 {#section-fit-measure}
 
@@ -858,22 +1023,193 @@ CV는 회귀모형의 예측력을 평가할 수 있는 resampling 기법이다.
 CV는 모형 적합에 사용되는 자료인 training data를 이용해서 test error를 추정하기 위한 resampling 기법이다. 몇 가지 조금 다른 방법이 있는데, 여기에서는 k-fold CV라는 방법에 대해서만 살펴보겠다. k-fold CV는 training data를 비슷한 크기의 k개 그룹(fold)으로 분리하는 것으로 시작한다. 분리된 k개의 그룹 중 첫 번째 그룹의 자료를 제외하고, 나머지 (k-1)개 그룹의 자료를 사용해서 적합한 회귀모형으로 적합 과정에서 제외된 첫 번째 그룹에 대한 예측을 실시하고 예측 오차를 계산한다.\
 이어서 각 그룹의 자료를 하나씩 차례로 제외하고 나머지 자료로 적합 및 예측하는 과정을 반복하여 k번의 예측을 실시한다. Test error는 k번의 예측에서 각각 발생된 예측 오차의 평균으로 추정한다.
 
+
+
 ### 평가 측도에 의한 변수선택
 
+평가 측도에 의한 방법은 \@ref(section-fit-measure)절에서 살펴본 $AIC$, $BIC$, $adj~R^{2}$ 및 $C_{p}$ 통계량 등을 기반으로 '최적' 변수를 선택하는 방법이다.
+모형에 포함시킬 수 있는 설명변수가 $k$ 개 있다면, 적합 가능한 모형의 개수는 $2^{k}$ 개가 된다.
+이 경우에 $2^{k}$ 개의 모형을 다 적합시키고 특정 평가 측도를 기준으로 최적 모형을 선택하는 이른바 'Best subset selection' 방법을 적용해 볼 수 있다.
+하지만, 이 방법은 $d$의 값이 커진다면 현실적으로 적용하기 쉽지 않다는 문제를 갖고 있다. 
+다른 방법으로는 특정 평가 측도를 기준으로 변수를 하나씩 모형에 추가하거나 제거하는 `Stepwise selection` 방법을 생각해 볼 수 있다. 
+이 방법은 검정에 의한 변수선택에서 적용되는 방법으로서 '최적' 모형을 찾지 못할 가능성이 있는 방법이다.
+나름의 장점과 단점이 존재하는 방법 중 주어진 상황에 가장 적합한 방법을 선택해서 사용해야 할 것이다. 
+
+$\bullet$ **Best subset selection**
+
+$k$ 개 설명변수의 모든 가능한 조합 중 모형의 성능을 최대로 할 수 있는 조합을 찾는 방법이다.
+일반적으로 적용되는 방식은 다음과 같다.
+
+-   $i=1,2,\ldots,k$ 에 대하여 $i$ 개 설명변수가 있는 $\binom{~k~}{i}$ 개 모형을 적합하고, 그 중 결정계수의 값이 가장 큰 모형을 $M_{i}$ 로 지정
+
+-   $M_{0}, M_{1}, \ldots, M_{k}$ 를 대상으로 $AIC$, $BIC$, $C_{p}$, $adj~R^{2}$ 등을 기준으로 '최적' 모형을 하나 선택
+
+$\bullet$ **Stepwise selection**
+
+'한 번에 하나씩' 이루어지는 선택 과정으로 인하여 '최적' 변수의 조합을 찾지 못할 수 있다는 문제가 있지만, 설명변수의 개수가 많은 경우에 비교적 빠르게 변수선택을 할 수 있다는 장점이 있는 방법이다.
+적용할 수 있는 방법에는 모형에 변수를 하나씩 추가하는 Forward stepwise selection과 모형에서 하나씩 변수를 제거하는 Backward elimination, 그리고 두 가지 방식이 혼합된 Hybrid stepwise selection이 있다. 
+
+1. Forward stepwise selection
+
+절편만 있는 모형 $M_{0}~(Y=\beta_{0}+\varepsilon)$ 에서 시작하여 단계적으로 변수를 하나씩 모형에 추가하는 방법이다. 추가할 변수를 선택하는 절차는 다음과 같이 두 가지 방식이 있다.
+
+$\bullet$ 방식 1
+
+-   $AIC$ 등을 기준으로 모형의 성능을 최대로 개선시킬 수 있는 변수를 하나씩 모형에 추가
+
+-   더 이상 모형의 성능을 개선시킬 변수가 없으면, 절차 종료
+
+$\bullet$ 방식 2
+
+-   $i=0, \ldots, k-1$ 에 대하여 $M_{i}$ 에 하나의 설명변수를 추가한 $(k-i)$ 개 모형 중 결정계수 값이 가장 큰 모형을 $M_{i+1}$ 으로 지정
+
+-   $M_{0}, M_{1}, \ldots, M_{k}$ 를 대상으로 $AIC$, $BIC$, $C_{p}$, $adj~R^{2}$ 등을 기준으로 '최적' 모형을 하나 선택
+
+Forward stepwise selection에서는 일단 모형에 포함된 변수에 대해서는 추가적인 확인 과정이 없다. 
+그러나 이러한 특성은 개별 설명변수의 영향력은 모형에 추가적으로 포함되는 다른 설명변수에 의해 변할 수 있기 때문에 문제가 될 수 있다. 
 
 
+2. Backward stepwise elimination
+
+모든 설명변수가 포함된 full model, $M_{k}$ 에서 시작하여 단계적으로 변수를 하나씩 제거하는 방법이다. 제거할 변수를 선택하는 절차는 다음과 같이 두 가지 방식이 있다.
+
+$\bullet$ 방식 1
+
+-   제거되면 모형의 성능이 최대로 개선되는 변수를 하나씩 제거
+
+-   모형에 포함된 변수 중 어떤 변수라도 제거되면 모형의 성능이 더 나빠질 때 절차 종료
+
+$\bullet$ 방식 2
+
+-   $i=k, k-1, \ldots, 1$ 에 대하여 $M_{i}$ 에서 하나씩 변수가 제거된 모구 $i$ 개 모형 중 결정계수의 값이 가장 큰 모형을 $M_{i-1}$ 으로 지정
+
+-   $M_{0}, M_{1}, \ldots, M_{k}$ 를 대상으로 $AIC$, $BIC$, $C_{p}$, $adj~R^{2}$ 등을 기준으로 '최적' 모형을 하나 선택
+
+Backward stepwise elimination에서는 일단 제거된 변수는 다시 모형에 포함될 수 없는 방식이다.
+그러나 이러한 특성은 개별 설명변수의 영향력은 모형에서 다른 설명변수가 제거되면 변할 수 있기 때문에 문제가 될 수 있다.
 
 
+3. Hybrid stepwise selection
+
+Forward stepwise selection과 Backward stepwise elimination는 일단 모형에 포함되거나 혹은 모형에서 제거된 변수에 대한 추가적인 고려가 불가능한 방식이다. 
+이러한 특성으로 인하여 '최적' 모형을 찾지 못할 가능성이 있는데, 이 문제는 두 방식의 특성을 혼합시킨 방식을 적용하면 해결할 수 있다.
+
+-   Hybrid forward selection : 각 단계별로 변수를 추가한 후에 모형에 포함되어 있는 변수를 대상으로 backward elimination 기법을 적용해서 변수 제거
+
+-   Hybrid backward elimination : 각 단계별로 변수를 제거한 후에 이미 제거된 변수를 대상으로 forward selection 기법으로 모형에 추가될 변수 선택
 
 
+$\bullet$ 예제: 행렬 `state.x77`
 
+\@ref(section-multi-fitting)절에서 다루었던 `state.x77`를 대상으로 변수선택을 진행해 보자. 
 
+Best subset selection은 함수 `leaps::regsubsets()`로 할 수 있다. 
+기본적인 사용법은 `regsubsets(formula, data, nbest = 1, nvmax = 8)`이다. 
+`formula`와 `data`는 함수 `lm()`에서 사용한 방식과 동일하다. 
+설명변수의 개수가 동일한 모형 중 결정계수의 값이 가장 큰 `nbest`개 모형을 선택하는데, 이렇게 선택된 모형을 대상으로 다양한 평가 측도를 기준으로 비교할 수 있다. 
+또한 최대 `nvmax`개의 설명변수가 포함된 모형을 대상으로 비교를 하기 때문에, `nvmax`에는 설명변수의 개수를 지정할 필요가 있다.
 
+Stepwise selection은 함수 `MASS::stepAIC()`로 할 수 있다.
+기본적인 사용법은 `stepAIC(object, scope, direction, trace = 1, k = 2)`이다.
+`object`는 stepwise selection을 시작하는 회귀모형을 나타내는 `lm` 객체를 지정한다.
+Forward selection의 경우에는 절편만이 있는 모형인 `lm(y ~ 1, data)`가 될 것이고, Backward elimination의 경우에는 모든 설명변수가 포함된 모형인 `lm(y ~ ., data)`가 될 것이다.
+`scope`는 탐색 범위를 나타내는 `upper`와 `lower`를 요소가 갖고 있는 리스트를 지정한다.
+`direction`은 탐색 방식을 지정하는데, `"forward"`는 모형에 포함된 변수는 계속 유지하면서 forward selection 방법을 진행하며, `"backward"`는 일단 모형에서 제거된 변수는 최종 모형에 포함시키지 않는 방식으로 backward elimination을 진행한다.
+또한 `"both"`는 hybrid stepwise selection 방법을 진행한다.
+`direction`의 디폴트는 `scope`를 지정하면 `"both"`가 되지만, `scope`가 생략되면 `"backward"`가 된다.
+`trace`는 탐색 과정의 출력 여부를 지정하는 것으로 출력되는 것이 디폴트이며, `FALSE` 또는 `0`을 지정하면 출력되지 않는다.
+`k`는 AIC나 BIC의 계산 과정에서 모형에 포함된 변수의 개수만큼 불이익을 주기 위한 상수로서, 디폴트는 AIC 계산을 위한 `k = 2`이다.
+만일 BIC에 의한 단계별 선택법을 적용하고자 한다면 `k = log(n)`으로 수정해야 한다.
+단, `n`은 데이터 프레임의 행 개수이다.
 
+`state.x77`를 대상으로 앞서 이루어진 주된 분석은 다음과 같다.
 
+```{r}
+states <- as_tibble(state.x77) |>  
+  rename(Life_Exp = `Life Exp`, HS_Grad = `HS Grad`) 
+```
 
+Best subset selection 방법을 함수 `leaps::regsubsets()`로 진행해 보자.
 
+```{r}
+library(leaps)
+fits <- regsubsets(Murder ~ ., states)
+```
 
+설명변수의 개수가 $i$ 개 ($i=1, \ldots, 7$) 인 모형 중 결정계수가 가장 높은 `nbest`개의 모형은 다음과 같이 함수 `summary()`로 출력할 수 있다. 
+모형에 포함되는 변수에는 `"*"`가 표시되어 있다.
+
+```{r}
+summary(fits)
+```
+
+설명변수가 하나인 경우에는 `Life_Exp`, 두 개인 경우에는 `Life_Exp`와 `Frost`, 세 개인 경우에는 `Population`, `Illiteracy`, `Life_Exp`가 선택된 것을 알 수 있다.
+
+이제 선택된 7개 모형을 대상으로 평가 측도를 비교해 보자. 
+평가 측도의 비교는 객체 `fits`를 함수 `plot()`에 입력하면 된다. 
+평가 측도는 `scale`에 지정할 수 있는데, 가능한 키워드는 `"bic"`, `"Cp"`, `"adjr2"`, `"r2"`이며, 디폴트는 `"bic"`이다.
+
+```{r states-1, fig.cap="BIC에 의한 비교 결과", fig.height=5}
+plot(fits)
+```
+
+그림 \@ref(fig:states-1)의 X축에는 설명변수가 표시되어 있고, Y축에는 비교 대상이 되는 각 모형의 $BIC$ 의 값이 표시되어 있다. 
+즉, 그래프의 각 행은 비교 대상이 되는 각 모형을 나타내는 것이며, X축에 표시된 설명변수가 해당 모형에 포함이 된 것이면 직사각형에 색이 채워진다.
+위에서 첫 번째 모형이 $BIC$ 의 값이 가장 작은 모형이며, 변수 `Population`, `Life_Exp`, `Frost`, `Area`가 포함된 모형이다.
+
+수정결정계수를 평가 측도로 변경하여 변수선택을 진행해 보자. 
+변수 `Population`, `Illiteracy`, `Life_Exp`, `Frost`, `Area`가 선택되었다.
+
+```{r states-2, fig.cap="수정결정계수에 의한 비교 결과", fig.height=5}
+plot(fits, scale = "adjr2")
+```
+
+Stepwise selection 방법을 함수 `MASS::stepAIC()`로 진행해 보자. 
+먼저 모든 설명변수가 포함된 모형과 절편만 있는 모형에 대한 `lm` 객체를 생성시키자.
+
+```{r}
+fit_full <- lm(Murder ~ ., states)
+fit_null <- lm(Murder ~ 1, states)
+```
+
+AIC에 의한 forward selection으로 변수선택을 진행해 보자. 
+`fit_null`로 시작하고 `scope`의 `upper`가 `fit_full`로 지정하였기 때문에 hybrid forward selection이 수행된다. 
+변수 `Life_Exp`, `Frost`, `Population`, `Area`, `Illiteracy`가 선택되었다.
+
+```{r}
+library(MASS)
+stepAIC(fit_null,
+        scope = list(lower = fit_null, upper = fit_full),
+        trace = FALSE)
+```
+
+AIC에 의한 backward elimination으로 변수선택을 진행해 보자. 
+Backward elimination은 full model을 시작 모형으로 지정하면 실행된다. 
+AIC에 의한 forward selection과 같은 결과를 보이고 있다.
+
+```{r}
+stepAIC(fit_full, direction = "both", trace = FALSE) 
+```
+
+BIC에 의한 forward selection으로 변수선택을 진행해 보자. 
+변수 `Illiteracy`가 제외되어 AIC에 의한 방법과는 다른 결과가 나왔다.
+
+```{r}
+stepAIC(fit_null, 
+          scope = list(lower = fit_null, upper = fit_full),
+          k = log(nrow(states)), 
+          trace = FALSE)
+```
+
+BIC에 의한 backward elimination으로 변수선택을 진행해 보자. 
+BIC에 의한 forward selection과 같은 결과를 보이고 있다.
+
+```{r}
+stepAIC(fit_full, direction = "both", 
+          k = log(nrow(states)), trace = FALSE)
+```
+
+### Shrinkage 방법
 
 
 
