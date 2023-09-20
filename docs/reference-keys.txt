@@ -84,7 +84,7 @@ eq:e-tss-rss
 eq:tss-partition
 eq:H0-2
 eq:H0-3
-fig:Lein-1
+fig:lein-1
 fig:c-1
 fig:c-2
 eq:full-model
