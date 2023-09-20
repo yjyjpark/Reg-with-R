@@ -796,7 +796,7 @@ $\bullet$ 예제: `carData::Leinhardt`
 \@ref(section-dummy)절에서 살펴본 `carData::Leinhardt`의 예제에서 `infant`와 `income`을 로그 변환하여 `Leinhardt_ln`을 생성하였다.
 `Leinhardt_ln` 자료에서 반응변수 `ln_infant`에 대해 설명변수`ln_income`과`oil`의 회귀모형을 설정하되`oil`이`"no"`인 그룹과`"yes"`인 그룹에서`ln_infant`와 `ln_income`의 관계가 같지 않다고 가정해 보자.
 
-```{r}
+```{r, eval=FALSE}
 data(Leinhardt, package = "carData")
 Leinhardt_ln <-  Leinhardt |> 
   mutate(ln_income = log(income), ln_infant = log(infant),
