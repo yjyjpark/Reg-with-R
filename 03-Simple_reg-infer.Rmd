@@ -1,8 +1,7 @@
-# 단순회귀모형의 추론 {#simple-reg-infer}
+# 단순선형회귀모형의 추론 {#simple-reg-infer}
 
 회귀모형의 추론에서 우리가 살펴볼 내용은 회귀계수에 대한 신뢰구간 추정 및 검정, 그리고 
-설명변수의 값이 주어졌을 때 반응변수의 조건부 평균에 대한 구간추정 등이다. 
-또한 분산분석 개념을 이용한 회귀모형의 유의성 검정에 대해서도 살펴볼 것이다 
+설명변수의 값이 주어졌을 때 반응변수의 조건부 평균에 대한 신뢰구간 추정 등이다. 
 
 이번 장에서 살펴볼 회귀모형은 다음의 단순회귀모형이다. 
 
@@ -141,7 +140,7 @@ t = \frac{\hat{\beta}_{1}}{SE(\hat{\beta}_{1})}
 (#eq:test-beta1-3)
 \end{equation}
 
-주어진 자료를 근거로 만일 $H_{0}$ 을 기각할 수 없다면, 식 \@ref(eq:simple-ch3-1)에서 설정된 모형이 $Y_{i}=\beta_{0}+\varepsilon_{i}$ 로 변경되는 것이며, 따라서 설명변수 $X$가 반응변수 $Y$의 변동 설명하는데 아무런 기여를 할 수 없다는 것을 의미하게 된다.
+주어진 자료를 근거로 만일 $H_{0}$ 을 기각할 수 없다면, 식 \@ref(eq:simple-ch3-1)에서 설정된 모형이 $Y_{i}=\beta_{0}+\varepsilon_{i}$ 로 변경되는 것이며, 따라서 설명변수 $X$가 반응변수 $Y$의 변동을 설명하는데 아무런 기여를 할 수 없다는 것을 의미하게 된다.
 하지만 이것은 두 변수의 실제 관계가 선형이 아닌 경우에는 틀린 결론이 될 수 있다.
 예시 자료를 활용해서 자세히 살펴보자. 
 
@@ -226,7 +225,7 @@ d3 |>
 
 ### $\hat{\beta}_{0}$ 의 표본분포
 
-\@ref(simple-reg)장에서 살펴본 $\beta_{0}$의 최소제곱추정량은 식 \@ref(eq:lse-3)에서 다음과 같이 유도되었다. 
+\@ref(simple-reg)장에서 살펴본 $\beta_{0}$ 의 최소제곱추정량은 식 \@ref(eq:lse-3)에서 다음과 같이 유도되었다. 
 
 \begin{equation}
 \hat{\beta}_{0} = \overline{Y} - \hat{\beta}_{1} \overline{X}
@@ -242,10 +241,10 @@ E\left(\hat{\beta}_{0}\right) &= \beta_{0} \\
 Var\left(\hat{\beta}_{0}\right) &= \sigma^{2}\left(\frac{1}{n}+\frac{\overline{X}^{2}}{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}\right)
 \end{align*}
 
-따라서 $\hat{\beta}_{0}$ 의 표본분포는 다음과 같이 나타낼 수 있다.  
+따라서 $\hat{\beta}_{0}$ 의 표본분포는 다음과 같다.  
 
 \begin{equation}
-\hat{\beta}_{0} ~ N\left(\beta_{0},~ \sigma^{2}\left(\frac{1}{n}+\frac{\overline{X}^{2}}{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}\right) \right)
+\hat{\beta}_{0} \sim N\left(\beta_{0},~ \sigma^{2}\left(\frac{1}{n}+\frac{\overline{X}^{2}}{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}\right) \right)
 \end{equation}
 
 
@@ -604,7 +603,7 @@ new_data |> cbind(pred_4) |> mutate(width = upr - lwr)
 ```
 
 
-## 단순회귀모형에서 두 변수 사이의 연관성 측정: 상관계수
+## 상관계수 : 두 변수 사이의 선형 연관성 측정
 
 두 변수 사이의 선형 관련성을 측정하는 통계량으로 식 \@ref(eq:cov)에 정의된 공분산이 있다.
 공분산의 값이 크면 두 변수 사이에 강한 양의 관계 또는 음의 관계가 있다고 할 수 있지만, 값이 작으면 선형 관계가 명확하지 않다고 할 수 있다.

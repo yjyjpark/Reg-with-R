@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 장 단순회귀모형 | R에 의한 회귀분석</title>
-  <meta name="description" content="2 장 단순회귀모형 | R에 의한 회귀분석" />
-  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+  <title>2 장 단순선형회귀모형 | R에 의한 회귀분석</title>
+  <meta name="description" content="2 장 단순선형회귀모형 | R에 의한 회귀분석" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 장 단순회귀모형 | R에 의한 회귀분석" />
+  <meta property="og:title" content="2 장 단순선형회귀모형 | R에 의한 회귀분석" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 장 단순회귀모형 | R에 의한 회귀분석" />
+  <meta name="twitter:title" content="2 장 단순선형회귀모형 | R에 의한 회귀분석" />
   
   
   
@@ -23,7 +23,7 @@
 <meta name="author" content="박동련" />
 
 
-<meta name="date" content="2023-09-20" />
+<meta name="date" content="2024-02-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,11 +52,11 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
@@ -147,21 +147,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="ch1.html"><a href="ch1.html"><i class="fa fa-check"></i><b>1</b> 회귀모형</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="ch1.html"><a href="ch1.html#반응변수와-설명변수-사이의-관계-설정"><i class="fa fa-check"></i><b>1.1</b> 반응변수와 설명변수 사이의 관계 설정</a></li>
-<li class="chapter" data-level="1.2" data-path="ch1.html"><a href="ch1.html#회귀모형의-설정"><i class="fa fa-check"></i><b>1.2</b> 회귀모형의 설정</a></li>
-<li class="chapter" data-level="1.3" data-path="ch1.html"><a href="ch1.html#회귀모형의-사용"><i class="fa fa-check"></i><b>1.3</b> 회귀모형의 사용</a></li>
+<li class="chapter" data-level="1.2" data-path="ch1.html"><a href="ch1.html#회귀분석의-목적"><i class="fa fa-check"></i><b>1.2</b> 회귀분석의 목적</a></li>
+<li class="chapter" data-level="1.3" data-path="ch1.html"><a href="ch1.html#회귀모형의-종류"><i class="fa fa-check"></i><b>1.3</b> 회귀모형의 종류</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="ch1.html"><a href="ch1.html#모수적-회귀모형"><i class="fa fa-check"></i><b>1.3.1</b> 모수적 회귀모형</a></li>
+<li class="chapter" data-level="1.3.2" data-path="ch1.html"><a href="ch1.html#비모수적-회귀모형"><i class="fa fa-check"></i><b>1.3.2</b> 비모수적 회귀모형</a></li>
+</ul></li>
 <li class="chapter" data-level="1.4" data-path="ch1.html"><a href="ch1.html#r의-역할"><i class="fa fa-check"></i><b>1.4</b> R의 역할</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="simple-reg.html"><a href="simple-reg.html"><i class="fa fa-check"></i><b>2</b> 단순회귀모형</a>
+<li class="chapter" data-level="2" data-path="simple-reg.html"><a href="simple-reg.html"><i class="fa fa-check"></i><b>2</b> 단순선형회귀모형</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="simple-reg.html"><a href="simple-reg.html#단순회귀모형의-설정"><i class="fa fa-check"></i><b>2.1</b> 단순회귀모형의 설정</a></li>
 <li class="chapter" data-level="2.2" data-path="simple-reg.html"><a href="simple-reg.html#회귀계수의-최소제곱추정"><i class="fa fa-check"></i><b>2.2</b> 회귀계수의 최소제곱추정</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="simple-reg.html"><a href="simple-reg.html#모수-beta_0와-beta_1의-추정"><i class="fa fa-check"></i><b>2.2.1</b> 모수 <span class="math inline">\(\beta_{0}\)</span>와 <span class="math inline">\(\beta_{1}\)</span>의 추정</a></li>
 <li class="chapter" data-level="2.2.2" data-path="simple-reg.html"><a href="simple-reg.html#section-property-lse"><i class="fa fa-check"></i><b>2.2.2</b> 최소제곱추정량의 특성</a></li>
-<li class="chapter" data-level="2.2.3" data-path="simple-reg.html"><a href="simple-reg.html#section-simple-sigma"><i class="fa fa-check"></i><b>2.2.3</b> 오차분산 <span class="math inline">\(\sigma^{2}\)</span>의 추정</a></li>
 </ul></li>
+<li class="chapter" data-level="2.3" data-path="simple-reg.html"><a href="simple-reg.html#section-simple-sigma"><i class="fa fa-check"></i><b>2.3</b> 오차분산 <span class="math inline">\(\sigma^{2}\)</span>의 추정</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html"><i class="fa fa-check"></i><b>3</b> 단순회귀모형의 추론</a>
+<li class="chapter" data-level="3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html"><i class="fa fa-check"></i><b>3</b> 단순선형회귀모형의 추론</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#회귀계수-beta_1에-대한-추론"><i class="fa fa-check"></i><b>3.1</b> 회귀계수 <span class="math inline">\(\beta_{1}\)</span>에 대한 추론</a>
 <ul>
@@ -177,9 +181,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-평균-eyx_o에-대한-신뢰구간-추정"><i class="fa fa-check"></i><b>3.3</b> 반응변수의 평균, <span class="math inline">\(E(Y|X_{o})\)</span>에 대한 신뢰구간 추정</a></li>
 <li class="chapter" data-level="3.4" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-개별-관측값-예측"><i class="fa fa-check"></i><b>3.4</b> 반응변수의 개별 관측값 예측</a></li>
-<li class="chapter" data-level="3.5" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#단순회귀모형에서-두-변수-사이의-연관성-측정-상관계수"><i class="fa fa-check"></i><b>3.5</b> 단순회귀모형에서 두 변수 사이의 연관성 측정: 상관계수</a></li>
+<li class="chapter" data-level="3.5" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#상관계수-두-변수-사이의-선형-연관성-측정"><i class="fa fa-check"></i><b>3.5</b> 상관계수 : 두 변수 사이의 선형 연관성 측정</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> 다중회귀모형</a>
+<li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> 다중선형회귀모형</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-model"><i class="fa fa-check"></i><b>4.1</b> 다중회귀모형의 설정</a>
 <ul>
@@ -191,17 +195,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="multiple-reg.html"><a href="multiple-reg.html#회귀계수-추정량의-표본분포"><i class="fa fa-check"></i><b>4.2.1</b> 회귀계수 추정량의 표본분포</a></li>
 <li class="chapter" data-level="4.2.2" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-model-signif"><i class="fa fa-check"></i><b>4.2.2</b> 회귀모형의 유의성 검정</a></li>
-<li class="chapter" data-level="4.2.3" data-path="multiple-reg.html"><a href="multiple-reg.html#개별회귀계수-유의성-검정"><i class="fa fa-check"></i><b>4.2.3</b> 개별회귀계수 유의성 검정</a></li>
+<li class="chapter" data-level="4.2.3" data-path="multiple-reg.html"><a href="multiple-reg.html#개별-회귀계수-유의성-검정"><i class="fa fa-check"></i><b>4.2.3</b> 개별 회귀계수 유의성 검정</a></li>
 <li class="chapter" data-level="4.2.4" data-path="multiple-reg.html"><a href="multiple-reg.html#두-회귀모형의-비교"><i class="fa fa-check"></i><b>4.2.4</b> 두 회귀모형의 비교</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#section-selection"><i class="fa fa-check"></i><b>4.3</b> 변수선택</a>
 <ul>
 <li class="chapter" data-level="4.3.1" data-path="multiple-reg.html"><a href="multiple-reg.html#section-fit-measure"><i class="fa fa-check"></i><b>4.3.1</b> 회귀모형의 평가 측도</a></li>
-<li class="chapter" data-level="4.3.2" data-path="multiple-reg.html"><a href="multiple-reg.html#평가-측도에-의한-변수선택"><i class="fa fa-check"></i><b>4.3.2</b> 평가 측도에 의한 변수선택</a></li>
-<li class="chapter" data-level="4.3.3" data-path="multiple-reg.html"><a href="multiple-reg.html#shrinkage-방법"><i class="fa fa-check"></i><b>4.3.3</b> Shrinkage 방법</a></li>
+<li class="chapter" data-level="4.3.2" data-path="multiple-reg.html"><a href="multiple-reg.html#section-variable-criterion"><i class="fa fa-check"></i><b>4.3.2</b> 평가 측도에 의한 변수선택</a></li>
+<li class="chapter" data-level="4.3.3" data-path="multiple-reg.html"><a href="multiple-reg.html#section-shrinkage"><i class="fa fa-check"></i><b>4.3.3</b> Shrinkage 방법</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="reg-diag.html"><a href="reg-diag.html"><i class="fa fa-check"></i><b>5</b> 회귀모형의 진단</a></li>
+<li class="chapter" data-level="5" data-path="reg-diag.html"><a href="reg-diag.html"><i class="fa fa-check"></i><b>5</b> 회귀모형의 진단</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="reg-diag.html"><a href="reg-diag.html#section-assumption-error"><i class="fa fa-check"></i><b>5.1</b> 회귀모형에 대한 진단</a></li>
+<li class="chapter" data-level="5.2" data-path="reg-diag.html"><a href="reg-diag.html#section-influence-data"><i class="fa fa-check"></i><b>5.2</b> 관찰값에 대한 진단</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -220,8 +228,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="simple-reg" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">2 장</span> 단순회귀모형<a href="simple-reg.html#simple-reg" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>회귀모형의 가장 기본적인 형태로써 한 개의 설명변수로 반응변수의 변동을 설명하려는 단순회귀모형에 대해서 살펴보도록 하자. 특히 두 변수의 관계가 직선인 경우에 대해서만 다루겠다.</p>
+<h1><span class="header-section-number">2 장</span> 단순선형회귀모형<a href="simple-reg.html#simple-reg" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>선형회귀모형의 가장 기본적인 형태는 한 개의 설명변수로 반응변수의 변동을 설명하려는 단순회귀모형이다.
+이 장에서는 특히 두 변수의 관계가 직선인 경우에 대해서만 살펴보겠다.</p>
 <div id="단순회귀모형의-설정" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> 단순회귀모형의 설정<a href="simple-reg.html#단순회귀모형의-설정" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>설명변수가 하나이고, 반응변수와의 관계가 직선인 경우에 회귀모형은 다음과 같이 설정된다.</p>
@@ -232,7 +241,7 @@ Y_{i} = \beta_{0} + \beta_{1}X_{i} + \varepsilon_{i}, ~~i=1,2,\ldots,n
 <p>여기에서 <span class="math inline">\(Y_{i}\)</span> 는 반응변수의 <span class="math inline">\(i\)</span> 번째 값, <span class="math inline">\(X_{i}\)</span> 는 설명변수의 <span class="math inline">\(i\)</span> 번째 값을 표시한다.
 절편 <span class="math inline">\(\beta_{0}\)</span> 와 <span class="math inline">\(\beta_{1}\)</span> 은 모수(parameter)이며, 따라서 알려지지 않은 상수(constant)이다.
 오차항 <span class="math inline">\(\varepsilon_{i}\)</span> 는 반응변수의 변동 중 설명변수로 설명할 수 없는 부분을 나타내는 확률변수인데, <span class="math inline">\(n\)</span> 개의 오차항이 모두 평균이 0, 분산은 <span class="math inline">\(\sigma^{2}\)</span> 이며, 서로 독립이라고 가정한다. 또한 설명변수의 값 <span class="math inline">\(X_{i}\)</span> 는 분석자에 의해서 값이 통제될 수 있는 변량으로써 확률변수가 아닌 상수라고 가정한다.</p>
-<p>이러한 가정에서 단순회귀모형의 특성을 다음과 같이 유도할 수 있다.</p>
+<p>이러한 가정에서 단순회귀모형의 반응변수 <span class="math inline">\(Y_{i}\)</span> 의 특성을 다음과 같이 유도할 수 있다.</p>
 <ul>
 <li><p><span class="math inline">\(Y_{i}\)</span> 는 상수인 <span class="math inline">\(\beta_{0}+\beta_{1}X_{i}\)</span>와 확률변수인 <span class="math inline">\(\varepsilon_{i}\)</span>의 합으로 구성되어 있다. 따라서 <span class="math inline">\(Y_{i}\)</span>는 확률변수이다.</p></li>
 <li><p>설명변수의 값이 <span class="math inline">\(X_{i}\)</span>로 주어졌을 때, 확률변수 <span class="math inline">\(Y_{i}\)</span>의 평균은 다음과 같다.</p></li>
@@ -263,14 +272,14 @@ Cov(X,Y) &amp; = E\left((X-E(X))(Y-E(Y)) \right) \\
 \end{align}\]</span></p>
 <p>만일 확률변수 <span class="math inline">\(X\)</span>와 <span class="math inline">\(Y\)</span>가 서로 독립이면, <span class="math inline">\(E(XY)=E(X)E(Y)\)</span>의 관계가 성립한다.
 따라서 서로 독립인 두 확률변수의 공분산은 식 <a href="simple-reg.html#eq:cov">(2.2)</a>에 의해서 0이 됨을 알 수 있다.</p>
-<p>공분산 <span class="math inline">\(Cov(X,Y)\)</span> 는 변수 <span class="math inline">\(X\)</span>와 <span class="math inline">\(Y\)</span> 사이에 존재하는 선형 관련성을 측정하는 통계량이다.
+<p>공분산 <span class="math inline">\(Cov(X,Y)\)</span> 는 변수 <span class="math inline">\(X\)</span>와 <span class="math inline">\(Y\)</span> 사이에 존재하는 선형 관련성을 표현하고 있다.
 식 <a href="simple-reg.html#eq:cov">(2.2)</a>에서 볼 수 있듯이 공분산은 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span>의 평균값을 나타낸다.
-만일 <span class="math inline">\((X,Y)\)</span>의 자료 중 <span class="math inline">\(X-E(X)&gt;0\)</span>이고 <span class="math inline">\(Y-E(Y)&gt;0\)</span>을 만족하거나 <span class="math inline">\(X-E(X)&lt;0\)</span>이고 <span class="math inline">\(Y-E(Y)&lt;0\)</span>인 조건을 만족하는 자료가 많게 되면 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span>의 값은 대부분 양수의 값이 되며,
-따라서 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span>의 평균값인 두 변수의 공분산은 0보다 큰 값을 갖게 된다.
-하지만 <span class="math inline">\((X,Y)\)</span>의 자료 중 <span class="math inline">\(X-E(X)\)</span>와 <span class="math inline">\(Y-E(Y)\)</span>의 부호가 서로 반대가 되는 자료가 많게 되면 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span>의 값은 대부분 음수의 값이 되며,
+만일 <span class="math inline">\((X,Y)\)</span>의 자료 중 <span class="math inline">\((X-E(X))&gt;0\)</span> 이고 <span class="math inline">\((Y-E(Y))&gt;0\)</span> 을 만족하거나 <span class="math inline">\((X-E(X))&lt;0\)</span> 이고 <span class="math inline">\((Y-E(Y))&lt;0\)</span> 인 조건을 만족하는 자료가 많게 되면 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span> 의 값은 대부분 양수의 값이 되며,
+따라서 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span> 의 평균값인 두 변수의 공분산은 0보다 큰 값을 갖게 된다.
+하지만 <span class="math inline">\((X,Y)\)</span>의 자료 중 <span class="math inline">\((X-E(X))\)</span>와 <span class="math inline">\((Y-E(Y))\)</span>의 부호가 서로 반대가 되는 자료가 많게 되면 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span>의 값은 대부분 음수의 값이 되며,
 따라서 변수 <span class="math inline">\((X-E(X))(Y-E(Y)\)</span>의 평균값인 두 변수의 공분산은 0보다 작은 값을 갖게 된다.</p>
-<p>그런데 <span class="math inline">\((X,Y)\)</span>의 자료 중 <span class="math inline">\(X-E(X)\)</span>와 <span class="math inline">\(Y-E(Y)\)</span>의 부호가 같은 자료들이 많다는 것은 그림 <a href="simple-reg.html#fig:cov-1">2.1</a>에서 1구역과 3구역에 대부분의 자료가 있다는 것을 의미하고 있기 때문에 한 변수의 값이 증가하거나 감소하면 다른 변수의 값도 함께 증가하거나 감소하는 ’양의 관계’에 있다는 것을 알 수 있다.
-또한 <span class="math inline">\((X,Y)\)</span>의 자료 중 <span class="math inline">\(X-E(X)\)</span>와 <span class="math inline">\(Y-E(Y)\)</span>의 부호가 반대인 자료들이 많다는 것은 그림 <a href="simple-reg.html#fig:cov-1">2.1</a>에서 2구역과 4구역에 대부분의 자료가 있다는 것을 의미하는 것이고,
+<p>그런데 <span class="math inline">\((X,Y)\)</span>의 자료 중 <span class="math inline">\((X-E(X))\)</span>와 <span class="math inline">\((Y-E(Y))\)</span>의 부호가 같은 자료들이 많다는 것은 그림 <a href="simple-reg.html#fig:cov-1">2.1</a>에서 1구역과 3구역에 대부분의 자료가 있다는 것을 의미하고 있기 때문에 한 변수의 값이 증가하거나 감소하면 다른 변수의 값도 함께 증가하거나 감소하는 ’양의 관계’에 있다는 것을 알 수 있다.
+또한 <span class="math inline">\((X,Y)\)</span>의 자료 중 <span class="math inline">\((X-E(X))\)</span>와 <span class="math inline">\((Y-E(Y))\)</span>의 부호가 반대인 자료들이 많다는 것은 그림 <a href="simple-reg.html#fig:cov-1">2.1</a>에서 2구역과 4구역에 대부분의 자료가 있다는 것을 의미하는 것이고,
 따라서 한 변수의 값이 증가하거나 감소하면 다른 변수의 값은 정반대의 방향으로 움직이는 ’음의 관계’에 있다는 것을 알 수 있다.</p>
 <p>이러한 관련성으로 두 변수의 공분산이 큰 양수 값이면 두 변수의 관계는 강한 양의 관계가 있음을 알 수 있으며, 큰 음수의 값을 취하고 있으면 강한 음의 관계가 있음을 알 수 있다.
 그러나 공분산의 값은 변수가 취하는 값 자체의 절대적 크기에도 영향을 받고 있기 때문에 스케일이 다른 자료에 대한 비교는 의미가 없게 된다.
@@ -314,14 +323,14 @@ RSS = \sum_{i=1}^{n} \left( y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{i} \right)^{
 <p><span class="math inline">\(\bullet\)</span> 예제 2.1: 모집단 회귀직선과 추정된 회귀직선</p>
 <p>모집단 회귀직선과 오차항의 분포는 일반적으로 알려져 있지 않지만, 회귀모형의 의미를 살펴보기 위해서 <span class="math inline">\(E(Y|X)=5+2X\)</span> 라고 가정하고, 오차항 <span class="math inline">\(\varepsilon\)</span>은 평균이 0이고 분산이 1인 표준정규분포라고 가정하자.</p>
 <ol style="list-style-type: decimal">
-<li><p>설명변수의 값이 1, 3, 2, 7, 12, 6, 1, 3, 6, 6, 7로 주어졌을 때, 표준정규분포에서 발생시킨 오차값을 추가해서 반응변수의 값을 생성해 보자.</p></li>
+<li><p>설명변수의 값이 1, 4, 2, 7, 12, 6, 0, 3, 5, 8, 7 로 주어졌을 때, 표준정규분포에서 발생시킨 오차값을 추가해서 반응변수의 값을 생성해 보자.</p></li>
 <li><p>단순선형회귀모형을 자료에 적합시켜서 절편과 기울기를 추정하고 모집단 회귀직선과 비교해 보자.</p></li>
 </ol>
 <p>주어진 설명변수의 값에 대해 정규 난수를 추가한 반응변수 값을 생성해서 데이터 프레임으로 만들어 보자. 표준정규분포에서 난수 생성은 함수 <code>rnorm()</code>으로 수행할 수 있다.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="simple-reg.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-2"><a href="simple-reg.html#cb2-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span>
-<span id="cb2-3"><a href="simple-reg.html#cb2-3" tabindex="-1"></a>df2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">12</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">7</span>),</span>
-<span id="cb2-4"><a href="simple-reg.html#cb2-4" tabindex="-1"></a>                <span class="at">y =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(x))</span>
+<span id="cb2-3"><a href="simple-reg.html#cb2-3" tabindex="-1"></a>df2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">12</span>, <span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">7</span>),</span>
+<span id="cb2-4"><a href="simple-reg.html#cb2-4" tabindex="-1"></a>                <span class="at">y =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">length</span>(x))</span>
 <span id="cb2-5"><a href="simple-reg.html#cb2-5" tabindex="-1"></a>                )</span></code></pre></div>
 <p>생성된 모의자료는 다음과 같다.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="simple-reg.html#cb3-1" tabindex="-1"></a>df2<span class="fl">.1</span></span>
@@ -329,18 +338,18 @@ RSS = \sum_{i=1}^{n} \left( y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{i} \right)^{
 <span id="cb3-3"><a href="simple-reg.html#cb3-3" tabindex="-1"></a><span class="do">##        x     y</span></span>
 <span id="cb3-4"><a href="simple-reg.html#cb3-4" tabindex="-1"></a><span class="do">##    &lt;dbl&gt; &lt;dbl&gt;</span></span>
 <span id="cb3-5"><a href="simple-reg.html#cb3-5" tabindex="-1"></a><span class="do">##  1     1  5.52</span></span>
-<span id="cb3-6"><a href="simple-reg.html#cb3-6" tabindex="-1"></a><span class="do">##  2     3 12.6 </span></span>
+<span id="cb3-6"><a href="simple-reg.html#cb3-6" tabindex="-1"></a><span class="do">##  2     4 14.6 </span></span>
 <span id="cb3-7"><a href="simple-reg.html#cb3-7" tabindex="-1"></a><span class="do">##  3     2  8.04</span></span>
 <span id="cb3-8"><a href="simple-reg.html#cb3-8" tabindex="-1"></a><span class="do">##  4     7 18.1 </span></span>
 <span id="cb3-9"><a href="simple-reg.html#cb3-9" tabindex="-1"></a><span class="do">##  5    12 27.0 </span></span>
 <span id="cb3-10"><a href="simple-reg.html#cb3-10" tabindex="-1"></a><span class="do">##  6     6 16.7 </span></span>
-<span id="cb3-11"><a href="simple-reg.html#cb3-11" tabindex="-1"></a><span class="do">##  7     1  6.68</span></span>
+<span id="cb3-11"><a href="simple-reg.html#cb3-11" tabindex="-1"></a><span class="do">##  7     0  4.68</span></span>
 <span id="cb3-12"><a href="simple-reg.html#cb3-12" tabindex="-1"></a><span class="do">##  8     3 10.4 </span></span>
-<span id="cb3-13"><a href="simple-reg.html#cb3-13" tabindex="-1"></a><span class="do">##  9     6 16.9 </span></span>
-<span id="cb3-14"><a href="simple-reg.html#cb3-14" tabindex="-1"></a><span class="do">## 10     6 17.4 </span></span>
+<span id="cb3-13"><a href="simple-reg.html#cb3-13" tabindex="-1"></a><span class="do">##  9     5 14.9 </span></span>
+<span id="cb3-14"><a href="simple-reg.html#cb3-14" tabindex="-1"></a><span class="do">## 10     8 21.4 </span></span>
 <span id="cb3-15"><a href="simple-reg.html#cb3-15" tabindex="-1"></a><span class="do">## 11     7 18.2</span></span></code></pre></div>
 <p>선형화귀모형의 적합은 함수 <code>lm()</code>으로 할 수 있으며, 일반적인 사용법은 <code>lm(formula, data, ...)</code>이다. <code>formula</code>는 설정된 회귀모형을 나타내는 R 모형 공식으로써, 단순회귀모형의 경우에는 <code>y ~ x</code>와 같이 물결표(<code>~</code>)의 왼쪽에는 반응변수, 오른쪽에는 설명변수를 두면 된다. R 모형 공식에 대해서는 다중회귀모형에서 더 자세하게 살펴보겠다. <code>data</code>는 회귀분석에 사용될 데이터 프레임을 지정하는 것으로써, 이 예제에서는 위에서 생성한 데이터 프레임 <code>df2.1</code>를 지정하면 된다.</p>
-<p>모의자료가 있는 데이터 프레임 <code>df2.1</code>를 대상으로 단순회귀모형을 함수 <code>lm()</code>으로 적합시켜보자. 적합 결과는 <span class="math inline">\(\hat{y} = 4.94 + 1.911x\)</span> 임을 알 수 있다.</p>
+<p>모의자료가 있는 데이터 프레임 <code>df2.1</code>를 대상으로 단순회귀모형을 함수 <code>lm()</code>으로 적합시켜보자. 적합 결과는 <span class="math inline">\(\hat{y} = 4.764 + 1.948x\)</span> 임을 알 수 있다.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="simple-reg.html#cb4-1" tabindex="-1"></a>fit2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df2<span class="fl">.1</span>)</span>
 <span id="cb4-2"><a href="simple-reg.html#cb4-2" tabindex="-1"></a>fit2<span class="fl">.1</span></span>
 <span id="cb4-3"><a href="simple-reg.html#cb4-3" tabindex="-1"></a><span class="do">## </span></span>
@@ -349,7 +358,7 @@ RSS = \sum_{i=1}^{n} \left( y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{i} \right)^{
 <span id="cb4-6"><a href="simple-reg.html#cb4-6" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb4-7"><a href="simple-reg.html#cb4-7" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
 <span id="cb4-8"><a href="simple-reg.html#cb4-8" tabindex="-1"></a><span class="do">## (Intercept)            x  </span></span>
-<span id="cb4-9"><a href="simple-reg.html#cb4-9" tabindex="-1"></a><span class="do">##       4.940        1.911</span></span></code></pre></div>
+<span id="cb4-9"><a href="simple-reg.html#cb4-9" tabindex="-1"></a><span class="do">##       4.764        1.948</span></span></code></pre></div>
 <p>함수 <code>lm()</code>으로 생성된 객체 <code>fit2.1</code>을 단순하게 출력시키면 추정된 회귀계수만 나타나지만, 사실 객체 <code>fit2.1</code>은 다음과 같이 많은 양의 정보가 담겨 있는 리스트 객체이다.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="simple-reg.html#cb5-1" tabindex="-1"></a><span class="fu">names</span>(fit2<span class="fl">.1</span>)</span>
 <span id="cb5-2"><a href="simple-reg.html#cb5-2" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;         </span></span>
@@ -438,7 +447,7 @@ RSS = \sum_{i=1}^{n} \left( y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{i} \right)^{
 <span class="math display" id="eq:lse-p2">\[\begin{align}
 E\left(\hat{\beta}_{1}\right) &amp; = E\left(\sum_{i=1}^{n}c_{i}Y_{i}\right) \\
 &amp; = \sum_{i=1}^{n}c_{i}E(Y_{i}) \\
-&amp; = \sum_{i=1}^{n}c_{i}E(\beta_{0}+\beta_{i}X_{i}) \\
+&amp; = \sum_{i=1}^{n}c_{i}E(\beta_{0}+\beta_{i}X_{i}+\varepsilon_{i}) \\
 &amp; = \beta_{0}\sum_{i=1}^{n}c_{i}+\beta_{1}\sum_{i=1}^{n}c_{i}X_{i}
 \tag{2.8}
 \end{align}\]</span>
@@ -535,24 +544,25 @@ Var\left(\hat{\beta}_{0}\right) &amp; = Var\left(\overline{Y}-\hat{\beta}_{1}\ov
 &amp; = 0
 \end{align*}\]</span></p>
 </div>
-<div id="section-simple-sigma" class="section level3 hasAnchor" number="2.2.3">
-<h3><span class="header-section-number">2.2.3</span> 오차분산 <span class="math inline">\(\sigma^{2}\)</span>의 추정<a href="simple-reg.html#section-simple-sigma" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="section-simple-sigma" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> 오차분산 <span class="math inline">\(\sigma^{2}\)</span>의 추정<a href="simple-reg.html#section-simple-sigma" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>회귀계수 <span class="math inline">\(\beta_{0}\)</span>과 <span class="math inline">\(\beta_{1}\)</span>의 구간추정 및 가설검정을 실시하는 경우와 설명변수의 주어진 값에 대한 반응변수 값의 예측구간 추정 등을 실시하는 경우에는 오차항의 분산인 <span class="math inline">\(\sigma^{2}\)</span>의 추정값이 반드시 필요하다.</p>
 <p>식 <a href="ch1.html#eq:reg-model">(1.1)</a>의 회귀모형에서 회귀모형 <span class="math inline">\(f(X)\)</span>의 실제 형태는 일반적으로 알려져 있지 않으며,
-주어진 자료를 근거로 식 <a href="ch1.html#eq:simple-reg">(1.2)</a>와 같은 함수형태를 가정하게 된다.
+주어진 자료를 근거로 식 <a href="ch1.html#eq:simple-reg">(1.3)</a>와 같은 함수형태를 가정하게 된다.
 이 때 가정한 함수형태의 적절성 여부와 관계 없이 오차항의 분산을 정확하게 추정할 수 있다면 가장 이상적인 상황이 될 것이다.
 그러나 이것은 하나의 <span class="math inline">\(X\)</span> 변수의 값에 대하여 여러 개의 <span class="math inline">\(Y\)</span> 변수의 값이 있는 경우에만 가능한 상황이며, 현실적으로는 접하기 어려운 상황이 된다.</p>
 <p>따라서 일반적으로 사용하는 방법은 잔차의 분산으로 오차항의 분산을 추정하는 것이다.
 잔차의 평균은 0이기 때문에 잔차의 분산은 잔차제곱합(residual sum of squares; RSS)으로 표현된다.</p>
 <p><span class="math display" id="eq:rss">\[\begin{equation}
-RSS = \sum_{i=1}^{n}\left(Y_{i}-\hat{Y}_{i}\right)^{2}
+RSS = \sum_{i=1}^{n}\left(y_{i}-\hat{y}_{i}\right)^{2}
 \tag{2.16}
 \end{equation}\]</span></p>
 <p>회귀모형의 추론 과정에는 잔차제곱합과 같은 형태의 몇 가지 제곱합이 사용된다.
 이러한 제곱합은 모두 ’자유도’를 갖게 되는데, 각 제곱합의 자유도는 다음 두 가지 방법 중 적용 가능한 방법으로 구할 수 있다.</p>
 <ol style="list-style-type: decimal">
-<li><p>변수의 합이 주어진 경우: 예를 들어 <span class="math inline">\(X_{1}+X_{2}+X_{3}=0\)</span> 이라는 조건에서 자유롭게 값을 선택할 수 있는 변수의 개수는 2개가 된다. 그것은 만일 <span class="math inline">\(X_{1}\)</span>과 <span class="math inline">\(X_{2}\)</span>의 값이 선택되면 <span class="math inline">\(X_{3}\)</span>의 값은 자동으로 구해지기 때문이다. 표본분산의 경우 적용되는 제곱합의 형태는 <span class="math inline">\(\sum_{i=1}^{n}(Y_{i}-\overline{Y})^{2}\)</span>이 되는데, <span class="math inline">\(\sum_{i=1}^{n}(Y_{i}-\overline{Y})=0\)</span> 이라는 조건이 있기 때문에 자유도는 <span class="math inline">\(n-1\)</span>이 된다.</p></li>
-<li><p>추정량이 포함된 경우: 자유도는 통계학에서 일종의 화폐와 같은 역할을 한다. 수집되는 각 자료마다 하나의 자유도가 추가되는 반면에, 모수에 대한 추정에 이루어질 때마다 하나의 자유도가 차감되는 것이다. 식 <a href="simple-reg.html#eq:rss">(2.16)</a>의 잔차제곱합에서는 <span class="math inline">\(n\)</span>개의 <span class="math inline">\(Y_{i}\)</span>가 수집되지만 <span class="math inline">\(\hat{Y}_{i}\)</span>를 얻기 위해서는 두 모수 <span class="math inline">\(\beta_{0}\)</span>와 <span class="math inline">\(\beta_{1}\)</span>에 대한 추정이 이루어져 2개의 자유도를 잃게 된다. 따라서 잔차제곱합의 자유도는 <span class="math inline">\(n-2\)</span>가 된다.</p></li>
+<li><p>변수의 합이 주어진 경우: 예를 들어 <span class="math inline">\(x_{1}+x_{2}+x_{3}=0\)</span> 이라는 조건에서 자유롭게 값을 선택할 수 있는 변수의 개수는 2개가 된다. 그것은 만일 <span class="math inline">\(x_{1}\)</span>과 <span class="math inline">\(x_{2}\)</span>의 값이 선택되면 <span class="math inline">\(x_{3}\)</span>의 값은 자동으로 구해지기 때문이다. 표본분산의 경우 적용되는 제곱합의 형태는 <span class="math inline">\(\sum_{i=1}^{n}(y_{i}-\overline{y})^{2}\)</span>이 되는데, <span class="math inline">\(\sum_{i=1}^{n}(y_{i}-\overline{y})=0\)</span> 이라는 조건이 있기 때문에 자유도는 <span class="math inline">\(n-1\)</span>이 된다.</p></li>
+<li><p>추정량이 포함된 경우: 자유도는 통계학에서 일종의 화폐와 같은 역할을 한다. 수집되는 각 자료마다 하나의 자유도가 추가되는 반면에, 모수에 대한 추정에 이루어질 때마다 하나의 자유도가 차감되는 것이다. 식 <a href="simple-reg.html#eq:rss">(2.16)</a>의 잔차제곱합에서는 <span class="math inline">\(n\)</span>개의 <span class="math inline">\(y_{i}\)</span>가 수집되지만 <span class="math inline">\(\hat{y}_{i}\)</span>를 얻기 위해서는 두 모수 <span class="math inline">\(\beta_{0}\)</span>와 <span class="math inline">\(\beta_{1}\)</span>에 대한 추정이 이루어져 2개의 자유도를 잃게 된다. 따라서 잔차제곱합의 자유도는 <span class="math inline">\(n-2\)</span>가 된다.</p></li>
 </ol>
 <p>식 <a href="simple-reg.html#eq:rss">(2.16)</a>의 잔차제곱합 <span class="math inline">\(RSS\)</span>의 기대값은 <span class="math inline">\(E(RSS)=(n-2)\sigma^{2}\)</span>가 되는데,
 이것은 <span class="math inline">\(RSS/\sigma^{2}\)</span> 가 자유도가 <span class="math inline">\(n-2\)</span> 인 카이제곱 분포를 하고 있으며, 카이제곱 분포를 하는 확률변수의 기대값은 자유도가 된다는 결과에 의해서 <span class="math inline">\(E(RSS/\sigma^{2})=n-2\)</span> 가 되기 때문이다.
@@ -561,7 +571,7 @@ RSS = \sum_{i=1}^{n}\left(Y_{i}-\hat{Y}_{i}\right)^{2}
 \hat{\sigma}^{2} = \frac{RSS}{n-2} = MSE
 \tag{2.17}
 \end{equation}\]</span></p>
-<p><span class="math inline">\(\sigma^{2}\)</span> 의 추정량인 <span class="math inline">\(MSE\)</span>는 잔차제곱평균이라고 하며, <span class="math inline">\(\sigma\)</span> 의 추정량인 <span class="math inline">\(\sqrt{MSE}\)</span>는 회귀 표준오차(standard error of regression)라고 한다. 추정량 <span class="math inline">\(MSE\)</span>는 잔차를 기반으로 오차항의 분산을 추정하는 것이기 때문에 식 <a href="ch1.html#eq:simple-reg">(1.2)</a>에서 가정한 함수 형태가 적절해야 하는 것은 필수적이다. 또한 오차항의 가정 사항도 모두 만족되어야 <span class="math inline">\(\sigma^{2}\)</span>의 좋은 추정량이 될 수 있다. 만일 이러한 가정 사항이 만족되지 않는다면, <span class="math inline">\(\sigma^{2}\)</span>의 추정량으로서 <span class="math inline">\(MSE\)</span>의 유용성은 매우 떨어진다고 할 수 있다.</p>
+<p><span class="math inline">\(\sigma^{2}\)</span> 의 추정량인 <span class="math inline">\(MSE\)</span>는 잔차제곱평균이라고 하며, <span class="math inline">\(\sigma\)</span> 의 추정량인 <span class="math inline">\(\sqrt{MSE}\)</span>는 회귀 표준오차(standard error of regression)라고 한다. 추정량 <span class="math inline">\(MSE\)</span>는 잔차를 기반으로 오차항의 분산을 추정하는 것이기 때문에 식 <a href="ch1.html#eq:simple-reg">(1.3)</a>에서 가정한 함수 형태가 적절해야 하는 것은 필수적이다. 또한 오차항의 가정 사항도 모두 만족되어야 <span class="math inline">\(\sigma^{2}\)</span>의 좋은 추정량이 될 수 있다. 만일 이러한 가정 사항이 만족되지 않는다면, <span class="math inline">\(\sigma^{2}\)</span>의 추정량으로서 <span class="math inline">\(MSE\)</span>의 유용성은 매우 떨어진다고 할 수 있다.</p>
 <p><span class="math inline">\(\bullet\)</span> 예제 2.3: 매출액에 대한 광고효과 분석</p>
 <p>예제 2.2의 자료 <code>ex2-2.csv</code>에 대하여 다음의 분석을 실시해 보자.</p>
 <ol style="list-style-type: decimal">
@@ -598,7 +608,6 @@ RSS = \sum_{i=1}^{n}\left(Y_{i}-\hat{Y}_{i}\right)^{2}
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="simple-reg.html#cb11-1" tabindex="-1"></a><span class="fu">summary</span>(fit2<span class="fl">.2</span>)<span class="sc">$</span>sigma</span>
 <span id="cb11-2"><a href="simple-reg.html#cb11-2" tabindex="-1"></a><span class="do">## [1] 60.41388</span></span></code></pre></div>
 
-</div>
 </div>
 </div>
             </section>
