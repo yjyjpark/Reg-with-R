@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1 장 회귀모형 | R에 의한 회귀분석</title>
-  <meta name="description" content="1 장 회귀모형 | R에 의한 회귀분석" />
+  <meta name="description" content="한신대학교 응용통계학과 전공 과목 회귀분석및실습의 교재로 사용되고 있습니다." />
   <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1 장 회귀모형 | R에 의한 회귀분석" />
   <meta property="og:type" content="book" />
   
-  
+  <meta property="og:description" content="한신대학교 응용통계학과 전공 과목 회귀분석및실습의 교재로 사용되고 있습니다." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="1 장 회귀모형 | R에 의한 회귀분석" />
   
-  
+  <meta name="twitter:description" content="한신대학교 응용통계학과 전공 과목 회귀분석및실습의 교재로 사용되고 있습니다." />
   
 
 <meta name="author" content="박동련" />
 
 
-<meta name="date" content="2024-02-21" />
+<meta name="date" content="2024-02-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -143,7 +143,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>소개하기</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>머리말</a></li>
 <li class="chapter" data-level="1" data-path="ch1.html"><a href="ch1.html"><i class="fa fa-check"></i><b>1</b> 회귀모형</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="ch1.html"><a href="ch1.html#반응변수와-설명변수-사이의-관계-설정"><i class="fa fa-check"></i><b>1.1</b> 반응변수와 설명변수 사이의 관계 설정</a></li>
@@ -232,8 +232,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>사회현상, 자연현상, 경영현상이나 경제현상 등을 측정한 변수들의 변동은 그 현상과 관련된 여러 변수들과 관련이 있다고 볼 수 있다.
 어떤 현상을 과학적 시각으로 설명하기 위해서는 해당 현상과 관련이 있는 변수들 사이의 관계를 설명하기 위한 적절한 모형을 설정해야 할 것이다.
 회귀분석(regression analysis)이란 특정 현상과 그 현상에 영향을 주거나 혹은 관련이 있는 변수들 사이의 관계를 분석하고 모형화하기 위한 통계적 기법이다.
-회귀분석에서는 변수들 사이의 함수관계를 이론적 근거나 경험적 판단에 의해서 설정하고,
-관측된 자료에 의해서 함수관계를 추정해서 변수들 사이의 관계를 설명하거나 예측하는데 사용된다.
+회귀분석에서는 변수들 사이의 함수관계를 이론적 근거나 경험적 판단에 의해서 설정하고, 관측된 자료에 의해서 함수관계를 추정해서 변수들 사이의 관계를 설명하거나 예측하는데 사용된다.
 따라서 회귀분석은 사회과학, 공학, 물리학, 생물학, 경영학, 경제학, 의학 등 거의 모든 학문 분야에서 가장 널리 사용되고 있는 통계적 분석 방법인 것이다.</p>
 <p>회귀모형을 설정할 때 우리가 관심이 있는 특정 현상의 변동을 나타내는 변수를 종속변수(dependent variable) 혹은 반응변수(response variable) 또는 결과변수(outcome variable)라고 하며, 일반적으로 <span class="math inline">\(Y\)</span>로 표시한다.
 반응변수가 나타내는 특정 현상에 연관되어 있을 것으로 판단되는 변수를 독립변수(independent variable) 혹은 설명변수(explanatory variable) 또는 예측변수(predictor variable)라고 하고, 일반적으로 <span class="math inline">\(X\)</span>로 표시한다.
@@ -411,49 +410,49 @@ Y = \beta_{0} + \beta_{1}X_{1} + \cdots + \beta_{k}X_{k} + \varepsilon
 또한 책에 제공된 R code에는 프롬프트(<code>&gt;</code> 또는 <code>+</code>)를 제거하였고,
 console 창에 출력되는 결과물은 <code>##</code>으로 시작되도록 하였다.</p>
 <p>이 책을 작성할 때의 R 세션 정보는 다음과 같다.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="ch1.html#cb1-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb1-2"><a href="ch1.html#cb1-2" tabindex="-1"></a><span class="do">## R version 4.3.2 (2023-10-31 ucrt)</span></span>
-<span id="cb1-3"><a href="ch1.html#cb1-3" tabindex="-1"></a><span class="do">## Platform: x86_64-w64-mingw32/x64 (64-bit)</span></span>
-<span id="cb1-4"><a href="ch1.html#cb1-4" tabindex="-1"></a><span class="do">## Running under: Windows 11 x64 (build 22631)</span></span>
-<span id="cb1-5"><a href="ch1.html#cb1-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-6"><a href="ch1.html#cb1-6" tabindex="-1"></a><span class="do">## Matrix products: default</span></span>
-<span id="cb1-7"><a href="ch1.html#cb1-7" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-8"><a href="ch1.html#cb1-8" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-9"><a href="ch1.html#cb1-9" tabindex="-1"></a><span class="do">## locale:</span></span>
-<span id="cb1-10"><a href="ch1.html#cb1-10" tabindex="-1"></a><span class="do">## [1] LC_COLLATE=Korean_Korea.utf8  LC_CTYPE=Korean_Korea.utf8   </span></span>
-<span id="cb1-11"><a href="ch1.html#cb1-11" tabindex="-1"></a><span class="do">## [3] LC_MONETARY=Korean_Korea.utf8 LC_NUMERIC=C                 </span></span>
-<span id="cb1-12"><a href="ch1.html#cb1-12" tabindex="-1"></a><span class="do">## [5] LC_TIME=Korean_Korea.utf8    </span></span>
-<span id="cb1-13"><a href="ch1.html#cb1-13" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-14"><a href="ch1.html#cb1-14" tabindex="-1"></a><span class="do">## time zone: Asia/Seoul</span></span>
-<span id="cb1-15"><a href="ch1.html#cb1-15" tabindex="-1"></a><span class="do">## tzcode source: internal</span></span>
-<span id="cb1-16"><a href="ch1.html#cb1-16" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-17"><a href="ch1.html#cb1-17" tabindex="-1"></a><span class="do">## attached base packages:</span></span>
-<span id="cb1-18"><a href="ch1.html#cb1-18" tabindex="-1"></a><span class="do">## [1] splines   stats     graphics  grDevices utils     datasets  methods  </span></span>
-<span id="cb1-19"><a href="ch1.html#cb1-19" tabindex="-1"></a><span class="do">## [8] base     </span></span>
-<span id="cb1-20"><a href="ch1.html#cb1-20" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-21"><a href="ch1.html#cb1-21" tabindex="-1"></a><span class="do">## other attached packages:</span></span>
-<span id="cb1-22"><a href="ch1.html#cb1-22" tabindex="-1"></a><span class="do">##  [1] patchwork_1.2.0 expsmooth_2.3   fma_2.5         forecast_8.21.1</span></span>
-<span id="cb1-23"><a href="ch1.html#cb1-23" tabindex="-1"></a><span class="do">##  [5] fpp2_2.5        lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1  </span></span>
-<span id="cb1-24"><a href="ch1.html#cb1-24" tabindex="-1"></a><span class="do">##  [9] dplyr_1.1.4     purrr_1.0.2     readr_2.1.5     tidyr_1.3.1    </span></span>
-<span id="cb1-25"><a href="ch1.html#cb1-25" tabindex="-1"></a><span class="do">## [13] tibble_3.2.1    ggplot2_3.4.4   tidyverse_2.0.0</span></span>
-<span id="cb1-26"><a href="ch1.html#cb1-26" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-27"><a href="ch1.html#cb1-27" tabindex="-1"></a><span class="do">## loaded via a namespace (and not attached):</span></span>
-<span id="cb1-28"><a href="ch1.html#cb1-28" tabindex="-1"></a><span class="do">##  [1] gtable_0.3.4      xfun_0.41         bslib_0.6.1       lattice_0.21-9   </span></span>
-<span id="cb1-29"><a href="ch1.html#cb1-29" tabindex="-1"></a><span class="do">##  [5] tzdb_0.4.0        quadprog_1.5-8    vctrs_0.6.5       tools_4.3.2      </span></span>
-<span id="cb1-30"><a href="ch1.html#cb1-30" tabindex="-1"></a><span class="do">##  [9] generics_0.1.3    curl_5.2.0        parallel_4.3.2    fansi_1.0.6      </span></span>
-<span id="cb1-31"><a href="ch1.html#cb1-31" tabindex="-1"></a><span class="do">## [13] highr_0.10        xts_0.13.2        pkgconfig_2.0.3   Matrix_1.6-5     </span></span>
-<span id="cb1-32"><a href="ch1.html#cb1-32" tabindex="-1"></a><span class="do">## [17] lifecycle_1.0.4   farver_2.1.1      compiler_4.3.2    munsell_0.5.0    </span></span>
-<span id="cb1-33"><a href="ch1.html#cb1-33" tabindex="-1"></a><span class="do">## [21] htmltools_0.5.7   sass_0.4.8        yaml_2.3.8        pillar_1.9.0     </span></span>
-<span id="cb1-34"><a href="ch1.html#cb1-34" tabindex="-1"></a><span class="do">## [25] crayon_1.5.2      jquerylib_0.1.4   cachem_1.0.8      nlme_3.1-164     </span></span>
-<span id="cb1-35"><a href="ch1.html#cb1-35" tabindex="-1"></a><span class="do">## [29] fracdiff_1.5-2    tidyselect_1.2.0  digest_0.6.34     stringi_1.8.3    </span></span>
-<span id="cb1-36"><a href="ch1.html#cb1-36" tabindex="-1"></a><span class="do">## [33] bookdown_0.37     labeling_0.4.3    tseries_0.10-55   fastmap_1.1.1    </span></span>
-<span id="cb1-37"><a href="ch1.html#cb1-37" tabindex="-1"></a><span class="do">## [37] grid_4.3.2        colorspace_2.1-0  cli_3.6.2         magrittr_2.0.3   </span></span>
-<span id="cb1-38"><a href="ch1.html#cb1-38" tabindex="-1"></a><span class="do">## [41] utf8_1.2.4        withr_3.0.0       scales_1.3.0      timechange_0.3.0 </span></span>
-<span id="cb1-39"><a href="ch1.html#cb1-39" tabindex="-1"></a><span class="do">## [45] TTR_0.24.4        rmarkdown_2.25    quantmod_0.4.25   nnet_7.3-19      </span></span>
-<span id="cb1-40"><a href="ch1.html#cb1-40" tabindex="-1"></a><span class="do">## [49] timeDate_4032.109 zoo_1.8-12        hms_1.1.3         urca_1.3-3       </span></span>
-<span id="cb1-41"><a href="ch1.html#cb1-41" tabindex="-1"></a><span class="do">## [53] evaluate_0.23     knitr_1.45        lmtest_0.9-40     mgcv_1.9-1       </span></span>
-<span id="cb1-42"><a href="ch1.html#cb1-42" tabindex="-1"></a><span class="do">## [57] rlang_1.1.3       Rcpp_1.0.12       glue_1.7.0        rstudioapi_0.15.0</span></span>
-<span id="cb1-43"><a href="ch1.html#cb1-43" tabindex="-1"></a><span class="do">## [61] jsonlite_1.8.8    R6_2.5.1</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="ch1.html#cb2-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb2-2"><a href="ch1.html#cb2-2" tabindex="-1"></a><span class="do">## R version 4.3.2 (2023-10-31 ucrt)</span></span>
+<span id="cb2-3"><a href="ch1.html#cb2-3" tabindex="-1"></a><span class="do">## Platform: x86_64-w64-mingw32/x64 (64-bit)</span></span>
+<span id="cb2-4"><a href="ch1.html#cb2-4" tabindex="-1"></a><span class="do">## Running under: Windows 11 x64 (build 22631)</span></span>
+<span id="cb2-5"><a href="ch1.html#cb2-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb2-6"><a href="ch1.html#cb2-6" tabindex="-1"></a><span class="do">## Matrix products: default</span></span>
+<span id="cb2-7"><a href="ch1.html#cb2-7" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb2-8"><a href="ch1.html#cb2-8" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb2-9"><a href="ch1.html#cb2-9" tabindex="-1"></a><span class="do">## locale:</span></span>
+<span id="cb2-10"><a href="ch1.html#cb2-10" tabindex="-1"></a><span class="do">## [1] LC_COLLATE=Korean_Korea.utf8  LC_CTYPE=Korean_Korea.utf8   </span></span>
+<span id="cb2-11"><a href="ch1.html#cb2-11" tabindex="-1"></a><span class="do">## [3] LC_MONETARY=Korean_Korea.utf8 LC_NUMERIC=C                 </span></span>
+<span id="cb2-12"><a href="ch1.html#cb2-12" tabindex="-1"></a><span class="do">## [5] LC_TIME=Korean_Korea.utf8    </span></span>
+<span id="cb2-13"><a href="ch1.html#cb2-13" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb2-14"><a href="ch1.html#cb2-14" tabindex="-1"></a><span class="do">## time zone: Asia/Seoul</span></span>
+<span id="cb2-15"><a href="ch1.html#cb2-15" tabindex="-1"></a><span class="do">## tzcode source: internal</span></span>
+<span id="cb2-16"><a href="ch1.html#cb2-16" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb2-17"><a href="ch1.html#cb2-17" tabindex="-1"></a><span class="do">## attached base packages:</span></span>
+<span id="cb2-18"><a href="ch1.html#cb2-18" tabindex="-1"></a><span class="do">## [1] splines   stats     graphics  grDevices utils     datasets  methods  </span></span>
+<span id="cb2-19"><a href="ch1.html#cb2-19" tabindex="-1"></a><span class="do">## [8] base     </span></span>
+<span id="cb2-20"><a href="ch1.html#cb2-20" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb2-21"><a href="ch1.html#cb2-21" tabindex="-1"></a><span class="do">## other attached packages:</span></span>
+<span id="cb2-22"><a href="ch1.html#cb2-22" tabindex="-1"></a><span class="do">##  [1] patchwork_1.2.0 expsmooth_2.3   fma_2.5         forecast_8.21.1</span></span>
+<span id="cb2-23"><a href="ch1.html#cb2-23" tabindex="-1"></a><span class="do">##  [5] fpp2_2.5        lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1  </span></span>
+<span id="cb2-24"><a href="ch1.html#cb2-24" tabindex="-1"></a><span class="do">##  [9] dplyr_1.1.4     purrr_1.0.2     readr_2.1.5     tidyr_1.3.1    </span></span>
+<span id="cb2-25"><a href="ch1.html#cb2-25" tabindex="-1"></a><span class="do">## [13] tibble_3.2.1    ggplot2_3.4.4   tidyverse_2.0.0</span></span>
+<span id="cb2-26"><a href="ch1.html#cb2-26" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb2-27"><a href="ch1.html#cb2-27" tabindex="-1"></a><span class="do">## loaded via a namespace (and not attached):</span></span>
+<span id="cb2-28"><a href="ch1.html#cb2-28" tabindex="-1"></a><span class="do">##  [1] gtable_0.3.4      xfun_0.41         bslib_0.6.1       lattice_0.21-9   </span></span>
+<span id="cb2-29"><a href="ch1.html#cb2-29" tabindex="-1"></a><span class="do">##  [5] tzdb_0.4.0        quadprog_1.5-8    vctrs_0.6.5       tools_4.3.2      </span></span>
+<span id="cb2-30"><a href="ch1.html#cb2-30" tabindex="-1"></a><span class="do">##  [9] generics_0.1.3    curl_5.2.0        parallel_4.3.2    fansi_1.0.6      </span></span>
+<span id="cb2-31"><a href="ch1.html#cb2-31" tabindex="-1"></a><span class="do">## [13] highr_0.10        xts_0.13.2        pkgconfig_2.0.3   Matrix_1.6-5     </span></span>
+<span id="cb2-32"><a href="ch1.html#cb2-32" tabindex="-1"></a><span class="do">## [17] lifecycle_1.0.4   farver_2.1.1      compiler_4.3.2    munsell_0.5.0    </span></span>
+<span id="cb2-33"><a href="ch1.html#cb2-33" tabindex="-1"></a><span class="do">## [21] htmltools_0.5.7   sass_0.4.8        yaml_2.3.8        pillar_1.9.0     </span></span>
+<span id="cb2-34"><a href="ch1.html#cb2-34" tabindex="-1"></a><span class="do">## [25] crayon_1.5.2      jquerylib_0.1.4   cachem_1.0.8      nlme_3.1-164     </span></span>
+<span id="cb2-35"><a href="ch1.html#cb2-35" tabindex="-1"></a><span class="do">## [29] fracdiff_1.5-2    tidyselect_1.2.0  digest_0.6.34     stringi_1.8.3    </span></span>
+<span id="cb2-36"><a href="ch1.html#cb2-36" tabindex="-1"></a><span class="do">## [33] bookdown_0.37     labeling_0.4.3    tseries_0.10-55   fastmap_1.1.1    </span></span>
+<span id="cb2-37"><a href="ch1.html#cb2-37" tabindex="-1"></a><span class="do">## [37] grid_4.3.2        colorspace_2.1-0  cli_3.6.2         magrittr_2.0.3   </span></span>
+<span id="cb2-38"><a href="ch1.html#cb2-38" tabindex="-1"></a><span class="do">## [41] utf8_1.2.4        withr_3.0.0       scales_1.3.0      timechange_0.3.0 </span></span>
+<span id="cb2-39"><a href="ch1.html#cb2-39" tabindex="-1"></a><span class="do">## [45] TTR_0.24.4        rmarkdown_2.25    quantmod_0.4.25   nnet_7.3-19      </span></span>
+<span id="cb2-40"><a href="ch1.html#cb2-40" tabindex="-1"></a><span class="do">## [49] timeDate_4032.109 zoo_1.8-12        hms_1.1.3         urca_1.3-3       </span></span>
+<span id="cb2-41"><a href="ch1.html#cb2-41" tabindex="-1"></a><span class="do">## [53] evaluate_0.23     knitr_1.45        lmtest_0.9-40     mgcv_1.9-1       </span></span>
+<span id="cb2-42"><a href="ch1.html#cb2-42" tabindex="-1"></a><span class="do">## [57] rlang_1.1.3       Rcpp_1.0.12       glue_1.7.0        rstudioapi_0.15.0</span></span>
+<span id="cb2-43"><a href="ch1.html#cb2-43" tabindex="-1"></a><span class="do">## [61] jsonlite_1.8.8    R6_2.5.1</span></span></code></pre></div>
 
 </div>
 </div>

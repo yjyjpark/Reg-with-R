@@ -25,7 +25,7 @@ eq:unbiased-beta1
 eq:unbiased-beta0
 eq:variance-beta1
 eq:variance-beta0
-thm:unnamed-chunk-11
+thm:unnamed-chunk-12
 eq:sum-resid
 eq:rss
 eq:mse-1

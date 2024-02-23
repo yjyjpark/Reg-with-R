@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 장 단순선형회귀모형 | R에 의한 회귀분석</title>
-  <meta name="description" content="2 장 단순선형회귀모형 | R에 의한 회귀분석" />
+  <meta name="description" content="한신대학교 응용통계학과 전공 과목 회귀분석및실습의 교재로 사용되고 있습니다." />
   <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 장 단순선형회귀모형 | R에 의한 회귀분석" />
   <meta property="og:type" content="book" />
   
-  
+  <meta property="og:description" content="한신대학교 응용통계학과 전공 과목 회귀분석및실습의 교재로 사용되고 있습니다." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="2 장 단순선형회귀모형 | R에 의한 회귀분석" />
   
-  
+  <meta name="twitter:description" content="한신대학교 응용통계학과 전공 과목 회귀분석및실습의 교재로 사용되고 있습니다." />
   
 
 <meta name="author" content="박동련" />
 
 
-<meta name="date" content="2024-02-21" />
+<meta name="date" content="2024-02-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -143,7 +143,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>소개하기</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>머리말</a></li>
 <li class="chapter" data-level="1" data-path="ch1.html"><a href="ch1.html"><i class="fa fa-check"></i><b>1</b> 회귀모형</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="ch1.html"><a href="ch1.html#반응변수와-설명변수-사이의-관계-설정"><i class="fa fa-check"></i><b>1.1</b> 반응변수와 설명변수 사이의 관계 설정</a></li>
@@ -327,43 +327,43 @@ RSS = \sum_{i=1}^{n} \left( y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{i} \right)^{
 <li><p>단순선형회귀모형을 자료에 적합시켜서 절편과 기울기를 추정하고 모집단 회귀직선과 비교해 보자.</p></li>
 </ol>
 <p>주어진 설명변수의 값에 대해 정규 난수를 추가한 반응변수 값을 생성해서 데이터 프레임으로 만들어 보자. 표준정규분포에서 난수 생성은 함수 <code>rnorm()</code>으로 수행할 수 있다.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="simple-reg.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-2"><a href="simple-reg.html#cb2-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span>
-<span id="cb2-3"><a href="simple-reg.html#cb2-3" tabindex="-1"></a>df2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">12</span>, <span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">7</span>),</span>
-<span id="cb2-4"><a href="simple-reg.html#cb2-4" tabindex="-1"></a>                <span class="at">y =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">length</span>(x))</span>
-<span id="cb2-5"><a href="simple-reg.html#cb2-5" tabindex="-1"></a>                )</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="simple-reg.html#cb3-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="simple-reg.html#cb3-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span>
+<span id="cb3-3"><a href="simple-reg.html#cb3-3" tabindex="-1"></a>df2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">12</span>, <span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">7</span>),</span>
+<span id="cb3-4"><a href="simple-reg.html#cb3-4" tabindex="-1"></a>                <span class="at">y =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">length</span>(x))</span>
+<span id="cb3-5"><a href="simple-reg.html#cb3-5" tabindex="-1"></a>                )</span></code></pre></div>
 <p>생성된 모의자료는 다음과 같다.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="simple-reg.html#cb3-1" tabindex="-1"></a>df2<span class="fl">.1</span></span>
-<span id="cb3-2"><a href="simple-reg.html#cb3-2" tabindex="-1"></a><span class="do">## # A tibble: 11 × 2</span></span>
-<span id="cb3-3"><a href="simple-reg.html#cb3-3" tabindex="-1"></a><span class="do">##        x     y</span></span>
-<span id="cb3-4"><a href="simple-reg.html#cb3-4" tabindex="-1"></a><span class="do">##    &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb3-5"><a href="simple-reg.html#cb3-5" tabindex="-1"></a><span class="do">##  1     1  5.52</span></span>
-<span id="cb3-6"><a href="simple-reg.html#cb3-6" tabindex="-1"></a><span class="do">##  2     4 14.6 </span></span>
-<span id="cb3-7"><a href="simple-reg.html#cb3-7" tabindex="-1"></a><span class="do">##  3     2  8.04</span></span>
-<span id="cb3-8"><a href="simple-reg.html#cb3-8" tabindex="-1"></a><span class="do">##  4     7 18.1 </span></span>
-<span id="cb3-9"><a href="simple-reg.html#cb3-9" tabindex="-1"></a><span class="do">##  5    12 27.0 </span></span>
-<span id="cb3-10"><a href="simple-reg.html#cb3-10" tabindex="-1"></a><span class="do">##  6     6 16.7 </span></span>
-<span id="cb3-11"><a href="simple-reg.html#cb3-11" tabindex="-1"></a><span class="do">##  7     0  4.68</span></span>
-<span id="cb3-12"><a href="simple-reg.html#cb3-12" tabindex="-1"></a><span class="do">##  8     3 10.4 </span></span>
-<span id="cb3-13"><a href="simple-reg.html#cb3-13" tabindex="-1"></a><span class="do">##  9     5 14.9 </span></span>
-<span id="cb3-14"><a href="simple-reg.html#cb3-14" tabindex="-1"></a><span class="do">## 10     8 21.4 </span></span>
-<span id="cb3-15"><a href="simple-reg.html#cb3-15" tabindex="-1"></a><span class="do">## 11     7 18.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="simple-reg.html#cb4-1" tabindex="-1"></a>df2<span class="fl">.1</span></span>
+<span id="cb4-2"><a href="simple-reg.html#cb4-2" tabindex="-1"></a><span class="do">## # A tibble: 11 × 2</span></span>
+<span id="cb4-3"><a href="simple-reg.html#cb4-3" tabindex="-1"></a><span class="do">##        x     y</span></span>
+<span id="cb4-4"><a href="simple-reg.html#cb4-4" tabindex="-1"></a><span class="do">##    &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb4-5"><a href="simple-reg.html#cb4-5" tabindex="-1"></a><span class="do">##  1     1  5.52</span></span>
+<span id="cb4-6"><a href="simple-reg.html#cb4-6" tabindex="-1"></a><span class="do">##  2     4 14.6 </span></span>
+<span id="cb4-7"><a href="simple-reg.html#cb4-7" tabindex="-1"></a><span class="do">##  3     2  8.04</span></span>
+<span id="cb4-8"><a href="simple-reg.html#cb4-8" tabindex="-1"></a><span class="do">##  4     7 18.1 </span></span>
+<span id="cb4-9"><a href="simple-reg.html#cb4-9" tabindex="-1"></a><span class="do">##  5    12 27.0 </span></span>
+<span id="cb4-10"><a href="simple-reg.html#cb4-10" tabindex="-1"></a><span class="do">##  6     6 16.7 </span></span>
+<span id="cb4-11"><a href="simple-reg.html#cb4-11" tabindex="-1"></a><span class="do">##  7     0  4.68</span></span>
+<span id="cb4-12"><a href="simple-reg.html#cb4-12" tabindex="-1"></a><span class="do">##  8     3 10.4 </span></span>
+<span id="cb4-13"><a href="simple-reg.html#cb4-13" tabindex="-1"></a><span class="do">##  9     5 14.9 </span></span>
+<span id="cb4-14"><a href="simple-reg.html#cb4-14" tabindex="-1"></a><span class="do">## 10     8 21.4 </span></span>
+<span id="cb4-15"><a href="simple-reg.html#cb4-15" tabindex="-1"></a><span class="do">## 11     7 18.2</span></span></code></pre></div>
 <p>선형화귀모형의 적합은 함수 <code>lm()</code>으로 할 수 있으며, 일반적인 사용법은 <code>lm(formula, data, ...)</code>이다. <code>formula</code>는 설정된 회귀모형을 나타내는 R 모형 공식으로써, 단순회귀모형의 경우에는 <code>y ~ x</code>와 같이 물결표(<code>~</code>)의 왼쪽에는 반응변수, 오른쪽에는 설명변수를 두면 된다. R 모형 공식에 대해서는 다중회귀모형에서 더 자세하게 살펴보겠다. <code>data</code>는 회귀분석에 사용될 데이터 프레임을 지정하는 것으로써, 이 예제에서는 위에서 생성한 데이터 프레임 <code>df2.1</code>를 지정하면 된다.</p>
 <p>모의자료가 있는 데이터 프레임 <code>df2.1</code>를 대상으로 단순회귀모형을 함수 <code>lm()</code>으로 적합시켜보자. 적합 결과는 <span class="math inline">\(\hat{y} = 4.764 + 1.948x\)</span> 임을 알 수 있다.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="simple-reg.html#cb4-1" tabindex="-1"></a>fit2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df2<span class="fl">.1</span>)</span>
-<span id="cb4-2"><a href="simple-reg.html#cb4-2" tabindex="-1"></a>fit2<span class="fl">.1</span></span>
-<span id="cb4-3"><a href="simple-reg.html#cb4-3" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb4-4"><a href="simple-reg.html#cb4-4" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb4-5"><a href="simple-reg.html#cb4-5" tabindex="-1"></a><span class="do">## lm(formula = y ~ x, data = df2.1)</span></span>
-<span id="cb4-6"><a href="simple-reg.html#cb4-6" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb4-7"><a href="simple-reg.html#cb4-7" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb4-8"><a href="simple-reg.html#cb4-8" tabindex="-1"></a><span class="do">## (Intercept)            x  </span></span>
-<span id="cb4-9"><a href="simple-reg.html#cb4-9" tabindex="-1"></a><span class="do">##       4.764        1.948</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="simple-reg.html#cb5-1" tabindex="-1"></a>fit2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df2<span class="fl">.1</span>)</span>
+<span id="cb5-2"><a href="simple-reg.html#cb5-2" tabindex="-1"></a>fit2<span class="fl">.1</span></span>
+<span id="cb5-3"><a href="simple-reg.html#cb5-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-4"><a href="simple-reg.html#cb5-4" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb5-5"><a href="simple-reg.html#cb5-5" tabindex="-1"></a><span class="do">## lm(formula = y ~ x, data = df2.1)</span></span>
+<span id="cb5-6"><a href="simple-reg.html#cb5-6" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-7"><a href="simple-reg.html#cb5-7" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb5-8"><a href="simple-reg.html#cb5-8" tabindex="-1"></a><span class="do">## (Intercept)            x  </span></span>
+<span id="cb5-9"><a href="simple-reg.html#cb5-9" tabindex="-1"></a><span class="do">##       4.764        1.948</span></span></code></pre></div>
 <p>함수 <code>lm()</code>으로 생성된 객체 <code>fit2.1</code>을 단순하게 출력시키면 추정된 회귀계수만 나타나지만, 사실 객체 <code>fit2.1</code>은 다음과 같이 많은 양의 정보가 담겨 있는 리스트 객체이다.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="simple-reg.html#cb5-1" tabindex="-1"></a><span class="fu">names</span>(fit2<span class="fl">.1</span>)</span>
-<span id="cb5-2"><a href="simple-reg.html#cb5-2" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;         </span></span>
-<span id="cb5-3"><a href="simple-reg.html#cb5-3" tabindex="-1"></a><span class="do">##  [5] &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;            &quot;df.residual&quot;  </span></span>
-<span id="cb5-4"><a href="simple-reg.html#cb5-4" tabindex="-1"></a><span class="do">##  [9] &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="simple-reg.html#cb6-1" tabindex="-1"></a><span class="fu">names</span>(fit2<span class="fl">.1</span>)</span>
+<span id="cb6-2"><a href="simple-reg.html#cb6-2" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;         </span></span>
+<span id="cb6-3"><a href="simple-reg.html#cb6-3" tabindex="-1"></a><span class="do">##  [5] &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;            &quot;df.residual&quot;  </span></span>
+<span id="cb6-4"><a href="simple-reg.html#cb6-4" tabindex="-1"></a><span class="do">##  [9] &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</span></span></code></pre></div>
 <p>사용자마다 필요한 정보가 서로 다를 수 있기 때문에 SAS나 SPSS에서와 같이 모든 결과물을 한 번에 출력하는 것은 좋은 방법이 아닐 수 있다. 객체 <code>fit2.1</code>에 담겨 있는 필요한 정보를 획득하기 위해서는 해당하는 함수를 사용해야 하며, 앞으로 차근차근 살펴보겠다.</p>
 <p>모집단 회귀직선 및 생성된 모의자료, 그리고 추정된 회귀직선을 함께 나타낸 그래프가 그림 <a href="simple-reg.html#fig:ex2-1">2.2</a>이다. 추정된 회귀직선은 모집단 회귀직선과 매우 비숫하지만 완벽하게 일치하지 않음을 알 수 있다.</p>
 <div class="figure"><span style="display:block;" id="fig:ex2-1"></span>
@@ -379,36 +379,36 @@ RSS = \sum_{i=1}^{n} \left( y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{i} \right)^{
 <li><p>최소제곱법에 의한 단순회귀직선을 추정하고, 추정된 <span class="math inline">\(\hat{\beta}_{1}\)</span>의 의미를 해석해 보자.</p></li>
 </ol>
 <p>자료가 콤마로 구분된 CSV 파일을 함수 <code>readr::read_csv()</code>로 불러와서 두 변수의 산점도를 작성해 보자.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="simple-reg.html#cb6-1" tabindex="-1"></a>df2<span class="fl">.2</span> <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;Data/ex2-2.csv&quot;</span>)</span>
-<span id="cb6-2"><a href="simple-reg.html#cb6-2" tabindex="-1"></a>df2<span class="fl">.2</span></span>
-<span id="cb6-3"><a href="simple-reg.html#cb6-3" tabindex="-1"></a><span class="do">## # A tibble: 20 × 2</span></span>
-<span id="cb6-4"><a href="simple-reg.html#cb6-4" tabindex="-1"></a><span class="do">##    sales advertisement</span></span>
-<span id="cb6-5"><a href="simple-reg.html#cb6-5" tabindex="-1"></a><span class="do">##    &lt;dbl&gt;         &lt;dbl&gt;</span></span>
-<span id="cb6-6"><a href="simple-reg.html#cb6-6" tabindex="-1"></a><span class="do">##  1   425            23</span></span>
-<span id="cb6-7"><a href="simple-reg.html#cb6-7" tabindex="-1"></a><span class="do">##  2   370            21</span></span>
-<span id="cb6-8"><a href="simple-reg.html#cb6-8" tabindex="-1"></a><span class="do">##  3   200            16</span></span>
-<span id="cb6-9"><a href="simple-reg.html#cb6-9" tabindex="-1"></a><span class="do">##  4   580            34</span></span>
-<span id="cb6-10"><a href="simple-reg.html#cb6-10" tabindex="-1"></a><span class="do">##  5   620            32</span></span>
-<span id="cb6-11"><a href="simple-reg.html#cb6-11" tabindex="-1"></a><span class="do">##  6   650            36</span></span>
-<span id="cb6-12"><a href="simple-reg.html#cb6-12" tabindex="-1"></a><span class="do">##  7   700            40</span></span>
-<span id="cb6-13"><a href="simple-reg.html#cb6-13" tabindex="-1"></a><span class="do">##  8   490            37</span></span>
-<span id="cb6-14"><a href="simple-reg.html#cb6-14" tabindex="-1"></a><span class="do">##  9   610            35</span></span>
-<span id="cb6-15"><a href="simple-reg.html#cb6-15" tabindex="-1"></a><span class="do">## 10   290            20</span></span>
-<span id="cb6-16"><a href="simple-reg.html#cb6-16" tabindex="-1"></a><span class="do">## 11   320            20</span></span>
-<span id="cb6-17"><a href="simple-reg.html#cb6-17" tabindex="-1"></a><span class="do">## 12   350            21</span></span>
-<span id="cb6-18"><a href="simple-reg.html#cb6-18" tabindex="-1"></a><span class="do">## 13   400            23</span></span>
-<span id="cb6-19"><a href="simple-reg.html#cb6-19" tabindex="-1"></a><span class="do">## 14   517            21</span></span>
-<span id="cb6-20"><a href="simple-reg.html#cb6-20" tabindex="-1"></a><span class="do">## 15   545            30</span></span>
-<span id="cb6-21"><a href="simple-reg.html#cb6-21" tabindex="-1"></a><span class="do">## 16   590            32</span></span>
-<span id="cb6-22"><a href="simple-reg.html#cb6-22" tabindex="-1"></a><span class="do">## 17   711            39</span></span>
-<span id="cb6-23"><a href="simple-reg.html#cb6-23" tabindex="-1"></a><span class="do">## 18   650            37</span></span>
-<span id="cb6-24"><a href="simple-reg.html#cb6-24" tabindex="-1"></a><span class="do">## 19   740            41</span></span>
-<span id="cb6-25"><a href="simple-reg.html#cb6-25" tabindex="-1"></a><span class="do">## 20   660            38</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="simple-reg.html#cb7-1" tabindex="-1"></a><span class="fu">ggplot</span>(df2<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">x =</span> advertisement, <span class="at">y =</span> sales)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="simple-reg.html#cb7-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="simple-reg.html#cb7-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;비모수적 회귀곡선&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb7-4"><a href="simple-reg.html#cb7-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;회귀직선&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="simple-reg.html#cb7-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="simple-reg.html#cb7-1" tabindex="-1"></a>df2<span class="fl">.2</span> <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;Data/ex2-2.csv&quot;</span>)</span>
+<span id="cb7-2"><a href="simple-reg.html#cb7-2" tabindex="-1"></a>df2<span class="fl">.2</span></span>
+<span id="cb7-3"><a href="simple-reg.html#cb7-3" tabindex="-1"></a><span class="do">## # A tibble: 20 × 2</span></span>
+<span id="cb7-4"><a href="simple-reg.html#cb7-4" tabindex="-1"></a><span class="do">##    sales advertisement</span></span>
+<span id="cb7-5"><a href="simple-reg.html#cb7-5" tabindex="-1"></a><span class="do">##    &lt;dbl&gt;         &lt;dbl&gt;</span></span>
+<span id="cb7-6"><a href="simple-reg.html#cb7-6" tabindex="-1"></a><span class="do">##  1   425            23</span></span>
+<span id="cb7-7"><a href="simple-reg.html#cb7-7" tabindex="-1"></a><span class="do">##  2   370            21</span></span>
+<span id="cb7-8"><a href="simple-reg.html#cb7-8" tabindex="-1"></a><span class="do">##  3   200            16</span></span>
+<span id="cb7-9"><a href="simple-reg.html#cb7-9" tabindex="-1"></a><span class="do">##  4   580            34</span></span>
+<span id="cb7-10"><a href="simple-reg.html#cb7-10" tabindex="-1"></a><span class="do">##  5   620            32</span></span>
+<span id="cb7-11"><a href="simple-reg.html#cb7-11" tabindex="-1"></a><span class="do">##  6   650            36</span></span>
+<span id="cb7-12"><a href="simple-reg.html#cb7-12" tabindex="-1"></a><span class="do">##  7   700            40</span></span>
+<span id="cb7-13"><a href="simple-reg.html#cb7-13" tabindex="-1"></a><span class="do">##  8   490            37</span></span>
+<span id="cb7-14"><a href="simple-reg.html#cb7-14" tabindex="-1"></a><span class="do">##  9   610            35</span></span>
+<span id="cb7-15"><a href="simple-reg.html#cb7-15" tabindex="-1"></a><span class="do">## 10   290            20</span></span>
+<span id="cb7-16"><a href="simple-reg.html#cb7-16" tabindex="-1"></a><span class="do">## 11   320            20</span></span>
+<span id="cb7-17"><a href="simple-reg.html#cb7-17" tabindex="-1"></a><span class="do">## 12   350            21</span></span>
+<span id="cb7-18"><a href="simple-reg.html#cb7-18" tabindex="-1"></a><span class="do">## 13   400            23</span></span>
+<span id="cb7-19"><a href="simple-reg.html#cb7-19" tabindex="-1"></a><span class="do">## 14   517            21</span></span>
+<span id="cb7-20"><a href="simple-reg.html#cb7-20" tabindex="-1"></a><span class="do">## 15   545            30</span></span>
+<span id="cb7-21"><a href="simple-reg.html#cb7-21" tabindex="-1"></a><span class="do">## 16   590            32</span></span>
+<span id="cb7-22"><a href="simple-reg.html#cb7-22" tabindex="-1"></a><span class="do">## 17   711            39</span></span>
+<span id="cb7-23"><a href="simple-reg.html#cb7-23" tabindex="-1"></a><span class="do">## 18   650            37</span></span>
+<span id="cb7-24"><a href="simple-reg.html#cb7-24" tabindex="-1"></a><span class="do">## 19   740            41</span></span>
+<span id="cb7-25"><a href="simple-reg.html#cb7-25" tabindex="-1"></a><span class="do">## 20   660            38</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="simple-reg.html#cb8-1" tabindex="-1"></a><span class="fu">ggplot</span>(df2<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">x =</span> advertisement, <span class="at">y =</span> sales)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="simple-reg.html#cb8-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="simple-reg.html#cb8-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;비모수적 회귀곡선&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="simple-reg.html#cb8-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;회귀직선&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="simple-reg.html#cb8-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="cn">NULL</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:ex2-2"></span>
 <img src="_main_files/figure-html/ex2-2-1.png" alt="예제 2.2 자료의 산점도와 비모수적 회귀곡선" width="576" />
 <p class="caption">
@@ -417,15 +417,15 @@ RSS = \sum_{i=1}^{n} \left( y_{i}-\hat{\beta}_{0}-\hat{\beta}_{1}x_{i} \right)^{
 </div>
 <p>비모수적 회귀곡선은 두 변수의 관계를 가장 잘 나타내는 곡선을 추정하는 기능을 가지고 있다. 그림 <a href="simple-reg.html#fig:ex2-2">2.3</a>에 작성된 비모수적 회귀곡선은 대체로 직선의 형태를 취하고 있음을 알 수 있으며, 함께 표시된 회귀직선과 큰 차이가 없는 것을 알 수 있다. 이것으로 두 변수의 관계를 직선으로 설정하는 데에 큰 무리가 없음을 알 수 있다.</p>
 <p>함수 <code>lm()</code>으로 단순회귀직선을 추정해 보자.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="simple-reg.html#cb8-1" tabindex="-1"></a>fit2<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(sales <span class="sc">~</span> advertisement, <span class="at">data =</span> df2<span class="fl">.2</span>)</span>
-<span id="cb8-2"><a href="simple-reg.html#cb8-2" tabindex="-1"></a>fit2<span class="fl">.2</span></span>
-<span id="cb8-3"><a href="simple-reg.html#cb8-3" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb8-4"><a href="simple-reg.html#cb8-4" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb8-5"><a href="simple-reg.html#cb8-5" tabindex="-1"></a><span class="do">## lm(formula = sales ~ advertisement, data = df2.2)</span></span>
-<span id="cb8-6"><a href="simple-reg.html#cb8-6" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb8-7"><a href="simple-reg.html#cb8-7" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb8-8"><a href="simple-reg.html#cb8-8" tabindex="-1"></a><span class="do">##   (Intercept)  advertisement  </span></span>
-<span id="cb8-9"><a href="simple-reg.html#cb8-9" tabindex="-1"></a><span class="do">##        -6.944         17.713</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="simple-reg.html#cb9-1" tabindex="-1"></a>fit2<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(sales <span class="sc">~</span> advertisement, <span class="at">data =</span> df2<span class="fl">.2</span>)</span>
+<span id="cb9-2"><a href="simple-reg.html#cb9-2" tabindex="-1"></a>fit2<span class="fl">.2</span></span>
+<span id="cb9-3"><a href="simple-reg.html#cb9-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb9-4"><a href="simple-reg.html#cb9-4" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb9-5"><a href="simple-reg.html#cb9-5" tabindex="-1"></a><span class="do">## lm(formula = sales ~ advertisement, data = df2.2)</span></span>
+<span id="cb9-6"><a href="simple-reg.html#cb9-6" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb9-7"><a href="simple-reg.html#cb9-7" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb9-8"><a href="simple-reg.html#cb9-8" tabindex="-1"></a><span class="do">##   (Intercept)  advertisement  </span></span>
+<span id="cb9-9"><a href="simple-reg.html#cb9-9" tabindex="-1"></a><span class="do">##        -6.944         17.713</span></span></code></pre></div>
 <p>적합 결과는 <span class="math inline">\(\hat{y} = -6.994 + 17.713x\)</span> 임을 알 수 있다. 추정된 직선의 기울기 <span class="math inline">\(\hat{\beta}_{1}=17.713\)</span> 의 의미는 광고비 지출을 한 단위인 100만원 증가시키면 평균 매출액의 규모가 17.713백만원 증가한다는 것이 된다.
 절편 <span class="math inline">\(\hat{\beta}_{0}=-6.994\)</span> 의 의미는 광고비 지출이 <span class="math inline">\(0\)</span> 일 때 평균 매출액은 -6.994백만원이라는 것이 된다.
 즉, 광고를 하지 않으면 적자를 본다는 것인데, 이러한 해석은 조사된 광고비 자료의 범위에 <span class="math inline">\(0\)</span> 이 포함되어 있지 않기 때문에 적절하지 않다고 하겠다.</p>
@@ -499,7 +499,7 @@ Var\left(\hat{\beta}_{0}\right) &amp; = Var\left(\overline{Y}-\hat{\beta}_{1}\ov
 <p>지금까지 살펴본 최소제곱추정량의 특성과 관련된 중요한 결과가 바로 가우스-마코프(Gauss-Markov) 정리이다.
 가우스-마코프 정리는 최소제곱추정량으로 회귀계수를 추정해서 사용할 수 있는 근거를 제시하고 있다.</p>
 <div class="theorem">
-<p><span id="thm:unnamed-chunk-11" class="theorem"><strong>정리 2.1  (Gauss-Markov 정리) </strong></span>오차항의 평균이 0, 분산이 <span class="math inline">\(\sigma^{2}\)</span>이며 서로 독립을 가정한 회귀모형에서 최소제곱추정량은 최량선형불편추정량(Best Linear Unbiased Estimator: BLUE)이다.
+<p><span id="thm:unnamed-chunk-12" class="theorem"><strong>정리 2.1  (Gauss-Markov 정리) </strong></span>오차항의 평균이 0, 분산이 <span class="math inline">\(\sigma^{2}\)</span>이며 서로 독립을 가정한 회귀모형에서 최소제곱추정량은 최량선형불편추정량(Best Linear Unbiased Estimator: BLUE)이다.
 즉, 최소제곱추정량은 <span class="math inline">\(Y_{i}\)</span>의 선형결합으로 표시되는 모든 불편추정량 중에 최소 분산을 갖는다.</p>
 </div>
 <p><span class="math inline">\(\bullet\)</span> 최소제곱추정량으로 추정된 회귀직선의 특성</p>
@@ -579,34 +579,34 @@ RSS = \sum_{i=1}^{n}\left(y_{i}-\hat{y}_{i}\right)^{2}
 <li><p><span class="math inline">\(\sigma\)</span> 의 추정값인 회귀 표준오차를 구해 보자.</p></li>
 </ol>
 <p>예제 2.2에서 이루어진 분석을 다시 실행해 보자.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="simple-reg.html#cb9-1" tabindex="-1"></a>df2<span class="fl">.2</span> <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;Data/ex2-2.csv&quot;</span>)</span>
-<span id="cb9-2"><a href="simple-reg.html#cb9-2" tabindex="-1"></a>fit2<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(sales <span class="sc">~</span> advertisement, <span class="at">data =</span> df2<span class="fl">.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="simple-reg.html#cb10-1" tabindex="-1"></a>df2<span class="fl">.2</span> <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;Data/ex2-2.csv&quot;</span>)</span>
+<span id="cb10-2"><a href="simple-reg.html#cb10-2" tabindex="-1"></a>fit2<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(sales <span class="sc">~</span> advertisement, <span class="at">data =</span> df2<span class="fl">.2</span>)</span></code></pre></div>
 <p>함수 <code>lm()</code>으로 생성된 리스트 객체 <code>fit2.2</code>에는 <code>"fitted.values"</code>와 <code>"residuals"</code>라는 이름으로 주어진 설명변수 값에 대한 반응변수의 추정값과 잔차가 입력되어 있다.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="simple-reg.html#cb10-1" tabindex="-1"></a><span class="fu">cbind</span>(df2<span class="fl">.2</span>, <span class="at">Yhat =</span> fit2<span class="fl">.2</span><span class="sc">$</span>fitted, <span class="at">resid =</span> fit2<span class="fl">.2</span><span class="sc">$</span>resid)</span>
-<span id="cb10-2"><a href="simple-reg.html#cb10-2" tabindex="-1"></a><span class="do">##    sales advertisement     Yhat       resid</span></span>
-<span id="cb10-3"><a href="simple-reg.html#cb10-3" tabindex="-1"></a><span class="do">## 1    425            23 400.4524   24.547619</span></span>
-<span id="cb10-4"><a href="simple-reg.html#cb10-4" tabindex="-1"></a><span class="do">## 2    370            21 365.0266    4.973389</span></span>
-<span id="cb10-5"><a href="simple-reg.html#cb10-5" tabindex="-1"></a><span class="do">## 3    200            16 276.4622  -76.462185</span></span>
-<span id="cb10-6"><a href="simple-reg.html#cb10-6" tabindex="-1"></a><span class="do">## 4    580            34 595.2941  -15.294118</span></span>
-<span id="cb10-7"><a href="simple-reg.html#cb10-7" tabindex="-1"></a><span class="do">## 5    620            32 559.8683   60.131653</span></span>
-<span id="cb10-8"><a href="simple-reg.html#cb10-8" tabindex="-1"></a><span class="do">## 6    650            36 630.7199   19.280112</span></span>
-<span id="cb10-9"><a href="simple-reg.html#cb10-9" tabindex="-1"></a><span class="do">## 7    700            40 701.5714   -1.571429</span></span>
-<span id="cb10-10"><a href="simple-reg.html#cb10-10" tabindex="-1"></a><span class="do">## 8    490            37 648.4328 -158.432773</span></span>
-<span id="cb10-11"><a href="simple-reg.html#cb10-11" tabindex="-1"></a><span class="do">## 9    610            35 613.0070   -3.007003</span></span>
-<span id="cb10-12"><a href="simple-reg.html#cb10-12" tabindex="-1"></a><span class="do">## 10   290            20 347.3137  -57.313725</span></span>
-<span id="cb10-13"><a href="simple-reg.html#cb10-13" tabindex="-1"></a><span class="do">## 11   320            20 347.3137  -27.313725</span></span>
-<span id="cb10-14"><a href="simple-reg.html#cb10-14" tabindex="-1"></a><span class="do">## 12   350            21 365.0266  -15.026611</span></span>
-<span id="cb10-15"><a href="simple-reg.html#cb10-15" tabindex="-1"></a><span class="do">## 13   400            23 400.4524   -0.452381</span></span>
-<span id="cb10-16"><a href="simple-reg.html#cb10-16" tabindex="-1"></a><span class="do">## 14   517            21 365.0266  151.973389</span></span>
-<span id="cb10-17"><a href="simple-reg.html#cb10-17" tabindex="-1"></a><span class="do">## 15   545            30 524.4426   20.557423</span></span>
-<span id="cb10-18"><a href="simple-reg.html#cb10-18" tabindex="-1"></a><span class="do">## 16   590            32 559.8683   30.131653</span></span>
-<span id="cb10-19"><a href="simple-reg.html#cb10-19" tabindex="-1"></a><span class="do">## 17   711            39 683.8585   27.141457</span></span>
-<span id="cb10-20"><a href="simple-reg.html#cb10-20" tabindex="-1"></a><span class="do">## 18   650            37 648.4328    1.567227</span></span>
-<span id="cb10-21"><a href="simple-reg.html#cb10-21" tabindex="-1"></a><span class="do">## 19   740            41 719.2843   20.715686</span></span>
-<span id="cb10-22"><a href="simple-reg.html#cb10-22" tabindex="-1"></a><span class="do">## 20   660            38 666.1457   -6.145658</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="simple-reg.html#cb11-1" tabindex="-1"></a><span class="fu">cbind</span>(df2<span class="fl">.2</span>, <span class="at">Yhat =</span> fit2<span class="fl">.2</span><span class="sc">$</span>fitted, <span class="at">resid =</span> fit2<span class="fl">.2</span><span class="sc">$</span>resid)</span>
+<span id="cb11-2"><a href="simple-reg.html#cb11-2" tabindex="-1"></a><span class="do">##    sales advertisement     Yhat       resid</span></span>
+<span id="cb11-3"><a href="simple-reg.html#cb11-3" tabindex="-1"></a><span class="do">## 1    425            23 400.4524   24.547619</span></span>
+<span id="cb11-4"><a href="simple-reg.html#cb11-4" tabindex="-1"></a><span class="do">## 2    370            21 365.0266    4.973389</span></span>
+<span id="cb11-5"><a href="simple-reg.html#cb11-5" tabindex="-1"></a><span class="do">## 3    200            16 276.4622  -76.462185</span></span>
+<span id="cb11-6"><a href="simple-reg.html#cb11-6" tabindex="-1"></a><span class="do">## 4    580            34 595.2941  -15.294118</span></span>
+<span id="cb11-7"><a href="simple-reg.html#cb11-7" tabindex="-1"></a><span class="do">## 5    620            32 559.8683   60.131653</span></span>
+<span id="cb11-8"><a href="simple-reg.html#cb11-8" tabindex="-1"></a><span class="do">## 6    650            36 630.7199   19.280112</span></span>
+<span id="cb11-9"><a href="simple-reg.html#cb11-9" tabindex="-1"></a><span class="do">## 7    700            40 701.5714   -1.571429</span></span>
+<span id="cb11-10"><a href="simple-reg.html#cb11-10" tabindex="-1"></a><span class="do">## 8    490            37 648.4328 -158.432773</span></span>
+<span id="cb11-11"><a href="simple-reg.html#cb11-11" tabindex="-1"></a><span class="do">## 9    610            35 613.0070   -3.007003</span></span>
+<span id="cb11-12"><a href="simple-reg.html#cb11-12" tabindex="-1"></a><span class="do">## 10   290            20 347.3137  -57.313725</span></span>
+<span id="cb11-13"><a href="simple-reg.html#cb11-13" tabindex="-1"></a><span class="do">## 11   320            20 347.3137  -27.313725</span></span>
+<span id="cb11-14"><a href="simple-reg.html#cb11-14" tabindex="-1"></a><span class="do">## 12   350            21 365.0266  -15.026611</span></span>
+<span id="cb11-15"><a href="simple-reg.html#cb11-15" tabindex="-1"></a><span class="do">## 13   400            23 400.4524   -0.452381</span></span>
+<span id="cb11-16"><a href="simple-reg.html#cb11-16" tabindex="-1"></a><span class="do">## 14   517            21 365.0266  151.973389</span></span>
+<span id="cb11-17"><a href="simple-reg.html#cb11-17" tabindex="-1"></a><span class="do">## 15   545            30 524.4426   20.557423</span></span>
+<span id="cb11-18"><a href="simple-reg.html#cb11-18" tabindex="-1"></a><span class="do">## 16   590            32 559.8683   30.131653</span></span>
+<span id="cb11-19"><a href="simple-reg.html#cb11-19" tabindex="-1"></a><span class="do">## 17   711            39 683.8585   27.141457</span></span>
+<span id="cb11-20"><a href="simple-reg.html#cb11-20" tabindex="-1"></a><span class="do">## 18   650            37 648.4328    1.567227</span></span>
+<span id="cb11-21"><a href="simple-reg.html#cb11-21" tabindex="-1"></a><span class="do">## 19   740            41 719.2843   20.715686</span></span>
+<span id="cb11-22"><a href="simple-reg.html#cb11-22" tabindex="-1"></a><span class="do">## 20   660            38 666.1457   -6.145658</span></span></code></pre></div>
 <p>회귀모형의 다양한 추정 결과는 함수 <code>lm()</code>으로 생성된 객체를 함수 <code>summary()</code>에 입력하면 얻을 수 있다. 자세한 사용 방법은 <a href="simple-reg-infer.html#simple-reg-infer">3</a>장에서 살펴볼 것이지만, 여기에서는 함수 <code>summary()</code>의 결과 중 <span class="math inline">\(\sigma\)</span> 의 추정값만을 출력해 보자.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="simple-reg.html#cb11-1" tabindex="-1"></a><span class="fu">summary</span>(fit2<span class="fl">.2</span>)<span class="sc">$</span>sigma</span>
-<span id="cb11-2"><a href="simple-reg.html#cb11-2" tabindex="-1"></a><span class="do">## [1] 60.41388</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="simple-reg.html#cb12-1" tabindex="-1"></a><span class="fu">summary</span>(fit2<span class="fl">.2</span>)<span class="sc">$</span>sigma</span>
+<span id="cb12-2"><a href="simple-reg.html#cb12-2" tabindex="-1"></a><span class="do">## [1] 60.41388</span></span></code></pre></div>
 
 </div>
 </div>
