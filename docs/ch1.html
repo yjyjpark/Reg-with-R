@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1 장 회귀모형 | R에 의한 회귀분석</title>
   <meta name="description" content="한신대학교 응용통계학과 전공 과목 회귀분석및실습의 교재로 사용되고 있습니다." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1 장 회귀모형 | R에 의한 회귀분석" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="박동련" />
 
 
-<meta name="date" content="2024-02-23" />
+<meta name="date" content="2024-03-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -411,7 +411,7 @@ Y = \beta_{0} + \beta_{1}X_{1} + \cdots + \beta_{k}X_{k} + \varepsilon
 console 창에 출력되는 결과물은 <code>##</code>으로 시작되도록 하였다.</p>
 <p>이 책을 작성할 때의 R 세션 정보는 다음과 같다.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="ch1.html#cb2-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb2-2"><a href="ch1.html#cb2-2" tabindex="-1"></a><span class="do">## R version 4.3.2 (2023-10-31 ucrt)</span></span>
+<span id="cb2-2"><a href="ch1.html#cb2-2" tabindex="-1"></a><span class="do">## R version 4.3.3 (2024-02-29 ucrt)</span></span>
 <span id="cb2-3"><a href="ch1.html#cb2-3" tabindex="-1"></a><span class="do">## Platform: x86_64-w64-mingw32/x64 (64-bit)</span></span>
 <span id="cb2-4"><a href="ch1.html#cb2-4" tabindex="-1"></a><span class="do">## Running under: Windows 11 x64 (build 22631)</span></span>
 <span id="cb2-5"><a href="ch1.html#cb2-5" tabindex="-1"></a><span class="do">## </span></span>
@@ -431,24 +431,24 @@ console 창에 출력되는 결과물은 <code>##</code>으로 시작되도록 �
 <span id="cb2-19"><a href="ch1.html#cb2-19" tabindex="-1"></a><span class="do">## [8] base     </span></span>
 <span id="cb2-20"><a href="ch1.html#cb2-20" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb2-21"><a href="ch1.html#cb2-21" tabindex="-1"></a><span class="do">## other attached packages:</span></span>
-<span id="cb2-22"><a href="ch1.html#cb2-22" tabindex="-1"></a><span class="do">##  [1] patchwork_1.2.0 expsmooth_2.3   fma_2.5         forecast_8.21.1</span></span>
+<span id="cb2-22"><a href="ch1.html#cb2-22" tabindex="-1"></a><span class="do">##  [1] patchwork_1.2.0 expsmooth_2.3   fma_2.5         forecast_8.22.0</span></span>
 <span id="cb2-23"><a href="ch1.html#cb2-23" tabindex="-1"></a><span class="do">##  [5] fpp2_2.5        lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1  </span></span>
 <span id="cb2-24"><a href="ch1.html#cb2-24" tabindex="-1"></a><span class="do">##  [9] dplyr_1.1.4     purrr_1.0.2     readr_2.1.5     tidyr_1.3.1    </span></span>
-<span id="cb2-25"><a href="ch1.html#cb2-25" tabindex="-1"></a><span class="do">## [13] tibble_3.2.1    ggplot2_3.4.4   tidyverse_2.0.0</span></span>
+<span id="cb2-25"><a href="ch1.html#cb2-25" tabindex="-1"></a><span class="do">## [13] tibble_3.2.1    ggplot2_3.5.0   tidyverse_2.0.0</span></span>
 <span id="cb2-26"><a href="ch1.html#cb2-26" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb2-27"><a href="ch1.html#cb2-27" tabindex="-1"></a><span class="do">## loaded via a namespace (and not attached):</span></span>
-<span id="cb2-28"><a href="ch1.html#cb2-28" tabindex="-1"></a><span class="do">##  [1] gtable_0.3.4      xfun_0.41         bslib_0.6.1       lattice_0.21-9   </span></span>
-<span id="cb2-29"><a href="ch1.html#cb2-29" tabindex="-1"></a><span class="do">##  [5] tzdb_0.4.0        quadprog_1.5-8    vctrs_0.6.5       tools_4.3.2      </span></span>
-<span id="cb2-30"><a href="ch1.html#cb2-30" tabindex="-1"></a><span class="do">##  [9] generics_0.1.3    curl_5.2.0        parallel_4.3.2    fansi_1.0.6      </span></span>
+<span id="cb2-28"><a href="ch1.html#cb2-28" tabindex="-1"></a><span class="do">##  [1] gtable_0.3.4      xfun_0.42         bslib_0.6.1       lattice_0.22-5   </span></span>
+<span id="cb2-29"><a href="ch1.html#cb2-29" tabindex="-1"></a><span class="do">##  [5] tzdb_0.4.0        quadprog_1.5-8    vctrs_0.6.5       tools_4.3.3      </span></span>
+<span id="cb2-30"><a href="ch1.html#cb2-30" tabindex="-1"></a><span class="do">##  [9] generics_0.1.3    curl_5.2.1        parallel_4.3.3    fansi_1.0.6      </span></span>
 <span id="cb2-31"><a href="ch1.html#cb2-31" tabindex="-1"></a><span class="do">## [13] highr_0.10        xts_0.13.2        pkgconfig_2.0.3   Matrix_1.6-5     </span></span>
-<span id="cb2-32"><a href="ch1.html#cb2-32" tabindex="-1"></a><span class="do">## [17] lifecycle_1.0.4   farver_2.1.1      compiler_4.3.2    munsell_0.5.0    </span></span>
+<span id="cb2-32"><a href="ch1.html#cb2-32" tabindex="-1"></a><span class="do">## [17] lifecycle_1.0.4   farver_2.1.1      compiler_4.3.3    munsell_0.5.0    </span></span>
 <span id="cb2-33"><a href="ch1.html#cb2-33" tabindex="-1"></a><span class="do">## [21] htmltools_0.5.7   sass_0.4.8        yaml_2.3.8        pillar_1.9.0     </span></span>
 <span id="cb2-34"><a href="ch1.html#cb2-34" tabindex="-1"></a><span class="do">## [25] crayon_1.5.2      jquerylib_0.1.4   cachem_1.0.8      nlme_3.1-164     </span></span>
-<span id="cb2-35"><a href="ch1.html#cb2-35" tabindex="-1"></a><span class="do">## [29] fracdiff_1.5-2    tidyselect_1.2.0  digest_0.6.34     stringi_1.8.3    </span></span>
-<span id="cb2-36"><a href="ch1.html#cb2-36" tabindex="-1"></a><span class="do">## [33] bookdown_0.37     labeling_0.4.3    tseries_0.10-55   fastmap_1.1.1    </span></span>
-<span id="cb2-37"><a href="ch1.html#cb2-37" tabindex="-1"></a><span class="do">## [37] grid_4.3.2        colorspace_2.1-0  cli_3.6.2         magrittr_2.0.3   </span></span>
+<span id="cb2-35"><a href="ch1.html#cb2-35" tabindex="-1"></a><span class="do">## [29] fracdiff_1.5-3    tidyselect_1.2.0  digest_0.6.34     stringi_1.8.3    </span></span>
+<span id="cb2-36"><a href="ch1.html#cb2-36" tabindex="-1"></a><span class="do">## [33] bookdown_0.38     labeling_0.4.3    tseries_0.10-55   fastmap_1.1.1    </span></span>
+<span id="cb2-37"><a href="ch1.html#cb2-37" tabindex="-1"></a><span class="do">## [37] grid_4.3.3        colorspace_2.1-0  cli_3.6.2         magrittr_2.0.3   </span></span>
 <span id="cb2-38"><a href="ch1.html#cb2-38" tabindex="-1"></a><span class="do">## [41] utf8_1.2.4        withr_3.0.0       scales_1.3.0      timechange_0.3.0 </span></span>
-<span id="cb2-39"><a href="ch1.html#cb2-39" tabindex="-1"></a><span class="do">## [45] TTR_0.24.4        rmarkdown_2.25    quantmod_0.4.25   nnet_7.3-19      </span></span>
+<span id="cb2-39"><a href="ch1.html#cb2-39" tabindex="-1"></a><span class="do">## [45] TTR_0.24.4        rmarkdown_2.25    quantmod_0.4.26   nnet_7.3-19      </span></span>
 <span id="cb2-40"><a href="ch1.html#cb2-40" tabindex="-1"></a><span class="do">## [49] timeDate_4032.109 zoo_1.8-12        hms_1.1.3         urca_1.3-3       </span></span>
 <span id="cb2-41"><a href="ch1.html#cb2-41" tabindex="-1"></a><span class="do">## [53] evaluate_0.23     knitr_1.45        lmtest_0.9-40     mgcv_1.9-1       </span></span>
 <span id="cb2-42"><a href="ch1.html#cb2-42" tabindex="-1"></a><span class="do">## [57] rlang_1.1.3       Rcpp_1.0.12       glue_1.7.0        rstudioapi_0.15.0</span></span>
