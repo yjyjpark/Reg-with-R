@@ -67,6 +67,7 @@ eq:multi-lse-3
 eq:multi-lse-4
 eq:multi-lse-5
 eq:multi-lse-6
+fig:ex4-1-1
 fig:ex4-2-1
 fig:ex4-2-2
 eq:poly-reg-1

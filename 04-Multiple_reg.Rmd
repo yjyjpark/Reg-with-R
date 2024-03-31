@@ -190,14 +190,26 @@ fit_m
 또한 변수 `qsec`에 대한 추정된 회귀계수 $0.929$ 은 `wt`를 일정한 수준으로 고정한 상태에서 `qsec`이 한 단위 증가했을 때 `mpg`의 평균 변화량을 나타내는 것이며, 그림에서 회귀평면이 `qsec`의 양의 방향으로 완만하게 증가하는 모습을 볼 수 있다.
 
 ```{r ex4-1-1, echo=FALSE, fig.cap="설명변수가 2개인 다중회귀모형에서 추정된 회귀평면"}
-library(plotly)
-wt <- seq(1, 6, len = 20)
-qsec <- seq(13, 23, len = 20)
-fun12 <- function(x1, x2) 19.74 - 5.047*x1 + 0.929*x2
-mpg <- outer(wt, qsec, fun12)
+library(tidyverse)
+#library(rayshader)
+library(lattice)
 
-p <- plot_ly() |> add_surface(y = ~wt, x = ~qsec, z = ~mpg) 
-htmltools::tagList(p)
+wt <- seq(1, 6, len = 50)
+qsec <- seq(13, 23, len = 50)
+fun12 <- function(x1, x2) 19.74 - 5.047*x1 + 0.929*x2
+
+# df1 <- expand_grid(wt, qsec)
+# p <- df1 |> mutate(mpg = fun12(wt, qsec)) |> 
+#   ggplot(aes(x = wt, y = qsec, fill = mpg)) +
+#   geom_raster()  +
+#   scale_fill_viridis_c()
+# plot_gg(p)
+
+mpg <- outer(wt, qsec, fun12)
+wireframe(mpg, drape = TRUE, screen = list(z = -40, x = -80, y = 0),
+          xlab = "wt", ylab = "qsec", zlab = "mpg",
+          scales = list(arrows = FALSE))
+
 ```
 
 
