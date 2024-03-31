@@ -197,7 +197,7 @@ fun12 <- function(x1, x2) 19.74 - 5.047*x1 + 0.929*x2
 mpg <- outer(wt, qsec, fun12)
 
 p <- plot_ly() |> add_surface(y = ~wt, x = ~qsec, z = ~mpg) 
-p
+htmltools::tagList(p)
 ```
 
 
