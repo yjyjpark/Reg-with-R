@@ -23,7 +23,7 @@
 <meta name="author" content="박동련" />
 
 
-<meta name="date" content="2024-03-31" />
+<meta name="date" content="2024-04-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -157,6 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.2" data-path="simple-reg.html"><a href="simple-reg.html#section-property-lse"><i class="fa fa-check"></i><b>2.2.2</b> 최소제곱추정량의 특성</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="simple-reg.html"><a href="simple-reg.html#section-simple-sigma"><i class="fa fa-check"></i><b>2.3</b> 오차분산 <span class="math inline">\(\sigma^{2}\)</span>의 추정</a></li>
+<li class="chapter" data-level="2.4" data-path="simple-reg.html"><a href="simple-reg.html#연습문제"><i class="fa fa-check"></i><b>2.4</b> 연습문제</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html"><i class="fa fa-check"></i><b>3</b> 단순선형회귀모형의 추론</a>
 <ul>
@@ -175,6 +176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-평균-eyx_o에-대한-신뢰구간-추정"><i class="fa fa-check"></i><b>3.3</b> 반응변수의 평균, <span class="math inline">\(E(Y|X_{o})\)</span>에 대한 신뢰구간 추정</a></li>
 <li class="chapter" data-level="3.4" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-개별-관측값-예측"><i class="fa fa-check"></i><b>3.4</b> 반응변수의 개별 관측값 예측</a></li>
 <li class="chapter" data-level="3.5" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#상관계수-두-변수-사이의-선형-연관성-측정"><i class="fa fa-check"></i><b>3.5</b> 상관계수 : 두 변수 사이의 선형 연관성 측정</a></li>
+<li class="chapter" data-level="3.6" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#연습문제-1"><i class="fa fa-check"></i><b>3.6</b> 연습문제</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> 다중선형회귀모형</a>
 <ul>
@@ -197,6 +199,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.2" data-path="multiple-reg.html"><a href="multiple-reg.html#section-variable-criterion"><i class="fa fa-check"></i><b>4.3.2</b> 평가 측도에 의한 변수선택</a></li>
 <li class="chapter" data-level="4.3.3" data-path="multiple-reg.html"><a href="multiple-reg.html#section-shrinkage"><i class="fa fa-check"></i><b>4.3.3</b> Shrinkage 방법</a></li>
 </ul></li>
+<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#연습문제-2"><i class="fa fa-check"></i><b>4.4</b> 연습문제</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="reg-diag.html"><a href="reg-diag.html"><i class="fa fa-check"></i><b>5</b> 회귀모형의 진단</a>
 <ul>
@@ -341,19 +344,19 @@ n &amp; \sum x_{1i} &amp; \cdots &amp; \sum x_{ki} \\
 \end{equation}\]</span></p>
 <p><span class="math inline">\(\bullet\)</span> 예제: 다중회귀모형의 회귀계수 추정</p>
 <p>데이터 프레임 <code>mtcars</code>는 1974년 <span class="math inline">\(\textit{Motor Trend US}\)</span> 에 실린 32 종류 자동차 모델의 연비와 관련된 자료가 입력되어 있다.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="multiple-reg.html#cb25-1" tabindex="-1"></a><span class="fu">str</span>(mtcars)</span>
-<span id="cb25-2"><a href="multiple-reg.html#cb25-2" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    32 obs. of  11 variables:</span></span>
-<span id="cb25-3"><a href="multiple-reg.html#cb25-3" tabindex="-1"></a><span class="do">##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...</span></span>
-<span id="cb25-4"><a href="multiple-reg.html#cb25-4" tabindex="-1"></a><span class="do">##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...</span></span>
-<span id="cb25-5"><a href="multiple-reg.html#cb25-5" tabindex="-1"></a><span class="do">##  $ disp: num  160 160 108 258 360 ...</span></span>
-<span id="cb25-6"><a href="multiple-reg.html#cb25-6" tabindex="-1"></a><span class="do">##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...</span></span>
-<span id="cb25-7"><a href="multiple-reg.html#cb25-7" tabindex="-1"></a><span class="do">##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...</span></span>
-<span id="cb25-8"><a href="multiple-reg.html#cb25-8" tabindex="-1"></a><span class="do">##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...</span></span>
-<span id="cb25-9"><a href="multiple-reg.html#cb25-9" tabindex="-1"></a><span class="do">##  $ qsec: num  16.5 17 18.6 19.4 17 ...</span></span>
-<span id="cb25-10"><a href="multiple-reg.html#cb25-10" tabindex="-1"></a><span class="do">##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...</span></span>
-<span id="cb25-11"><a href="multiple-reg.html#cb25-11" tabindex="-1"></a><span class="do">##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...</span></span>
-<span id="cb25-12"><a href="multiple-reg.html#cb25-12" tabindex="-1"></a><span class="do">##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...</span></span>
-<span id="cb25-13"><a href="multiple-reg.html#cb25-13" tabindex="-1"></a><span class="do">##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="multiple-reg.html#cb28-1" tabindex="-1"></a><span class="fu">str</span>(mtcars)</span>
+<span id="cb28-2"><a href="multiple-reg.html#cb28-2" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    32 obs. of  11 variables:</span></span>
+<span id="cb28-3"><a href="multiple-reg.html#cb28-3" tabindex="-1"></a><span class="do">##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...</span></span>
+<span id="cb28-4"><a href="multiple-reg.html#cb28-4" tabindex="-1"></a><span class="do">##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...</span></span>
+<span id="cb28-5"><a href="multiple-reg.html#cb28-5" tabindex="-1"></a><span class="do">##  $ disp: num  160 160 108 258 360 ...</span></span>
+<span id="cb28-6"><a href="multiple-reg.html#cb28-6" tabindex="-1"></a><span class="do">##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...</span></span>
+<span id="cb28-7"><a href="multiple-reg.html#cb28-7" tabindex="-1"></a><span class="do">##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...</span></span>
+<span id="cb28-8"><a href="multiple-reg.html#cb28-8" tabindex="-1"></a><span class="do">##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...</span></span>
+<span id="cb28-9"><a href="multiple-reg.html#cb28-9" tabindex="-1"></a><span class="do">##  $ qsec: num  16.5 17 18.6 19.4 17 ...</span></span>
+<span id="cb28-10"><a href="multiple-reg.html#cb28-10" tabindex="-1"></a><span class="do">##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...</span></span>
+<span id="cb28-11"><a href="multiple-reg.html#cb28-11" tabindex="-1"></a><span class="do">##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb28-12"><a href="multiple-reg.html#cb28-12" tabindex="-1"></a><span class="do">##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...</span></span>
+<span id="cb28-13"><a href="multiple-reg.html#cb28-13" tabindex="-1"></a><span class="do">##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</span></span></code></pre></div>
 <p>연비를 나타내는 <code>mpg</code>를 반응변수로 하고, 설명변수에는 차량의 무게를 나타내는 <code>wt</code>와 0.25 마일까지 도달하는 데 걸리는 시간을 나타내는 <code>qsec</code>을 선택해서 다중회귀모형을 설정하고 회귀계수를 추정해 보자.</p>
 <p>단순회귀모형의 경우와 동일하게 다중회귀모형에서도 함수 <code>lm()</code>을 사용해서 모형적합을 실시할 수 있다.
 하지만 단순회귀모형의 경우와 다르게 설명변수의 개수가 2개 이상이 되며, 복잡한 형태의 모형이 설정되는 경우도 많이 있기 때문에 다중회귀모형의 경우에는 함수 <code>lm()</code>에 지정되는 R 모형공식에 반응변수와 설명변수를 구분하는 <code>~</code> 기호 외에도 많은 기호가 사용된다.</p>
@@ -409,15 +412,15 @@ n &amp; \sum x_{1i} &amp; \cdots &amp; \sum x_{ki} \\
 </tbody>
 </table>
 <p>이제 <code>mpg</code>를 반응변수로, <code>wt</code>와 <code>qsec</code>을 설명변수로 하는 다중회귀모형을 적합해 보자.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="multiple-reg.html#cb26-1" tabindex="-1"></a>fit_m <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> qsec, <span class="at">data =</span> mtcars)</span>
-<span id="cb26-2"><a href="multiple-reg.html#cb26-2" tabindex="-1"></a>fit_m</span>
-<span id="cb26-3"><a href="multiple-reg.html#cb26-3" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb26-4"><a href="multiple-reg.html#cb26-4" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb26-5"><a href="multiple-reg.html#cb26-5" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + qsec, data = mtcars)</span></span>
-<span id="cb26-6"><a href="multiple-reg.html#cb26-6" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb26-7"><a href="multiple-reg.html#cb26-7" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb26-8"><a href="multiple-reg.html#cb26-8" tabindex="-1"></a><span class="do">## (Intercept)           wt         qsec  </span></span>
-<span id="cb26-9"><a href="multiple-reg.html#cb26-9" tabindex="-1"></a><span class="do">##     19.7462      -5.0480       0.9292</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="multiple-reg.html#cb29-1" tabindex="-1"></a>fit_m <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> qsec, <span class="at">data =</span> mtcars)</span>
+<span id="cb29-2"><a href="multiple-reg.html#cb29-2" tabindex="-1"></a>fit_m</span>
+<span id="cb29-3"><a href="multiple-reg.html#cb29-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-4"><a href="multiple-reg.html#cb29-4" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb29-5"><a href="multiple-reg.html#cb29-5" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + qsec, data = mtcars)</span></span>
+<span id="cb29-6"><a href="multiple-reg.html#cb29-6" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-7"><a href="multiple-reg.html#cb29-7" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb29-8"><a href="multiple-reg.html#cb29-8" tabindex="-1"></a><span class="do">## (Intercept)           wt         qsec  </span></span>
+<span id="cb29-9"><a href="multiple-reg.html#cb29-9" tabindex="-1"></a><span class="do">##     19.7462      -5.0480       0.9292</span></span></code></pre></div>
 <p>적합된 모형식은 <span class="math inline">\(\widehat{\mbox{mpg}} = 19.74 - 5.047\mbox{ wt} + 0.929\mbox{ qsec}\)</span> 임을 알 수 있다.
 추정된 회귀계수에 대한 해석은 단순회귀모형의 경우와 비슷하지만 제한 사항이 추가된다.
 단순회귀모형에서는 하나의 설명변수만 있기 때문에 추정된 모형은 직선으로 표현되고, 따라서 해당 설명변수가 한 단위 증가했을 때 반응변수의 평균 변화량으로 회귀계수를 해석할 수 있었다.
@@ -433,30 +436,30 @@ n &amp; \sum x_{1i} &amp; \cdots &amp; \sum x_{ki} \\
 </div>
 <p><span class="math inline">\(\bullet\)</span> 예제: 행렬 <code>state.x77</code></p>
 <p>행렬 <code>state.x77</code>은 미국 50개 주와 관련된 8개 변수로 구성되었다. 변수 <code>Life Exp</code>와 <code>HS Grad</code>는 이름 중간에 빈칸이 있으며, 각 주의 이름이 행렬의 row name으로 입력되어 있음을 알 수 있다.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="multiple-reg.html#cb27-1" tabindex="-1"></a>state.x77[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]</span>
-<span id="cb27-2"><a href="multiple-reg.html#cb27-2" tabindex="-1"></a><span class="do">##            Population Income Illiteracy Life Exp Murder HS Grad Frost   Area</span></span>
-<span id="cb27-3"><a href="multiple-reg.html#cb27-3" tabindex="-1"></a><span class="do">## Alabama          3615   3624        2.1    69.05   15.1    41.3    20  50708</span></span>
-<span id="cb27-4"><a href="multiple-reg.html#cb27-4" tabindex="-1"></a><span class="do">## Alaska            365   6315        1.5    69.31   11.3    66.7   152 566432</span></span>
-<span id="cb27-5"><a href="multiple-reg.html#cb27-5" tabindex="-1"></a><span class="do">## Arizona          2212   4530        1.8    70.55    7.8    58.1    15 113417</span></span>
-<span id="cb27-6"><a href="multiple-reg.html#cb27-6" tabindex="-1"></a><span class="do">## Arkansas         2110   3378        1.9    70.66   10.1    39.9    65  51945</span></span>
-<span id="cb27-7"><a href="multiple-reg.html#cb27-7" tabindex="-1"></a><span class="do">## California      21198   5114        1.1    71.71   10.3    62.6    20 156361</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="multiple-reg.html#cb30-1" tabindex="-1"></a>state.x77[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]</span>
+<span id="cb30-2"><a href="multiple-reg.html#cb30-2" tabindex="-1"></a><span class="do">##            Population Income Illiteracy Life Exp Murder HS Grad Frost   Area</span></span>
+<span id="cb30-3"><a href="multiple-reg.html#cb30-3" tabindex="-1"></a><span class="do">## Alabama          3615   3624        2.1    69.05   15.1    41.3    20  50708</span></span>
+<span id="cb30-4"><a href="multiple-reg.html#cb30-4" tabindex="-1"></a><span class="do">## Alaska            365   6315        1.5    69.31   11.3    66.7   152 566432</span></span>
+<span id="cb30-5"><a href="multiple-reg.html#cb30-5" tabindex="-1"></a><span class="do">## Arizona          2212   4530        1.8    70.55    7.8    58.1    15 113417</span></span>
+<span id="cb30-6"><a href="multiple-reg.html#cb30-6" tabindex="-1"></a><span class="do">## Arkansas         2110   3378        1.9    70.66   10.1    39.9    65  51945</span></span>
+<span id="cb30-7"><a href="multiple-reg.html#cb30-7" tabindex="-1"></a><span class="do">## California      21198   5114        1.1    71.71   10.3    62.6    20 156361</span></span></code></pre></div>
 <p>변수 <code>Murder</code>를 반응변수로, 나머지 7개 변수를 설명변수로 하는 다중회귀모형을 설정해 보자.
 회귀분석을 원활하게 수행하기 위해서는 자료가 행렬이 아닌 데이터 프레임의 형태로 입력되어 있어야 한다.
 행렬 <code>state.x77</code>을 데이터 프레임으로 변환하면서, 빈칸이 있는 변수 이름을 수정하고 반응변수를 마지막 변수로 이동시키자.
 반응변수의 위치를 마지막으로 이동시킨 이유는 산점도 행렬을 작성하고 결과를 해석할 때 더 편리하기 때문이다.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="multiple-reg.html#cb28-1" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(state.x77) <span class="sc">|&gt;</span>  </span>
-<span id="cb28-2"><a href="multiple-reg.html#cb28-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Life_Exp =</span> <span class="st">`</span><span class="at">Life Exp</span><span class="st">`</span>, <span class="at">HS_Grad =</span> <span class="st">`</span><span class="at">HS Grad</span><span class="st">`</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb28-3"><a href="multiple-reg.html#cb28-3" tabindex="-1"></a>  <span class="fu">relocate</span>(Murder, <span class="at">.after =</span> <span class="fu">last_col</span>())</span></code></pre></div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="multiple-reg.html#cb29-1" tabindex="-1"></a><span class="fu">str</span>(states)</span>
-<span id="cb29-2"><a href="multiple-reg.html#cb29-2" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    50 obs. of  8 variables:</span></span>
-<span id="cb29-3"><a href="multiple-reg.html#cb29-3" tabindex="-1"></a><span class="do">##  $ Population: num  3615 365 2212 2110 21198 ...</span></span>
-<span id="cb29-4"><a href="multiple-reg.html#cb29-4" tabindex="-1"></a><span class="do">##  $ Income    : num  3624 6315 4530 3378 5114 ...</span></span>
-<span id="cb29-5"><a href="multiple-reg.html#cb29-5" tabindex="-1"></a><span class="do">##  $ Illiteracy: num  2.1 1.5 1.8 1.9 1.1 0.7 1.1 0.9 1.3 2 ...</span></span>
-<span id="cb29-6"><a href="multiple-reg.html#cb29-6" tabindex="-1"></a><span class="do">##  $ Life_Exp  : num  69 69.3 70.5 70.7 71.7 ...</span></span>
-<span id="cb29-7"><a href="multiple-reg.html#cb29-7" tabindex="-1"></a><span class="do">##  $ HS_Grad   : num  41.3 66.7 58.1 39.9 62.6 63.9 56 54.6 52.6 40.6 ...</span></span>
-<span id="cb29-8"><a href="multiple-reg.html#cb29-8" tabindex="-1"></a><span class="do">##  $ Frost     : num  20 152 15 65 20 166 139 103 11 60 ...</span></span>
-<span id="cb29-9"><a href="multiple-reg.html#cb29-9" tabindex="-1"></a><span class="do">##  $ Area      : num  50708 566432 113417 51945 156361 ...</span></span>
-<span id="cb29-10"><a href="multiple-reg.html#cb29-10" tabindex="-1"></a><span class="do">##  $ Murder    : num  15.1 11.3 7.8 10.1 10.3 6.8 3.1 6.2 10.7 13.9 ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="multiple-reg.html#cb31-1" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(state.x77) <span class="sc">|&gt;</span>  </span>
+<span id="cb31-2"><a href="multiple-reg.html#cb31-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Life_Exp =</span> <span class="st">`</span><span class="at">Life Exp</span><span class="st">`</span>, <span class="at">HS_Grad =</span> <span class="st">`</span><span class="at">HS Grad</span><span class="st">`</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb31-3"><a href="multiple-reg.html#cb31-3" tabindex="-1"></a>  <span class="fu">relocate</span>(Murder, <span class="at">.after =</span> <span class="fu">last_col</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="multiple-reg.html#cb32-1" tabindex="-1"></a><span class="fu">str</span>(states)</span>
+<span id="cb32-2"><a href="multiple-reg.html#cb32-2" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    50 obs. of  8 variables:</span></span>
+<span id="cb32-3"><a href="multiple-reg.html#cb32-3" tabindex="-1"></a><span class="do">##  $ Population: num  3615 365 2212 2110 21198 ...</span></span>
+<span id="cb32-4"><a href="multiple-reg.html#cb32-4" tabindex="-1"></a><span class="do">##  $ Income    : num  3624 6315 4530 3378 5114 ...</span></span>
+<span id="cb32-5"><a href="multiple-reg.html#cb32-5" tabindex="-1"></a><span class="do">##  $ Illiteracy: num  2.1 1.5 1.8 1.9 1.1 0.7 1.1 0.9 1.3 2 ...</span></span>
+<span id="cb32-6"><a href="multiple-reg.html#cb32-6" tabindex="-1"></a><span class="do">##  $ Life_Exp  : num  69 69.3 70.5 70.7 71.7 ...</span></span>
+<span id="cb32-7"><a href="multiple-reg.html#cb32-7" tabindex="-1"></a><span class="do">##  $ HS_Grad   : num  41.3 66.7 58.1 39.9 62.6 63.9 56 54.6 52.6 40.6 ...</span></span>
+<span id="cb32-8"><a href="multiple-reg.html#cb32-8" tabindex="-1"></a><span class="do">##  $ Frost     : num  20 152 15 65 20 166 139 103 11 60 ...</span></span>
+<span id="cb32-9"><a href="multiple-reg.html#cb32-9" tabindex="-1"></a><span class="do">##  $ Area      : num  50708 566432 113417 51945 156361 ...</span></span>
+<span id="cb32-10"><a href="multiple-reg.html#cb32-10" tabindex="-1"></a><span class="do">##  $ Murder    : num  15.1 11.3 7.8 10.1 10.3 6.8 3.1 6.2 10.7 13.9 ...</span></span></code></pre></div>
 <p>다중회귀모형에 의한 분석을 진행하기 전에 반드시 거쳐야 할 단계가 있는데, 그것은 모형에 포함될 변수들의 관계를 탐색하는 것이다.
 변수들 사이의 관계 탐색에 많이 사용되는 방법은 상관계수와 산점도행렬이다.
 산점도행렬과 같은 그래프에 의한 탐색은 필수적이라 할 수 있으며, 연속형 변수의 경우에는 두 변수끼리 짝을 지어 상관계수를 살펴보는 것도 필요하다.</p>
@@ -472,25 +475,25 @@ n &amp; \sum x_{1i} &amp; \cdots &amp; \sum x_{ki} \\
 세 번째 방법인 <code>"spearman"</code>은 Spearman의 순위상관계수 혹은 Spearman의 <span class="math inline">\(\rho\)</span> 를 지정하는 것으로서 두 변수 사이의 관계가 단조증가 혹은 단조감소 함수로 얼마나 잘 설명될 수 있는지를 표현하는 비모수 상관계수를 계산한다.
 정규성 가정이 어긋나는 경우에 사용할 수 있다.</p>
 <p>데이터 프레임 <code>states</code>를 구성하고 있는 변수들의 상관계수를 구해보자.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="multiple-reg.html#cb30-1" tabindex="-1"></a><span class="fu">cor</span>(states)</span>
-<span id="cb30-2"><a href="multiple-reg.html#cb30-2" tabindex="-1"></a><span class="do">##             Population     Income  Illiteracy    Life_Exp     HS_Grad</span></span>
-<span id="cb30-3"><a href="multiple-reg.html#cb30-3" tabindex="-1"></a><span class="do">## Population  1.00000000  0.2082276  0.10762237 -0.06805195 -0.09848975</span></span>
-<span id="cb30-4"><a href="multiple-reg.html#cb30-4" tabindex="-1"></a><span class="do">## Income      0.20822756  1.0000000 -0.43707519  0.34025534  0.61993232</span></span>
-<span id="cb30-5"><a href="multiple-reg.html#cb30-5" tabindex="-1"></a><span class="do">## Illiteracy  0.10762237 -0.4370752  1.00000000 -0.58847793 -0.65718861</span></span>
-<span id="cb30-6"><a href="multiple-reg.html#cb30-6" tabindex="-1"></a><span class="do">## Life_Exp   -0.06805195  0.3402553 -0.58847793  1.00000000  0.58221620</span></span>
-<span id="cb30-7"><a href="multiple-reg.html#cb30-7" tabindex="-1"></a><span class="do">## HS_Grad    -0.09848975  0.6199323 -0.65718861  0.58221620  1.00000000</span></span>
-<span id="cb30-8"><a href="multiple-reg.html#cb30-8" tabindex="-1"></a><span class="do">## Frost      -0.33215245  0.2262822 -0.67194697  0.26206801  0.36677970</span></span>
-<span id="cb30-9"><a href="multiple-reg.html#cb30-9" tabindex="-1"></a><span class="do">## Area        0.02254384  0.3633154  0.07726113 -0.10733194  0.33354187</span></span>
-<span id="cb30-10"><a href="multiple-reg.html#cb30-10" tabindex="-1"></a><span class="do">## Murder      0.34364275 -0.2300776  0.70297520 -0.78084575 -0.48797102</span></span>
-<span id="cb30-11"><a href="multiple-reg.html#cb30-11" tabindex="-1"></a><span class="do">##                 Frost        Area     Murder</span></span>
-<span id="cb30-12"><a href="multiple-reg.html#cb30-12" tabindex="-1"></a><span class="do">## Population -0.3321525  0.02254384  0.3436428</span></span>
-<span id="cb30-13"><a href="multiple-reg.html#cb30-13" tabindex="-1"></a><span class="do">## Income      0.2262822  0.36331544 -0.2300776</span></span>
-<span id="cb30-14"><a href="multiple-reg.html#cb30-14" tabindex="-1"></a><span class="do">## Illiteracy -0.6719470  0.07726113  0.7029752</span></span>
-<span id="cb30-15"><a href="multiple-reg.html#cb30-15" tabindex="-1"></a><span class="do">## Life_Exp    0.2620680 -0.10733194 -0.7808458</span></span>
-<span id="cb30-16"><a href="multiple-reg.html#cb30-16" tabindex="-1"></a><span class="do">## HS_Grad     0.3667797  0.33354187 -0.4879710</span></span>
-<span id="cb30-17"><a href="multiple-reg.html#cb30-17" tabindex="-1"></a><span class="do">## Frost       1.0000000  0.05922910 -0.5388834</span></span>
-<span id="cb30-18"><a href="multiple-reg.html#cb30-18" tabindex="-1"></a><span class="do">## Area        0.0592291  1.00000000  0.2283902</span></span>
-<span id="cb30-19"><a href="multiple-reg.html#cb30-19" tabindex="-1"></a><span class="do">## Murder     -0.5388834  0.22839021  1.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="multiple-reg.html#cb33-1" tabindex="-1"></a><span class="fu">cor</span>(states)</span>
+<span id="cb33-2"><a href="multiple-reg.html#cb33-2" tabindex="-1"></a><span class="do">##             Population     Income  Illiteracy    Life_Exp     HS_Grad</span></span>
+<span id="cb33-3"><a href="multiple-reg.html#cb33-3" tabindex="-1"></a><span class="do">## Population  1.00000000  0.2082276  0.10762237 -0.06805195 -0.09848975</span></span>
+<span id="cb33-4"><a href="multiple-reg.html#cb33-4" tabindex="-1"></a><span class="do">## Income      0.20822756  1.0000000 -0.43707519  0.34025534  0.61993232</span></span>
+<span id="cb33-5"><a href="multiple-reg.html#cb33-5" tabindex="-1"></a><span class="do">## Illiteracy  0.10762237 -0.4370752  1.00000000 -0.58847793 -0.65718861</span></span>
+<span id="cb33-6"><a href="multiple-reg.html#cb33-6" tabindex="-1"></a><span class="do">## Life_Exp   -0.06805195  0.3402553 -0.58847793  1.00000000  0.58221620</span></span>
+<span id="cb33-7"><a href="multiple-reg.html#cb33-7" tabindex="-1"></a><span class="do">## HS_Grad    -0.09848975  0.6199323 -0.65718861  0.58221620  1.00000000</span></span>
+<span id="cb33-8"><a href="multiple-reg.html#cb33-8" tabindex="-1"></a><span class="do">## Frost      -0.33215245  0.2262822 -0.67194697  0.26206801  0.36677970</span></span>
+<span id="cb33-9"><a href="multiple-reg.html#cb33-9" tabindex="-1"></a><span class="do">## Area        0.02254384  0.3633154  0.07726113 -0.10733194  0.33354187</span></span>
+<span id="cb33-10"><a href="multiple-reg.html#cb33-10" tabindex="-1"></a><span class="do">## Murder      0.34364275 -0.2300776  0.70297520 -0.78084575 -0.48797102</span></span>
+<span id="cb33-11"><a href="multiple-reg.html#cb33-11" tabindex="-1"></a><span class="do">##                 Frost        Area     Murder</span></span>
+<span id="cb33-12"><a href="multiple-reg.html#cb33-12" tabindex="-1"></a><span class="do">## Population -0.3321525  0.02254384  0.3436428</span></span>
+<span id="cb33-13"><a href="multiple-reg.html#cb33-13" tabindex="-1"></a><span class="do">## Income      0.2262822  0.36331544 -0.2300776</span></span>
+<span id="cb33-14"><a href="multiple-reg.html#cb33-14" tabindex="-1"></a><span class="do">## Illiteracy -0.6719470  0.07726113  0.7029752</span></span>
+<span id="cb33-15"><a href="multiple-reg.html#cb33-15" tabindex="-1"></a><span class="do">## Life_Exp    0.2620680 -0.10733194 -0.7808458</span></span>
+<span id="cb33-16"><a href="multiple-reg.html#cb33-16" tabindex="-1"></a><span class="do">## HS_Grad     0.3667797  0.33354187 -0.4879710</span></span>
+<span id="cb33-17"><a href="multiple-reg.html#cb33-17" tabindex="-1"></a><span class="do">## Frost       1.0000000  0.05922910 -0.5388834</span></span>
+<span id="cb33-18"><a href="multiple-reg.html#cb33-18" tabindex="-1"></a><span class="do">## Area        0.0592291  1.00000000  0.2283902</span></span>
+<span id="cb33-19"><a href="multiple-reg.html#cb33-19" tabindex="-1"></a><span class="do">## Murder     -0.5388834  0.22839021  1.0000000</span></span></code></pre></div>
 <p>함수 <code>cor()</code>에 데이터 프레임을 입력하면 모든 변수들 사이의 상관계수가 행렬 형태로 계산되어 출력된다.
 상관계수행렬은 변수의 개수가 많아지면 변수 사이의 관계 파악이 어려워지는 문제가 있다.
 이런 경우에는 그래프로 표현하는 것이 더 효과적인 방법이 될 것이다.</p>
@@ -500,8 +503,8 @@ n &amp; \sum x_{1i} &amp; \cdots &amp; \sum x_{ki} \\
 <code>label</code>은 그래프에 상관계수를 표시할 것인지 여부를 결정하는 것이고, <code>label_round</code>는 표시되는 상관계수의 반올림 자릿수를 지정한다.</p>
 <p>데이터 프레임 <code>states</code>를 구성하고 하는 변수들의 상관계수를 그래프로 나타내 보자.
 숫자로만 구성되어 있는 상관계수행렬보다 훨씬 간편하게 변수 사이의 상관관계를 파악할 수 있다.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="multiple-reg.html#cb31-1" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb31-2"><a href="multiple-reg.html#cb31-2" tabindex="-1"></a><span class="fu">ggcorr</span>(states, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">label_round =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="multiple-reg.html#cb34-1" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb34-2"><a href="multiple-reg.html#cb34-2" tabindex="-1"></a><span class="fu">ggcorr</span>(states, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">label_round =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:ex4-2-1"></span>
 <img src="_main_files/figure-html/ex4-2-1-1.png" alt="함수 `ggcorr()`에 의한 상관계수 그래프" width="768" />
 <p class="caption">
@@ -513,7 +516,7 @@ n &amp; \sum x_{1i} &amp; \cdots &amp; \sum x_{ki} \\
 <p>상관계수는 두 변수 사이의 선형관계 정도만을 측정하는 측도이다.
 변수 사이에 존재하는 ’있는 그대로’의 관계를 확인하는 가장 좋은 방법은 산점도행렬이다.
 함수 <code>GGally::ggpairs()</code>로 작성해 보자.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="multiple-reg.html#cb32-1" tabindex="-1"></a><span class="fu">ggpairs</span>(states, <span class="at">lower =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="st">&quot;smooth&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="multiple-reg.html#cb35-1" tabindex="-1"></a><span class="fu">ggpairs</span>(states, <span class="at">lower =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="st">&quot;smooth&quot;</span>))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:ex4-2-2"></span>
 <img src="_main_files/figure-html/ex4-2-2-1.png" alt="함수 `ggpairs()`에 의한 산점도행렬" width="768" />
 <p class="caption">
@@ -522,17 +525,17 @@ n &amp; \sum x_{1i} &amp; \cdots &amp; \sum x_{ki} \\
 </div>
 <p>반응변수를 마지막 변수로 위치를 이동시켰기 때문에 산점도행렬의 마지막 행을 이루고 있는 모든 패널에서 <code>Murder</code>가 Y축 변수로 배치되고, 설명변수들이 각각 X축 변수로 배치되었다.</p>
 <p>이제 <code>states</code> 자료에 대한 회귀모형을 함수 <code>lm()</code>으로 적합해 보자.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="multiple-reg.html#cb33-1" tabindex="-1"></a>fit_s <span class="ot">&lt;-</span> <span class="fu">lm</span>(Murder <span class="sc">~</span> ., <span class="at">data =</span> states)</span></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="multiple-reg.html#cb34-1" tabindex="-1"></a>fit_s</span>
-<span id="cb34-2"><a href="multiple-reg.html#cb34-2" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb34-3"><a href="multiple-reg.html#cb34-3" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb34-4"><a href="multiple-reg.html#cb34-4" tabindex="-1"></a><span class="do">## lm(formula = Murder ~ ., data = states)</span></span>
-<span id="cb34-5"><a href="multiple-reg.html#cb34-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb34-6"><a href="multiple-reg.html#cb34-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb34-7"><a href="multiple-reg.html#cb34-7" tabindex="-1"></a><span class="do">## (Intercept)   Population       Income   Illiteracy     Life_Exp      HS_Grad  </span></span>
-<span id="cb34-8"><a href="multiple-reg.html#cb34-8" tabindex="-1"></a><span class="do">##   1.222e+02    1.880e-04   -1.592e-04    1.373e+00   -1.655e+00    3.234e-02  </span></span>
-<span id="cb34-9"><a href="multiple-reg.html#cb34-9" tabindex="-1"></a><span class="do">##       Frost         Area  </span></span>
-<span id="cb34-10"><a href="multiple-reg.html#cb34-10" tabindex="-1"></a><span class="do">##  -1.288e-02    5.967e-06</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="multiple-reg.html#cb36-1" tabindex="-1"></a>fit_s <span class="ot">&lt;-</span> <span class="fu">lm</span>(Murder <span class="sc">~</span> ., <span class="at">data =</span> states)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="multiple-reg.html#cb37-1" tabindex="-1"></a>fit_s</span>
+<span id="cb37-2"><a href="multiple-reg.html#cb37-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb37-3"><a href="multiple-reg.html#cb37-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb37-4"><a href="multiple-reg.html#cb37-4" tabindex="-1"></a><span class="do">## lm(formula = Murder ~ ., data = states)</span></span>
+<span id="cb37-5"><a href="multiple-reg.html#cb37-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb37-6"><a href="multiple-reg.html#cb37-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb37-7"><a href="multiple-reg.html#cb37-7" tabindex="-1"></a><span class="do">## (Intercept)   Population       Income   Illiteracy     Life_Exp      HS_Grad  </span></span>
+<span id="cb37-8"><a href="multiple-reg.html#cb37-8" tabindex="-1"></a><span class="do">##   1.222e+02    1.880e-04   -1.592e-04    1.373e+00   -1.655e+00    3.234e-02  </span></span>
+<span id="cb37-9"><a href="multiple-reg.html#cb37-9" tabindex="-1"></a><span class="do">##       Frost         Area  </span></span>
+<span id="cb37-10"><a href="multiple-reg.html#cb37-10" tabindex="-1"></a><span class="do">##  -1.288e-02    5.967e-06</span></span></code></pre></div>
 <p>함수 <code>lm()</code>으로 생성된 객체 <code>fit_s</code>을 단순하게 출력시키면 추정된 회귀계수만 나타나지만, 사실 객체 <code>fit_s</code>는 많은 양의 정보가 담겨 있는 리스트이며, 이것은 획득하기 위해서는 몇 가지 함수를 사용해야 한다.
 함수 목록은 아래 표에 정리되어 있으며, 사용하는 방법은 앞으로 살펴보겠다.</p>
 <table>
@@ -606,11 +609,11 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{1}^{2} + \beta_{4}
 <p>데이터 프레임 <code>women</code>에는 미국 30대 여성의 키(<code>height</code>)와 몸무게(<code>weight</code>)가 입력되어 있다.
 두 변수 <code>height</code>와 <code>weight</code>의 회귀모형을 설정해 보자.
 먼저 두 변수의 관계가 선형인지 여부를 그래프로 확인해 보자.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="multiple-reg.html#cb35-1" tabindex="-1"></a><span class="fu">ggplot</span>(women, <span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> weight)) <span class="sc">+</span> </span>
-<span id="cb35-2"><a href="multiple-reg.html#cb35-2" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb35-3"><a href="multiple-reg.html#cb35-3" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;loess&quot;</span>), <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb35-4"><a href="multiple-reg.html#cb35-4" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;linear&quot;</span>), <span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb35-5"><a href="multiple-reg.html#cb35-5" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">color =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="multiple-reg.html#cb38-1" tabindex="-1"></a><span class="fu">ggplot</span>(women, <span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> weight)) <span class="sc">+</span> </span>
+<span id="cb38-2"><a href="multiple-reg.html#cb38-2" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb38-3"><a href="multiple-reg.html#cb38-3" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;loess&quot;</span>), <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb38-4"><a href="multiple-reg.html#cb38-4" tabindex="-1"></a>   <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;linear&quot;</span>), <span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb38-5"><a href="multiple-reg.html#cb38-5" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">color =</span> <span class="cn">NULL</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:women-1"></span>
 <img src="_main_files/figure-html/women-1-1.png" alt="데이터 프레임 `women`의 변수 `height`와 `weight`의 산점도와 선형회귀직선 및 국소회귀곡선" width="576" />
 <p class="caption">
@@ -625,15 +628,15 @@ Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{1}^{2} + \beta_{4}
 <p>차수가 높지 않은 일반적인 다항회귀모형을 적합하는 경우에는 함수 <code>I()</code>를 사용하는 것이 더 간편할 수 있다.
 함수 <code>lm()</code> 안에서 <code>lm(y ~ x + I(x^2), data)</code>와 같이 입력하면 2차 다항회귀모형을 적합하게 된다.</p>
 <p>반응변수 <code>weight</code>에 대한 설명변수 <code>height</code>의 2차 다항회귀모형을 적합해 보자.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="multiple-reg.html#cb36-1" tabindex="-1"></a>fit_w <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> height <span class="sc">+</span> <span class="fu">I</span>(height<span class="sc">^</span><span class="dv">2</span>), women)</span></code></pre></div>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="multiple-reg.html#cb37-1" tabindex="-1"></a>fit_w</span>
-<span id="cb37-2"><a href="multiple-reg.html#cb37-2" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb37-3"><a href="multiple-reg.html#cb37-3" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb37-4"><a href="multiple-reg.html#cb37-4" tabindex="-1"></a><span class="do">## lm(formula = weight ~ height + I(height^2), data = women)</span></span>
-<span id="cb37-5"><a href="multiple-reg.html#cb37-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb37-6"><a href="multiple-reg.html#cb37-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb37-7"><a href="multiple-reg.html#cb37-7" tabindex="-1"></a><span class="do">## (Intercept)       height  I(height^2)  </span></span>
-<span id="cb37-8"><a href="multiple-reg.html#cb37-8" tabindex="-1"></a><span class="do">##   261.87818     -7.34832      0.08306</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="multiple-reg.html#cb39-1" tabindex="-1"></a>fit_w <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> height <span class="sc">+</span> <span class="fu">I</span>(height<span class="sc">^</span><span class="dv">2</span>), women)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="multiple-reg.html#cb40-1" tabindex="-1"></a>fit_w</span>
+<span id="cb40-2"><a href="multiple-reg.html#cb40-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb40-3"><a href="multiple-reg.html#cb40-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb40-4"><a href="multiple-reg.html#cb40-4" tabindex="-1"></a><span class="do">## lm(formula = weight ~ height + I(height^2), data = women)</span></span>
+<span id="cb40-5"><a href="multiple-reg.html#cb40-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb40-6"><a href="multiple-reg.html#cb40-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb40-7"><a href="multiple-reg.html#cb40-7" tabindex="-1"></a><span class="do">## (Intercept)       height  I(height^2)  </span></span>
+<span id="cb40-8"><a href="multiple-reg.html#cb40-8" tabindex="-1"></a><span class="do">##   261.87818     -7.34832      0.08306</span></span></code></pre></div>
 <p>적합된 회귀모형식은 <span class="math inline">\(\hat{y}_{i}=261.87 - 7.348x_{i} + 0.08x_{i}^{2}\)</span> 임을 알 수 있다.</p>
 </div>
 <div id="section-dummy" class="section level3 hasAnchor" number="4.1.3">
@@ -680,44 +683,44 @@ Y = \beta_{0} + \beta_{1}X + \beta_{2}D_{1} + \beta_{3}D_{2} + \varepsilon
 <p><span class="math inline">\(\bullet\)</span> 예제: <code>mtcars</code></p>
 <p>반응변수는 자동차 연비인 <code>mpg</code>로 하고, 설명변수로는 1/4 마일 도착 시간인 <code>qsec</code>, 변속기 종류를 나타내는 <code>am</code>과 실린더 개수를 나타내는 <code>cyl</code>을 사용하자.</p>
 <p>변수 <code>am</code>과 <code>cyl</code>은 범주형 변수이지만 숫자로 입력된 상태이다.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="multiple-reg.html#cb38-1" tabindex="-1"></a><span class="fu">str</span>(mtcars)</span>
-<span id="cb38-2"><a href="multiple-reg.html#cb38-2" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    32 obs. of  11 variables:</span></span>
-<span id="cb38-3"><a href="multiple-reg.html#cb38-3" tabindex="-1"></a><span class="do">##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...</span></span>
-<span id="cb38-4"><a href="multiple-reg.html#cb38-4" tabindex="-1"></a><span class="do">##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...</span></span>
-<span id="cb38-5"><a href="multiple-reg.html#cb38-5" tabindex="-1"></a><span class="do">##  $ disp: num  160 160 108 258 360 ...</span></span>
-<span id="cb38-6"><a href="multiple-reg.html#cb38-6" tabindex="-1"></a><span class="do">##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...</span></span>
-<span id="cb38-7"><a href="multiple-reg.html#cb38-7" tabindex="-1"></a><span class="do">##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...</span></span>
-<span id="cb38-8"><a href="multiple-reg.html#cb38-8" tabindex="-1"></a><span class="do">##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...</span></span>
-<span id="cb38-9"><a href="multiple-reg.html#cb38-9" tabindex="-1"></a><span class="do">##  $ qsec: num  16.5 17 18.6 19.4 17 ...</span></span>
-<span id="cb38-10"><a href="multiple-reg.html#cb38-10" tabindex="-1"></a><span class="do">##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...</span></span>
-<span id="cb38-11"><a href="multiple-reg.html#cb38-11" tabindex="-1"></a><span class="do">##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...</span></span>
-<span id="cb38-12"><a href="multiple-reg.html#cb38-12" tabindex="-1"></a><span class="do">##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...</span></span>
-<span id="cb38-13"><a href="multiple-reg.html#cb38-13" tabindex="-1"></a><span class="do">##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="multiple-reg.html#cb41-1" tabindex="-1"></a><span class="fu">str</span>(mtcars)</span>
+<span id="cb41-2"><a href="multiple-reg.html#cb41-2" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    32 obs. of  11 variables:</span></span>
+<span id="cb41-3"><a href="multiple-reg.html#cb41-3" tabindex="-1"></a><span class="do">##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...</span></span>
+<span id="cb41-4"><a href="multiple-reg.html#cb41-4" tabindex="-1"></a><span class="do">##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...</span></span>
+<span id="cb41-5"><a href="multiple-reg.html#cb41-5" tabindex="-1"></a><span class="do">##  $ disp: num  160 160 108 258 360 ...</span></span>
+<span id="cb41-6"><a href="multiple-reg.html#cb41-6" tabindex="-1"></a><span class="do">##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...</span></span>
+<span id="cb41-7"><a href="multiple-reg.html#cb41-7" tabindex="-1"></a><span class="do">##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...</span></span>
+<span id="cb41-8"><a href="multiple-reg.html#cb41-8" tabindex="-1"></a><span class="do">##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...</span></span>
+<span id="cb41-9"><a href="multiple-reg.html#cb41-9" tabindex="-1"></a><span class="do">##  $ qsec: num  16.5 17 18.6 19.4 17 ...</span></span>
+<span id="cb41-10"><a href="multiple-reg.html#cb41-10" tabindex="-1"></a><span class="do">##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...</span></span>
+<span id="cb41-11"><a href="multiple-reg.html#cb41-11" tabindex="-1"></a><span class="do">##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb41-12"><a href="multiple-reg.html#cb41-12" tabindex="-1"></a><span class="do">##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...</span></span>
+<span id="cb41-13"><a href="multiple-reg.html#cb41-13" tabindex="-1"></a><span class="do">##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</span></span></code></pre></div>
 <p>함수 <code>lm()</code>은 요인으로 설명변수를 입력하면 자동으로 필요한 개수의 가변수를 생성한다.
 따라서 변수 <code>am</code>과 <code>cyl</code>은 요인으로 유형을 변경하는 것이 필요하다.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="multiple-reg.html#cb39-1" tabindex="-1"></a>mtcars_3 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb39-2"><a href="multiple-reg.html#cb39-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">am =</span> <span class="fu">factor</span>(am), <span class="at">cyl =</span> <span class="fu">factor</span>(cyl))</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="multiple-reg.html#cb42-1" tabindex="-1"></a>mtcars_3 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb42-2"><a href="multiple-reg.html#cb42-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">am =</span> <span class="fu">factor</span>(am), <span class="at">cyl =</span> <span class="fu">factor</span>(cyl))</span></code></pre></div>
 <p>요인으로 변경된 두 변수의 범주별 도수를 확인해 보자.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="multiple-reg.html#cb40-1" tabindex="-1"></a>mtcars_3 <span class="sc">|&gt;</span> <span class="fu">count</span>(am)</span>
-<span id="cb40-2"><a href="multiple-reg.html#cb40-2" tabindex="-1"></a><span class="do">##   am  n</span></span>
-<span id="cb40-3"><a href="multiple-reg.html#cb40-3" tabindex="-1"></a><span class="do">## 1  0 19</span></span>
-<span id="cb40-4"><a href="multiple-reg.html#cb40-4" tabindex="-1"></a><span class="do">## 2  1 13</span></span></code></pre></div>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="multiple-reg.html#cb41-1" tabindex="-1"></a>mtcars_3 <span class="sc">|&gt;</span> <span class="fu">count</span>(cyl)</span>
-<span id="cb41-2"><a href="multiple-reg.html#cb41-2" tabindex="-1"></a><span class="do">##   cyl  n</span></span>
-<span id="cb41-3"><a href="multiple-reg.html#cb41-3" tabindex="-1"></a><span class="do">## 1   4 11</span></span>
-<span id="cb41-4"><a href="multiple-reg.html#cb41-4" tabindex="-1"></a><span class="do">## 2   6  7</span></span>
-<span id="cb41-5"><a href="multiple-reg.html#cb41-5" tabindex="-1"></a><span class="do">## 3   8 14</span></span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="multiple-reg.html#cb43-1" tabindex="-1"></a>mtcars_3 <span class="sc">|&gt;</span> <span class="fu">count</span>(am)</span>
+<span id="cb43-2"><a href="multiple-reg.html#cb43-2" tabindex="-1"></a><span class="do">##   am  n</span></span>
+<span id="cb43-3"><a href="multiple-reg.html#cb43-3" tabindex="-1"></a><span class="do">## 1  0 19</span></span>
+<span id="cb43-4"><a href="multiple-reg.html#cb43-4" tabindex="-1"></a><span class="do">## 2  1 13</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="multiple-reg.html#cb44-1" tabindex="-1"></a>mtcars_3 <span class="sc">|&gt;</span> <span class="fu">count</span>(cyl)</span>
+<span id="cb44-2"><a href="multiple-reg.html#cb44-2" tabindex="-1"></a><span class="do">##   cyl  n</span></span>
+<span id="cb44-3"><a href="multiple-reg.html#cb44-3" tabindex="-1"></a><span class="do">## 1   4 11</span></span>
+<span id="cb44-4"><a href="multiple-reg.html#cb44-4" tabindex="-1"></a><span class="do">## 2   6  7</span></span>
+<span id="cb44-5"><a href="multiple-reg.html#cb44-5" tabindex="-1"></a><span class="do">## 3   8 14</span></span></code></pre></div>
 <p>두 개의 범주를 갖고 있는 <code>am</code>과 숫자형 변수 <code>qsec</code>을 설명변수로 하는 회귀모형을 적합해 보자.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="multiple-reg.html#cb42-1" tabindex="-1"></a>fit_m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> qsec <span class="sc">+</span> am, <span class="at">data =</span> mtcars_3)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="multiple-reg.html#cb45-1" tabindex="-1"></a>fit_m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> qsec <span class="sc">+</span> am, <span class="at">data =</span> mtcars_3)</span></code></pre></div>
 <p>적합 결과는 다음과 같다.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="multiple-reg.html#cb43-1" tabindex="-1"></a>fit_m1</span>
-<span id="cb43-2"><a href="multiple-reg.html#cb43-2" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb43-3"><a href="multiple-reg.html#cb43-3" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb43-4"><a href="multiple-reg.html#cb43-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ qsec + am, data = mtcars_3)</span></span>
-<span id="cb43-5"><a href="multiple-reg.html#cb43-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb43-6"><a href="multiple-reg.html#cb43-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb43-7"><a href="multiple-reg.html#cb43-7" tabindex="-1"></a><span class="do">## (Intercept)         qsec          am1  </span></span>
-<span id="cb43-8"><a href="multiple-reg.html#cb43-8" tabindex="-1"></a><span class="do">##     -18.889        1.982        8.876</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="multiple-reg.html#cb46-1" tabindex="-1"></a>fit_m1</span>
+<span id="cb46-2"><a href="multiple-reg.html#cb46-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb46-3"><a href="multiple-reg.html#cb46-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb46-4"><a href="multiple-reg.html#cb46-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ qsec + am, data = mtcars_3)</span></span>
+<span id="cb46-5"><a href="multiple-reg.html#cb46-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb46-6"><a href="multiple-reg.html#cb46-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb46-7"><a href="multiple-reg.html#cb46-7" tabindex="-1"></a><span class="do">## (Intercept)         qsec          am1  </span></span>
+<span id="cb46-8"><a href="multiple-reg.html#cb46-8" tabindex="-1"></a><span class="do">##     -18.889        1.982        8.876</span></span></code></pre></div>
 <p>적합된 회귀모형을 그래프로 표현하면 그림 <a href="multiple-reg.html#fig:ex4-4-1">4.5</a>과 같이 두 개의 평행한 회귀직선으로 표현된다.</p>
 <div class="figure"><span style="display:block;" id="fig:ex4-4-1"></span>
 <img src="_main_files/figure-html/ex4-4-1-1.png" alt="모형 `fit_m1`의 적합 결과" width="576" />
@@ -738,15 +741,15 @@ Y = \beta_{0} + \beta_{1}X + \beta_{2}D_{1} + \beta_{3}D_{2} + \varepsilon
 </p>
 </div>
 <p>이번에는 세 개의 범주를 갖고 있는 <code>cyl</code>과 숫자형 변수 <code>qsec</code>을 설명변수로 하는 회귀모형을 적합해 보자.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="multiple-reg.html#cb44-1" tabindex="-1"></a>fit_m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> qsec <span class="sc">+</span> cyl, <span class="at">data =</span> mtcars_3)</span></code></pre></div>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="multiple-reg.html#cb45-1" tabindex="-1"></a>fit_m2</span>
-<span id="cb45-2"><a href="multiple-reg.html#cb45-2" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb45-3"><a href="multiple-reg.html#cb45-3" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb45-4"><a href="multiple-reg.html#cb45-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ qsec + cyl, data = mtcars_3)</span></span>
-<span id="cb45-5"><a href="multiple-reg.html#cb45-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb45-6"><a href="multiple-reg.html#cb45-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb45-7"><a href="multiple-reg.html#cb45-7" tabindex="-1"></a><span class="do">## (Intercept)         qsec         cyl6         cyl8  </span></span>
-<span id="cb45-8"><a href="multiple-reg.html#cb45-8" tabindex="-1"></a><span class="do">##     35.0724      -0.4394      -7.4305     -12.6029</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="multiple-reg.html#cb47-1" tabindex="-1"></a>fit_m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> qsec <span class="sc">+</span> cyl, <span class="at">data =</span> mtcars_3)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="multiple-reg.html#cb48-1" tabindex="-1"></a>fit_m2</span>
+<span id="cb48-2"><a href="multiple-reg.html#cb48-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb48-3"><a href="multiple-reg.html#cb48-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb48-4"><a href="multiple-reg.html#cb48-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ qsec + cyl, data = mtcars_3)</span></span>
+<span id="cb48-5"><a href="multiple-reg.html#cb48-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb48-6"><a href="multiple-reg.html#cb48-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb48-7"><a href="multiple-reg.html#cb48-7" tabindex="-1"></a><span class="do">## (Intercept)         qsec         cyl6         cyl8  </span></span>
+<span id="cb48-8"><a href="multiple-reg.html#cb48-8" tabindex="-1"></a><span class="do">##     35.0724      -0.4394      -7.4305     -12.6029</span></span></code></pre></div>
 <p>적합된 모형은 다음과 같이 그래프로 표현된다.</p>
 <div class="figure"><span style="display:block;" id="fig:ex4-4-3"></span>
 <img src="_main_files/figure-html/ex4-4-3-1.png" alt="모형 `fit_m2`의 적합 결과" width="576" />
@@ -938,40 +941,40 @@ F=\frac{(RSS_{\omega}-RSS_{\Omega})/q}{RSS_{\Omega}/(n-k-1)}
 <p><span class="math inline">\(\bullet\)</span> 예제: <code>mtcars</code></p>
 <p><a href="multiple-reg.html#section-multi-fitting">4.1.1</a>절에서 다루었던 <code>mtcars</code> 자료에 대한 분석을 다시 실행해 보자.
 반응변수는 <code>mpg</code>이고, 설명변수로는 <code>gear</code>와 <code>carb</code>를 제외한 나머지 변수를 사용하며, <code>cyl</code>, <code>vs</code>, <code>am</code>은 요인으로 변경하자.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="multiple-reg.html#cb46-1" tabindex="-1"></a>mtcars_4 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb46-2"><a href="multiple-reg.html#cb46-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(gear, carb)) <span class="sc">|&gt;</span> </span>
-<span id="cb46-3"><a href="multiple-reg.html#cb46-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(cyl, vs, am), as.factor))</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="multiple-reg.html#cb49-1" tabindex="-1"></a>mtcars_4 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb49-2"><a href="multiple-reg.html#cb49-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(gear, carb)) <span class="sc">|&gt;</span> </span>
+<span id="cb49-3"><a href="multiple-reg.html#cb49-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(cyl, vs, am), as.factor))</span></code></pre></div>
 <p><code>mtcars_4</code>를 사용해서 회귀모형 <code>fit_m3</code>를 적합해 보자.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="multiple-reg.html#cb47-1" tabindex="-1"></a>fit_m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> ., mtcars_4)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="multiple-reg.html#cb50-1" tabindex="-1"></a>fit_m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> ., mtcars_4)</span></code></pre></div>
 <p>이제 <code>lm()</code>으로 생성된 객체 <code>fit_m3</code>를 대상으로 회귀모형 추론을 위한 몇 가지 함수를 적용해 보자.
 먼저 가장 빈번하게 사용되는 함수인 <code>summary()</code>의 결과를 확인해 보자.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="multiple-reg.html#cb48-1" tabindex="-1"></a><span class="fu">summary</span>(fit_m3)</span>
-<span id="cb48-2"><a href="multiple-reg.html#cb48-2" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb48-3"><a href="multiple-reg.html#cb48-3" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb48-4"><a href="multiple-reg.html#cb48-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ ., data = mtcars_4)</span></span>
-<span id="cb48-5"><a href="multiple-reg.html#cb48-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb48-6"><a href="multiple-reg.html#cb48-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
-<span id="cb48-7"><a href="multiple-reg.html#cb48-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb48-8"><a href="multiple-reg.html#cb48-8" tabindex="-1"></a><span class="do">## -3.9978 -1.3551 -0.3108  1.1992  4.1102 </span></span>
-<span id="cb48-9"><a href="multiple-reg.html#cb48-9" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb48-10"><a href="multiple-reg.html#cb48-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb48-11"><a href="multiple-reg.html#cb48-11" tabindex="-1"></a><span class="do">##              Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
-<span id="cb48-12"><a href="multiple-reg.html#cb48-12" tabindex="-1"></a><span class="do">## (Intercept) 19.865583  14.801183   1.342   0.1932  </span></span>
-<span id="cb48-13"><a href="multiple-reg.html#cb48-13" tabindex="-1"></a><span class="do">## cyl6        -1.458247   1.983190  -0.735   0.4699  </span></span>
-<span id="cb48-14"><a href="multiple-reg.html#cb48-14" tabindex="-1"></a><span class="do">## cyl8         0.484450   3.910064   0.124   0.9025  </span></span>
-<span id="cb48-15"><a href="multiple-reg.html#cb48-15" tabindex="-1"></a><span class="do">## disp         0.006688   0.013512   0.495   0.6255  </span></span>
-<span id="cb48-16"><a href="multiple-reg.html#cb48-16" tabindex="-1"></a><span class="do">## hp          -0.029141   0.017182  -1.696   0.1040  </span></span>
-<span id="cb48-17"><a href="multiple-reg.html#cb48-17" tabindex="-1"></a><span class="do">## drat         0.588059   1.503111   0.391   0.6994  </span></span>
-<span id="cb48-18"><a href="multiple-reg.html#cb48-18" tabindex="-1"></a><span class="do">## wt          -3.155246   1.420235  -2.222   0.0369 *</span></span>
-<span id="cb48-19"><a href="multiple-reg.html#cb48-19" tabindex="-1"></a><span class="do">## qsec         0.523235   0.690130   0.758   0.4564  </span></span>
-<span id="cb48-20"><a href="multiple-reg.html#cb48-20" tabindex="-1"></a><span class="do">## vs1          1.237800   2.106056   0.588   0.5627  </span></span>
-<span id="cb48-21"><a href="multiple-reg.html#cb48-21" tabindex="-1"></a><span class="do">## am1          3.000910   1.853400   1.619   0.1197  </span></span>
-<span id="cb48-22"><a href="multiple-reg.html#cb48-22" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb48-23"><a href="multiple-reg.html#cb48-23" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb48-24"><a href="multiple-reg.html#cb48-24" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb48-25"><a href="multiple-reg.html#cb48-25" tabindex="-1"></a><span class="do">## Residual standard error: 2.514 on 22 degrees of freedom</span></span>
-<span id="cb48-26"><a href="multiple-reg.html#cb48-26" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.8765, Adjusted R-squared:  0.826 </span></span>
-<span id="cb48-27"><a href="multiple-reg.html#cb48-27" tabindex="-1"></a><span class="do">## F-statistic: 17.35 on 9 and 22 DF,  p-value: 4.814e-08</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="multiple-reg.html#cb51-1" tabindex="-1"></a><span class="fu">summary</span>(fit_m3)</span>
+<span id="cb51-2"><a href="multiple-reg.html#cb51-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb51-3"><a href="multiple-reg.html#cb51-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb51-4"><a href="multiple-reg.html#cb51-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ ., data = mtcars_4)</span></span>
+<span id="cb51-5"><a href="multiple-reg.html#cb51-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb51-6"><a href="multiple-reg.html#cb51-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb51-7"><a href="multiple-reg.html#cb51-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb51-8"><a href="multiple-reg.html#cb51-8" tabindex="-1"></a><span class="do">## -3.9978 -1.3551 -0.3108  1.1992  4.1102 </span></span>
+<span id="cb51-9"><a href="multiple-reg.html#cb51-9" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb51-10"><a href="multiple-reg.html#cb51-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb51-11"><a href="multiple-reg.html#cb51-11" tabindex="-1"></a><span class="do">##              Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
+<span id="cb51-12"><a href="multiple-reg.html#cb51-12" tabindex="-1"></a><span class="do">## (Intercept) 19.865583  14.801183   1.342   0.1932  </span></span>
+<span id="cb51-13"><a href="multiple-reg.html#cb51-13" tabindex="-1"></a><span class="do">## cyl6        -1.458247   1.983190  -0.735   0.4699  </span></span>
+<span id="cb51-14"><a href="multiple-reg.html#cb51-14" tabindex="-1"></a><span class="do">## cyl8         0.484450   3.910064   0.124   0.9025  </span></span>
+<span id="cb51-15"><a href="multiple-reg.html#cb51-15" tabindex="-1"></a><span class="do">## disp         0.006688   0.013512   0.495   0.6255  </span></span>
+<span id="cb51-16"><a href="multiple-reg.html#cb51-16" tabindex="-1"></a><span class="do">## hp          -0.029141   0.017182  -1.696   0.1040  </span></span>
+<span id="cb51-17"><a href="multiple-reg.html#cb51-17" tabindex="-1"></a><span class="do">## drat         0.588059   1.503111   0.391   0.6994  </span></span>
+<span id="cb51-18"><a href="multiple-reg.html#cb51-18" tabindex="-1"></a><span class="do">## wt          -3.155246   1.420235  -2.222   0.0369 *</span></span>
+<span id="cb51-19"><a href="multiple-reg.html#cb51-19" tabindex="-1"></a><span class="do">## qsec         0.523235   0.690130   0.758   0.4564  </span></span>
+<span id="cb51-20"><a href="multiple-reg.html#cb51-20" tabindex="-1"></a><span class="do">## vs1          1.237800   2.106056   0.588   0.5627  </span></span>
+<span id="cb51-21"><a href="multiple-reg.html#cb51-21" tabindex="-1"></a><span class="do">## am1          3.000910   1.853400   1.619   0.1197  </span></span>
+<span id="cb51-22"><a href="multiple-reg.html#cb51-22" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb51-23"><a href="multiple-reg.html#cb51-23" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb51-24"><a href="multiple-reg.html#cb51-24" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb51-25"><a href="multiple-reg.html#cb51-25" tabindex="-1"></a><span class="do">## Residual standard error: 2.514 on 22 degrees of freedom</span></span>
+<span id="cb51-26"><a href="multiple-reg.html#cb51-26" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.8765, Adjusted R-squared:  0.826 </span></span>
+<span id="cb51-27"><a href="multiple-reg.html#cb51-27" tabindex="-1"></a><span class="do">## F-statistic: 17.35 on 9 and 22 DF,  p-value: 4.814e-08</span></span></code></pre></div>
 <p>함수 <code>lm()</code>으로 생성된 객체에 함수 <code>summary()</code>를 적용시켜 얻은 결과물은 SAS나 SPSS에서 볼 수 있는 결과물과는 형식에서 차이가 있으나 많은 정보를 매우 효과적으로 보여주는 방식이라고 할 수 있다. 결과물을 하나씩 살펴보자.</p>
 <p>먼저 <code>Residuals:</code>에는 잔차의 분포를 엿볼 수 있는 요약통계가 계산되어 있다.
 가정이 만족된다면 잔차는 평균이 0인 정규분포를 보이게 되는데, 잔차의 요약 통계 결과 값으로 대략적인 판단을 할 수 있다.</p>
@@ -982,147 +985,147 @@ F=\frac{(RSS_{\omega}-RSS_{\Omega})/q}{RSS_{\Omega}/(n-k-1)}
 <p><code>F-statistic:</code>은 모든 회귀계수가 0이라는 가설, 즉 <span class="math inline">\(H_{0}:\beta_{1}=\beta_{2}=\cdots=\beta_{k}=0\)</span> 에 대한 검정통계량의 값과 자유도, 그리고 p-값이 계산되어 있다.</p>
 <p>함수 <code>summary()</code>로 얻어지는 결과물로 회귀모형에 대한 중요한 추론이 가능함을 알 수 있다.
 한 가지 SAS나 SPSS에 익숙한 사용자들에게 아쉬울 수 있는 점은 아마도 회귀모형의 분산분석표가 출력되지 않는다는 것일 텐데, 이것은 함수 <code>anova()</code>를 사용함으로써 해결할 수 있다.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="multiple-reg.html#cb49-1" tabindex="-1"></a><span class="fu">anova</span>(fit_m3)</span>
-<span id="cb49-2"><a href="multiple-reg.html#cb49-2" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
-<span id="cb49-3"><a href="multiple-reg.html#cb49-3" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb49-4"><a href="multiple-reg.html#cb49-4" tabindex="-1"></a><span class="do">## Response: mpg</span></span>
-<span id="cb49-5"><a href="multiple-reg.html#cb49-5" tabindex="-1"></a><span class="do">##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
-<span id="cb49-6"><a href="multiple-reg.html#cb49-6" tabindex="-1"></a><span class="do">## cyl        2 824.78  412.39 65.2599 5.624e-10 ***</span></span>
-<span id="cb49-7"><a href="multiple-reg.html#cb49-7" tabindex="-1"></a><span class="do">## disp       1  57.64   57.64  9.1218  0.006292 ** </span></span>
-<span id="cb49-8"><a href="multiple-reg.html#cb49-8" tabindex="-1"></a><span class="do">## hp         1  18.50   18.50  2.9279  0.101125    </span></span>
-<span id="cb49-9"><a href="multiple-reg.html#cb49-9" tabindex="-1"></a><span class="do">## drat       1  11.91   11.91  1.8854  0.183553    </span></span>
-<span id="cb49-10"><a href="multiple-reg.html#cb49-10" tabindex="-1"></a><span class="do">## wt         1  55.79   55.79  8.8281  0.007049 ** </span></span>
-<span id="cb49-11"><a href="multiple-reg.html#cb49-11" tabindex="-1"></a><span class="do">## qsec       1   1.52    1.52  0.2413  0.628165    </span></span>
-<span id="cb49-12"><a href="multiple-reg.html#cb49-12" tabindex="-1"></a><span class="do">## vs         1   0.30    0.30  0.0478  0.828944    </span></span>
-<span id="cb49-13"><a href="multiple-reg.html#cb49-13" tabindex="-1"></a><span class="do">## am         1  16.57   16.57  2.6216  0.119666    </span></span>
-<span id="cb49-14"><a href="multiple-reg.html#cb49-14" tabindex="-1"></a><span class="do">## Residuals 22 139.02    6.32                      </span></span>
-<span id="cb49-15"><a href="multiple-reg.html#cb49-15" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb49-16"><a href="multiple-reg.html#cb49-16" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="multiple-reg.html#cb52-1" tabindex="-1"></a><span class="fu">anova</span>(fit_m3)</span>
+<span id="cb52-2"><a href="multiple-reg.html#cb52-2" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb52-3"><a href="multiple-reg.html#cb52-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb52-4"><a href="multiple-reg.html#cb52-4" tabindex="-1"></a><span class="do">## Response: mpg</span></span>
+<span id="cb52-5"><a href="multiple-reg.html#cb52-5" tabindex="-1"></a><span class="do">##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
+<span id="cb52-6"><a href="multiple-reg.html#cb52-6" tabindex="-1"></a><span class="do">## cyl        2 824.78  412.39 65.2599 5.624e-10 ***</span></span>
+<span id="cb52-7"><a href="multiple-reg.html#cb52-7" tabindex="-1"></a><span class="do">## disp       1  57.64   57.64  9.1218  0.006292 ** </span></span>
+<span id="cb52-8"><a href="multiple-reg.html#cb52-8" tabindex="-1"></a><span class="do">## hp         1  18.50   18.50  2.9279  0.101125    </span></span>
+<span id="cb52-9"><a href="multiple-reg.html#cb52-9" tabindex="-1"></a><span class="do">## drat       1  11.91   11.91  1.8854  0.183553    </span></span>
+<span id="cb52-10"><a href="multiple-reg.html#cb52-10" tabindex="-1"></a><span class="do">## wt         1  55.79   55.79  8.8281  0.007049 ** </span></span>
+<span id="cb52-11"><a href="multiple-reg.html#cb52-11" tabindex="-1"></a><span class="do">## qsec       1   1.52    1.52  0.2413  0.628165    </span></span>
+<span id="cb52-12"><a href="multiple-reg.html#cb52-12" tabindex="-1"></a><span class="do">## vs         1   0.30    0.30  0.0478  0.828944    </span></span>
+<span id="cb52-13"><a href="multiple-reg.html#cb52-13" tabindex="-1"></a><span class="do">## am         1  16.57   16.57  2.6216  0.119666    </span></span>
+<span id="cb52-14"><a href="multiple-reg.html#cb52-14" tabindex="-1"></a><span class="do">## Residuals 22 139.02    6.32                      </span></span>
+<span id="cb52-15"><a href="multiple-reg.html#cb52-15" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb52-16"><a href="multiple-reg.html#cb52-16" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
 <p>함수 <code>anova()</code>는 두 회귀모형을 비교할 때에도 사용되는 함수이다.
 비교되는 두 모형은 확장모형과 확장모형의 부분집합인 축소모형이어야 한다.
 확장모형의 부분집합이라는 것은 확장모형의 일부 회귀계수가 0이 되는 모형을 의미하는 것으로써, 확장모형에 없는 설명변수가 축소모형에 포함되면 정상적인 비교가 이루어질 수 없다.</p>
 <p><code>mtcars_4</code> 자료에서 모든 설명변수가 포함된 확장모형 <code>fit_m3</code>와 변수 <code>cyl</code>, <code>vs</code>, <code>drat</code>를 제외한 축소모형 <code>fit_m4</code>를 비교해 보자.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="multiple-reg.html#cb50-1" tabindex="-1"></a>fit_m4 <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_m3, . <span class="sc">~</span> . <span class="sc">-</span> cyl <span class="sc">-</span> vs <span class="sc">-</span> drat)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="multiple-reg.html#cb53-1" tabindex="-1"></a>fit_m4 <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_m3, . <span class="sc">~</span> . <span class="sc">-</span> cyl <span class="sc">-</span> vs <span class="sc">-</span> drat)</span></code></pre></div>
 <p>축소모형 <code>fit_m4</code>는 확장모형 <code>fit_m3</code>의 적합 내용을 변경한 것인데, 이런 경우에 유용하게 사용되는 함수가 <code>update()</code>이며, 사용법은 다음과 같다.</p>
 <p><code>update(object, formula)</code></p>
 <p><code>object</code>는 <code>lm()</code>로 생성된 객체이고, <code>formula</code>는 <code>object</code>의 적합 내용 중 변경되는 모형의 공식을 지정하는 것이다.
 모형 <code>fit_m4</code>에 적용된 모형공식은 <code>. ~ . - cyl - vs - drat</code>인데, 이것은 <code>fit_m3</code>에 적용된 모형공식 중 설명변수에서 <code>cyl</code>, <code>vs</code>, <code>drat</code>를 제거하는 것을 의미한다.</p>
 <p>두 회귀모형 <code>fit_m3</code>와 <code>fit_m4</code>의 비교를 함수 <code>anova()</code>로 진행하자.
 함수 <code>anova()</code>에 의한 비교 방법은 <code>anova(축소모형, 확장모형)</code>으로 지정되어야 한다.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="multiple-reg.html#cb51-1" tabindex="-1"></a><span class="fu">anova</span>(fit_m4, fit_m3)</span>
-<span id="cb51-2"><a href="multiple-reg.html#cb51-2" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
-<span id="cb51-3"><a href="multiple-reg.html#cb51-3" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb51-4"><a href="multiple-reg.html#cb51-4" tabindex="-1"></a><span class="do">## Model 1: mpg ~ disp + hp + wt + qsec + am</span></span>
-<span id="cb51-5"><a href="multiple-reg.html#cb51-5" tabindex="-1"></a><span class="do">## Model 2: mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am</span></span>
-<span id="cb51-6"><a href="multiple-reg.html#cb51-6" tabindex="-1"></a><span class="do">##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)</span></span>
-<span id="cb51-7"><a href="multiple-reg.html#cb51-7" tabindex="-1"></a><span class="do">## 1     26 153.44                           </span></span>
-<span id="cb51-8"><a href="multiple-reg.html#cb51-8" tabindex="-1"></a><span class="do">## 2     22 139.02  4    14.415 0.5703 0.6869</span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="multiple-reg.html#cb54-1" tabindex="-1"></a><span class="fu">anova</span>(fit_m4, fit_m3)</span>
+<span id="cb54-2"><a href="multiple-reg.html#cb54-2" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb54-3"><a href="multiple-reg.html#cb54-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb54-4"><a href="multiple-reg.html#cb54-4" tabindex="-1"></a><span class="do">## Model 1: mpg ~ disp + hp + wt + qsec + am</span></span>
+<span id="cb54-5"><a href="multiple-reg.html#cb54-5" tabindex="-1"></a><span class="do">## Model 2: mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am</span></span>
+<span id="cb54-6"><a href="multiple-reg.html#cb54-6" tabindex="-1"></a><span class="do">##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)</span></span>
+<span id="cb54-7"><a href="multiple-reg.html#cb54-7" tabindex="-1"></a><span class="do">## 1     26 153.44                           </span></span>
+<span id="cb54-8"><a href="multiple-reg.html#cb54-8" tabindex="-1"></a><span class="do">## 2     22 139.02  4    14.415 0.5703 0.6869</span></span></code></pre></div>
 <p>함수 <code>anova()</code>로 검정이 실시된 귀무가설은 변수 <code>cyl</code>, <code>vs</code>, <code>drat</code>의 회귀계수가 0이라는 것인데, p-값이 0.687으로 계산되어 귀무가설을 기각할 수 없게 되었다.
 두 모형의 설명력에는 차이가 없다는 것이므로, 모수 절약의 원칙에 따라 축소모형을 선택하는 것이 더 좋다고 하겠다.</p>
 <p>다중회귀모형에서 회귀계수의 유의성은 모형에 포함된 설명변수의 조합에 따라 달라질 수 있음에 유의해야 한다.
 모형 <code>fit_m3</code>가 아닌 <code>fit_m4</code>를 선택했다는 것이 제외된 변수인 <code>cyl</code>, <code>vs</code>, <code>drat</code>가 항상 비유의적인 변수라는 것을 의미하는 것은 아니다.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="multiple-reg.html#cb52-1" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> drat, mtcars_4) <span class="sc">|&gt;</span> </span>
-<span id="cb52-2"><a href="multiple-reg.html#cb52-2" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
-<span id="cb52-3"><a href="multiple-reg.html#cb52-3" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb52-4"><a href="multiple-reg.html#cb52-4" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb52-5"><a href="multiple-reg.html#cb52-5" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ drat, data = mtcars_4)</span></span>
-<span id="cb52-6"><a href="multiple-reg.html#cb52-6" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb52-7"><a href="multiple-reg.html#cb52-7" tabindex="-1"></a><span class="do">## Residuals:</span></span>
-<span id="cb52-8"><a href="multiple-reg.html#cb52-8" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb52-9"><a href="multiple-reg.html#cb52-9" tabindex="-1"></a><span class="do">## -9.0775 -2.6803 -0.2095  2.2976  9.0225 </span></span>
-<span id="cb52-10"><a href="multiple-reg.html#cb52-10" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb52-11"><a href="multiple-reg.html#cb52-11" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb52-12"><a href="multiple-reg.html#cb52-12" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb52-13"><a href="multiple-reg.html#cb52-13" tabindex="-1"></a><span class="do">## (Intercept)   -7.525      5.477  -1.374     0.18    </span></span>
-<span id="cb52-14"><a href="multiple-reg.html#cb52-14" tabindex="-1"></a><span class="do">## drat           7.678      1.507   5.096 1.78e-05 ***</span></span>
-<span id="cb52-15"><a href="multiple-reg.html#cb52-15" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb52-16"><a href="multiple-reg.html#cb52-16" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb52-17"><a href="multiple-reg.html#cb52-17" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb52-18"><a href="multiple-reg.html#cb52-18" tabindex="-1"></a><span class="do">## Residual standard error: 4.485 on 30 degrees of freedom</span></span>
-<span id="cb52-19"><a href="multiple-reg.html#cb52-19" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.464,  Adjusted R-squared:  0.4461 </span></span>
-<span id="cb52-20"><a href="multiple-reg.html#cb52-20" tabindex="-1"></a><span class="do">## F-statistic: 25.97 on 1 and 30 DF,  p-value: 1.776e-05</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="multiple-reg.html#cb55-1" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> drat, mtcars_4) <span class="sc">|&gt;</span> </span>
+<span id="cb55-2"><a href="multiple-reg.html#cb55-2" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
+<span id="cb55-3"><a href="multiple-reg.html#cb55-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb55-4"><a href="multiple-reg.html#cb55-4" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb55-5"><a href="multiple-reg.html#cb55-5" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ drat, data = mtcars_4)</span></span>
+<span id="cb55-6"><a href="multiple-reg.html#cb55-6" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb55-7"><a href="multiple-reg.html#cb55-7" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb55-8"><a href="multiple-reg.html#cb55-8" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb55-9"><a href="multiple-reg.html#cb55-9" tabindex="-1"></a><span class="do">## -9.0775 -2.6803 -0.2095  2.2976  9.0225 </span></span>
+<span id="cb55-10"><a href="multiple-reg.html#cb55-10" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb55-11"><a href="multiple-reg.html#cb55-11" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb55-12"><a href="multiple-reg.html#cb55-12" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb55-13"><a href="multiple-reg.html#cb55-13" tabindex="-1"></a><span class="do">## (Intercept)   -7.525      5.477  -1.374     0.18    </span></span>
+<span id="cb55-14"><a href="multiple-reg.html#cb55-14" tabindex="-1"></a><span class="do">## drat           7.678      1.507   5.096 1.78e-05 ***</span></span>
+<span id="cb55-15"><a href="multiple-reg.html#cb55-15" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb55-16"><a href="multiple-reg.html#cb55-16" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb55-17"><a href="multiple-reg.html#cb55-17" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb55-18"><a href="multiple-reg.html#cb55-18" tabindex="-1"></a><span class="do">## Residual standard error: 4.485 on 30 degrees of freedom</span></span>
+<span id="cb55-19"><a href="multiple-reg.html#cb55-19" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.464,  Adjusted R-squared:  0.4461 </span></span>
+<span id="cb55-20"><a href="multiple-reg.html#cb55-20" tabindex="-1"></a><span class="do">## F-statistic: 25.97 on 1 and 30 DF,  p-value: 1.776e-05</span></span></code></pre></div>
 <p>변수 <code>drat</code>만 사용한 회귀모형에서 <code>drat</code>는 유의적인 변수이고,</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="multiple-reg.html#cb53-1" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> drat <span class="sc">+</span> cyl, mtcars_4) <span class="sc">|&gt;</span> </span>
-<span id="cb53-2"><a href="multiple-reg.html#cb53-2" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
-<span id="cb53-3"><a href="multiple-reg.html#cb53-3" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb53-4"><a href="multiple-reg.html#cb53-4" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb53-5"><a href="multiple-reg.html#cb53-5" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ drat + cyl, data = mtcars_4)</span></span>
-<span id="cb53-6"><a href="multiple-reg.html#cb53-6" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb53-7"><a href="multiple-reg.html#cb53-7" tabindex="-1"></a><span class="do">## Residuals:</span></span>
-<span id="cb53-8"><a href="multiple-reg.html#cb53-8" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb53-9"><a href="multiple-reg.html#cb53-9" tabindex="-1"></a><span class="do">## -5.3337 -1.8212 -0.1335  1.7382  6.9691 </span></span>
-<span id="cb53-10"><a href="multiple-reg.html#cb53-10" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb53-11"><a href="multiple-reg.html#cb53-11" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb53-12"><a href="multiple-reg.html#cb53-12" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb53-13"><a href="multiple-reg.html#cb53-13" tabindex="-1"></a><span class="do">## (Intercept)   19.366      6.219   3.114  0.00423 ** </span></span>
-<span id="cb53-14"><a href="multiple-reg.html#cb53-14" tabindex="-1"></a><span class="do">## drat           1.793      1.509   1.188  0.24488    </span></span>
-<span id="cb53-15"><a href="multiple-reg.html#cb53-15" tabindex="-1"></a><span class="do">## cyl6          -6.051      1.712  -3.535  0.00144 ** </span></span>
-<span id="cb53-16"><a href="multiple-reg.html#cb53-16" tabindex="-1"></a><span class="do">## cyl8         -10.055      1.810  -5.555 6.09e-06 ***</span></span>
-<span id="cb53-17"><a href="multiple-reg.html#cb53-17" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb53-18"><a href="multiple-reg.html#cb53-18" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb53-19"><a href="multiple-reg.html#cb53-19" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb53-20"><a href="multiple-reg.html#cb53-20" tabindex="-1"></a><span class="do">## Residual standard error: 3.201 on 28 degrees of freedom</span></span>
-<span id="cb53-21"><a href="multiple-reg.html#cb53-21" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.7453, Adjusted R-squared:  0.718 </span></span>
-<span id="cb53-22"><a href="multiple-reg.html#cb53-22" tabindex="-1"></a><span class="do">## F-statistic: 27.31 on 3 and 28 DF,  p-value: 1.83e-08</span></span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="multiple-reg.html#cb56-1" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> drat <span class="sc">+</span> cyl, mtcars_4) <span class="sc">|&gt;</span> </span>
+<span id="cb56-2"><a href="multiple-reg.html#cb56-2" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
+<span id="cb56-3"><a href="multiple-reg.html#cb56-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb56-4"><a href="multiple-reg.html#cb56-4" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb56-5"><a href="multiple-reg.html#cb56-5" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ drat + cyl, data = mtcars_4)</span></span>
+<span id="cb56-6"><a href="multiple-reg.html#cb56-6" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb56-7"><a href="multiple-reg.html#cb56-7" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb56-8"><a href="multiple-reg.html#cb56-8" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb56-9"><a href="multiple-reg.html#cb56-9" tabindex="-1"></a><span class="do">## -5.3337 -1.8212 -0.1335  1.7382  6.9691 </span></span>
+<span id="cb56-10"><a href="multiple-reg.html#cb56-10" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb56-11"><a href="multiple-reg.html#cb56-11" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb56-12"><a href="multiple-reg.html#cb56-12" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb56-13"><a href="multiple-reg.html#cb56-13" tabindex="-1"></a><span class="do">## (Intercept)   19.366      6.219   3.114  0.00423 ** </span></span>
+<span id="cb56-14"><a href="multiple-reg.html#cb56-14" tabindex="-1"></a><span class="do">## drat           1.793      1.509   1.188  0.24488    </span></span>
+<span id="cb56-15"><a href="multiple-reg.html#cb56-15" tabindex="-1"></a><span class="do">## cyl6          -6.051      1.712  -3.535  0.00144 ** </span></span>
+<span id="cb56-16"><a href="multiple-reg.html#cb56-16" tabindex="-1"></a><span class="do">## cyl8         -10.055      1.810  -5.555 6.09e-06 ***</span></span>
+<span id="cb56-17"><a href="multiple-reg.html#cb56-17" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb56-18"><a href="multiple-reg.html#cb56-18" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb56-19"><a href="multiple-reg.html#cb56-19" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb56-20"><a href="multiple-reg.html#cb56-20" tabindex="-1"></a><span class="do">## Residual standard error: 3.201 on 28 degrees of freedom</span></span>
+<span id="cb56-21"><a href="multiple-reg.html#cb56-21" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.7453, Adjusted R-squared:  0.718 </span></span>
+<span id="cb56-22"><a href="multiple-reg.html#cb56-22" tabindex="-1"></a><span class="do">## F-statistic: 27.31 on 3 and 28 DF,  p-value: 1.83e-08</span></span></code></pre></div>
 <p>변수 <code>drat</code>와 <code>cyl</code>을 함께 사용한 모형에서는 <code>drat</code>가 비유의적인 변수가 되었음을 알 수 있다.</p>
 <p>회귀계수의 신뢰구간은 함수 <code>confint()</code>로 계산할 수 있다. 95% 신뢰구간이 디폴트로 계산되며, 만일 신뢰수준을 변경하고자 한다면 옵션 <code>level</code>에 원하는 신뢰수준을 입력하면 된다. 객체 <code>fit1</code>에 포함되어 있는 회귀계수의 95% 신뢰구간은 다음과 같이 계산된다.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="multiple-reg.html#cb54-1" tabindex="-1"></a><span class="fu">confint</span>(fit_m4)</span>
-<span id="cb54-2"><a href="multiple-reg.html#cb54-2" tabindex="-1"></a><span class="do">##                   2.5 %       97.5 %</span></span>
-<span id="cb54-3"><a href="multiple-reg.html#cb54-3" tabindex="-1"></a><span class="do">## (Intercept) -5.66058661 34.384394537</span></span>
-<span id="cb54-4"><a href="multiple-reg.html#cb54-4" tabindex="-1"></a><span class="do">## disp        -0.01055781  0.033033109</span></span>
-<span id="cb54-5"><a href="multiple-reg.html#cb54-5" tabindex="-1"></a><span class="do">## hp          -0.05098537  0.008644273</span></span>
-<span id="cb54-6"><a href="multiple-reg.html#cb54-6" tabindex="-1"></a><span class="do">## wt          -6.53883919 -1.629824922</span></span>
-<span id="cb54-7"><a href="multiple-reg.html#cb54-7" tabindex="-1"></a><span class="do">## qsec         0.02963058  1.984163085</span></span>
-<span id="cb54-8"><a href="multiple-reg.html#cb54-8" tabindex="-1"></a><span class="do">## am1          0.41638869  6.524518102</span></span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="multiple-reg.html#cb57-1" tabindex="-1"></a><span class="fu">confint</span>(fit_m4)</span>
+<span id="cb57-2"><a href="multiple-reg.html#cb57-2" tabindex="-1"></a><span class="do">##                   2.5 %       97.5 %</span></span>
+<span id="cb57-3"><a href="multiple-reg.html#cb57-3" tabindex="-1"></a><span class="do">## (Intercept) -5.66058661 34.384394537</span></span>
+<span id="cb57-4"><a href="multiple-reg.html#cb57-4" tabindex="-1"></a><span class="do">## disp        -0.01055781  0.033033109</span></span>
+<span id="cb57-5"><a href="multiple-reg.html#cb57-5" tabindex="-1"></a><span class="do">## hp          -0.05098537  0.008644273</span></span>
+<span id="cb57-6"><a href="multiple-reg.html#cb57-6" tabindex="-1"></a><span class="do">## wt          -6.53883919 -1.629824922</span></span>
+<span id="cb57-7"><a href="multiple-reg.html#cb57-7" tabindex="-1"></a><span class="do">## qsec         0.02963058  1.984163085</span></span>
+<span id="cb57-8"><a href="multiple-reg.html#cb57-8" tabindex="-1"></a><span class="do">## am1          0.41638869  6.524518102</span></span></code></pre></div>
 <p>회귀계수의 95% 신뢰구간에 0이 포함됐다는 것은 5% 유의수준에서 가설 <span class="math inline">\(H_{0}:\beta_{j}=0, \quad H_{1}:\beta_{j} \ne 0\)</span> 의 귀무가설을 기각할 수 없음을 의미한다. 따라서 95% 신뢰구간에 0이 포함된 변수 <code>disp</code>, <code>hp</code>는 5% 유의수준에서 비유적인 변수인 것이다.</p>
 <p><span class="math inline">\(\bullet\)</span> 가변수 회귀모형 : 가변수와 연속형 변수의 상호작용 항 포함 여부</p>
 <p>설명변수 중 범주형 변수가 있다면, 그 변수에 대한 가변수를 사용해야 하는데, 이 경우에 모형에 포함된 숫자형 설명변수와 반응변수의 관계가 범주형 변수의 모든 범주에서 동일하다고 가정하는 식 <a href="multiple-reg.html#eq:dummy-1">(4.13)</a>의 모형을 사용할 수 있다.
 <code>mtcars_4</code> 자료에서 반응변수 <code>mpg</code>와 설명변수 <code>qsec</code>, <code>am</code>의 회귀모형을 다음과 같이 적합한다면, <code>am</code>의 두 범주에서 <code>mpg</code>와 <code>qsec</code>의 기울기가 동일하다고 가정한 것이 된다.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="multiple-reg.html#cb55-1" tabindex="-1"></a>fit_m5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> qsec <span class="sc">+</span> am, mtcars_4)</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="multiple-reg.html#cb58-1" tabindex="-1"></a>fit_m5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> qsec <span class="sc">+</span> am, mtcars_4)</span></code></pre></div>
 <p>모형 <code>fit_m5</code>의 적합 결과에 대한 그래프는 그림 <a href="multiple-reg.html#fig:ex4-4-1">4.5</a>에서 볼 수 있다.</p>
 <p>그러나 만일 숫자형 설명변수와 반응변수의 관계가 각 범주에서 다르다고 판단이 된다면, 식 <a href="multiple-reg.html#eq:dummy-2">(4.14)</a>의 모형을 선택해서, 가변수와 연속형 변수의 상호작용 항을 포함시켜야 한다.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="multiple-reg.html#cb56-1" tabindex="-1"></a>fit_m6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> qsec <span class="sc">*</span> am, mtcars_4)</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="multiple-reg.html#cb59-1" tabindex="-1"></a>fit_m6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> qsec <span class="sc">*</span> am, mtcars_4)</span></code></pre></div>
 <p>모형 <code>fit_m6</code>의 모형 공식에 사용된 <code>*</code> 기호는 두 변수의 주 효과와 상호작용 효과를 모두 포함시키는 작용을 한다.
 모형 <code>fit_m6</code>의 적합 결과에 대한 그래프는 그림 <a href="multiple-reg.html#fig:ex4-4-2">4.6</a>에서 볼 수 있다.</p>
 <p>두 모형 중 어떤 모형을 선택할 것인지는 모형 <code>fit_m6</code>에 포함된 상호작용 항의 유의성 여부로 결정할 수 있으나, 모형 수립 목적에 부합한 평가 기준을 사용하는 것이 더 좋은 방법이라고 하겠다.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="multiple-reg.html#cb57-1" tabindex="-1"></a><span class="fu">summary</span>(fit_m6)</span>
-<span id="cb57-2"><a href="multiple-reg.html#cb57-2" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb57-3"><a href="multiple-reg.html#cb57-3" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb57-4"><a href="multiple-reg.html#cb57-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ qsec * am, data = mtcars_4)</span></span>
-<span id="cb57-5"><a href="multiple-reg.html#cb57-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb57-6"><a href="multiple-reg.html#cb57-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
-<span id="cb57-7"><a href="multiple-reg.html#cb57-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb57-8"><a href="multiple-reg.html#cb57-8" tabindex="-1"></a><span class="do">## -6.4551 -1.4331  0.1918  2.2493  7.2773 </span></span>
-<span id="cb57-9"><a href="multiple-reg.html#cb57-9" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb57-10"><a href="multiple-reg.html#cb57-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb57-11"><a href="multiple-reg.html#cb57-11" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span id="cb57-12"><a href="multiple-reg.html#cb57-12" tabindex="-1"></a><span class="do">## (Intercept)  -9.0099     8.2179  -1.096  0.28226   </span></span>
-<span id="cb57-13"><a href="multiple-reg.html#cb57-13" tabindex="-1"></a><span class="do">## qsec          1.4385     0.4500   3.197  0.00343 **</span></span>
-<span id="cb57-14"><a href="multiple-reg.html#cb57-14" tabindex="-1"></a><span class="do">## am1         -14.5107    12.4812  -1.163  0.25481   </span></span>
-<span id="cb57-15"><a href="multiple-reg.html#cb57-15" tabindex="-1"></a><span class="do">## qsec:am1      1.3214     0.7017   1.883  0.07012 . </span></span>
-<span id="cb57-16"><a href="multiple-reg.html#cb57-16" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb57-17"><a href="multiple-reg.html#cb57-17" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb57-18"><a href="multiple-reg.html#cb57-18" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb57-19"><a href="multiple-reg.html#cb57-19" tabindex="-1"></a><span class="do">## Residual standard error: 3.343 on 28 degrees of freedom</span></span>
-<span id="cb57-20"><a href="multiple-reg.html#cb57-20" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.722,  Adjusted R-squared:  0.6923 </span></span>
-<span id="cb57-21"><a href="multiple-reg.html#cb57-21" tabindex="-1"></a><span class="do">## F-statistic: 24.24 on 3 and 28 DF,  p-value: 6.129e-08</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="multiple-reg.html#cb60-1" tabindex="-1"></a><span class="fu">summary</span>(fit_m6)</span>
+<span id="cb60-2"><a href="multiple-reg.html#cb60-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb60-3"><a href="multiple-reg.html#cb60-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb60-4"><a href="multiple-reg.html#cb60-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ qsec * am, data = mtcars_4)</span></span>
+<span id="cb60-5"><a href="multiple-reg.html#cb60-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb60-6"><a href="multiple-reg.html#cb60-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb60-7"><a href="multiple-reg.html#cb60-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb60-8"><a href="multiple-reg.html#cb60-8" tabindex="-1"></a><span class="do">## -6.4551 -1.4331  0.1918  2.2493  7.2773 </span></span>
+<span id="cb60-9"><a href="multiple-reg.html#cb60-9" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb60-10"><a href="multiple-reg.html#cb60-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb60-11"><a href="multiple-reg.html#cb60-11" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
+<span id="cb60-12"><a href="multiple-reg.html#cb60-12" tabindex="-1"></a><span class="do">## (Intercept)  -9.0099     8.2179  -1.096  0.28226   </span></span>
+<span id="cb60-13"><a href="multiple-reg.html#cb60-13" tabindex="-1"></a><span class="do">## qsec          1.4385     0.4500   3.197  0.00343 **</span></span>
+<span id="cb60-14"><a href="multiple-reg.html#cb60-14" tabindex="-1"></a><span class="do">## am1         -14.5107    12.4812  -1.163  0.25481   </span></span>
+<span id="cb60-15"><a href="multiple-reg.html#cb60-15" tabindex="-1"></a><span class="do">## qsec:am1      1.3214     0.7017   1.883  0.07012 . </span></span>
+<span id="cb60-16"><a href="multiple-reg.html#cb60-16" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb60-17"><a href="multiple-reg.html#cb60-17" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb60-18"><a href="multiple-reg.html#cb60-18" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb60-19"><a href="multiple-reg.html#cb60-19" tabindex="-1"></a><span class="do">## Residual standard error: 3.343 on 28 degrees of freedom</span></span>
+<span id="cb60-20"><a href="multiple-reg.html#cb60-20" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.722,  Adjusted R-squared:  0.6923 </span></span>
+<span id="cb60-21"><a href="multiple-reg.html#cb60-21" tabindex="-1"></a><span class="do">## F-statistic: 24.24 on 3 and 28 DF,  p-value: 6.129e-08</span></span></code></pre></div>
 <p><span class="math inline">\(\bullet\)</span> 예제 : <code>modeldata::crickets</code></p>
 <p>패키지 <code>modeldata</code>의 데이터 프레임 <code>crickets</code>에는 기온과 귀뚜라미 울음소리 횟수의 관계를 탐색하기 위해 관측한 자료가 입력되어 있다.
 변수 <code>temp</code>는 기온, <code>rate</code>는 귀뚜라미의 분당 울음소리 횟수이며, <code>species</code>는 귀뚜라미 종류이다.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="multiple-reg.html#cb58-1" tabindex="-1"></a><span class="fu">data</span>(crickets, <span class="at">package =</span> <span class="st">&quot;modeldata&quot;</span>)</span>
-<span id="cb58-2"><a href="multiple-reg.html#cb58-2" tabindex="-1"></a><span class="fu">str</span>(crickets)</span>
-<span id="cb58-3"><a href="multiple-reg.html#cb58-3" tabindex="-1"></a><span class="do">## tibble [31 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
-<span id="cb58-4"><a href="multiple-reg.html#cb58-4" tabindex="-1"></a><span class="do">##  $ species: Factor w/ 2 levels &quot;O. exclamationis&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span id="cb58-5"><a href="multiple-reg.html#cb58-5" tabindex="-1"></a><span class="do">##  $ temp   : num [1:31] 20.8 20.8 24 24 24 24 26.2 26.2 26.2 26.2 ...</span></span>
-<span id="cb58-6"><a href="multiple-reg.html#cb58-6" tabindex="-1"></a><span class="do">##  $ rate   : num [1:31] 67.9 65.1 77.3 78.7 79.4 80.4 85.8 86.6 87.5 89.1 ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="multiple-reg.html#cb61-1" tabindex="-1"></a><span class="fu">data</span>(crickets, <span class="at">package =</span> <span class="st">&quot;modeldata&quot;</span>)</span>
+<span id="cb61-2"><a href="multiple-reg.html#cb61-2" tabindex="-1"></a><span class="fu">str</span>(crickets)</span>
+<span id="cb61-3"><a href="multiple-reg.html#cb61-3" tabindex="-1"></a><span class="do">## tibble [31 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
+<span id="cb61-4"><a href="multiple-reg.html#cb61-4" tabindex="-1"></a><span class="do">##  $ species: Factor w/ 2 levels &quot;O. exclamationis&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb61-5"><a href="multiple-reg.html#cb61-5" tabindex="-1"></a><span class="do">##  $ temp   : num [1:31] 20.8 20.8 24 24 24 24 26.2 26.2 26.2 26.2 ...</span></span>
+<span id="cb61-6"><a href="multiple-reg.html#cb61-6" tabindex="-1"></a><span class="do">##  $ rate   : num [1:31] 67.9 65.1 77.3 78.7 79.4 80.4 85.8 86.6 87.5 89.1 ...</span></span></code></pre></div>
 <p>세 변수의 관계 탐색을 위한 그래프를 작성해 보자.
 변수 <code>temp</code>와 <code>rate</code>의 단순 산점도와 <code>species</code>의 효과를 살펴볼 수 있는 산점도를 모두 작성해 보자.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="multiple-reg.html#cb59-1" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb59-2"><a href="multiple-reg.html#cb59-2" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(crickets, <span class="fu">aes</span>(<span class="at">x =</span> temp, <span class="at">y =</span> rate)) <span class="sc">+</span></span>
-<span id="cb59-3"><a href="multiple-reg.html#cb59-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
-<span id="cb59-4"><a href="multiple-reg.html#cb59-4" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(crickets, <span class="fu">aes</span>(<span class="at">x =</span> temp, <span class="at">y =</span> rate, <span class="at">color =</span> species)) <span class="sc">+</span></span>
-<span id="cb59-5"><a href="multiple-reg.html#cb59-5" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
-<span id="cb59-6"><a href="multiple-reg.html#cb59-6" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="multiple-reg.html#cb62-1" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb62-2"><a href="multiple-reg.html#cb62-2" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(crickets, <span class="fu">aes</span>(<span class="at">x =</span> temp, <span class="at">y =</span> rate)) <span class="sc">+</span></span>
+<span id="cb62-3"><a href="multiple-reg.html#cb62-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb62-4"><a href="multiple-reg.html#cb62-4" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(crickets, <span class="fu">aes</span>(<span class="at">x =</span> temp, <span class="at">y =</span> rate, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb62-5"><a href="multiple-reg.html#cb62-5" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb62-6"><a href="multiple-reg.html#cb62-6" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:c-1"></span>
 <img src="_main_files/figure-html/c-1-1.png" alt="`crickets` 자료의 세 변수 관계 탐색" width="768" />
 <p class="caption">
@@ -1131,10 +1134,10 @@ F=\frac{(RSS_{\omega}-RSS_{\Omega})/q}{RSS_{\Omega}/(n-k-1)}
 </div>
 <p>변수 <code>temp</code>와 <code>rate</code> 사이에는 명확한 양의 관계가 있는데, <code>species</code>의 두 범주 사이에는 효과 차이가 있는 것으로 보인다.
 가변수를 사용한 선형회귀모형을 사용하는 것이 적절한 것으로 보이는데, 두 범주에서 변수 <code>temp</code>와 <code>rate</code>의 관계가 동일한지 여부를 확인하기 위해서 그림 <a href="multiple-reg.html#fig:c-1">4.8</a>의 오른쪽 그래프에 회귀직선을 추가해 보자.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="multiple-reg.html#cb60-1" tabindex="-1"></a><span class="fu">ggplot</span>(crickets, <span class="fu">aes</span>(<span class="at">x =</span> temp, <span class="at">y =</span> rate, <span class="at">color =</span> species)) <span class="sc">+</span></span>
-<span id="cb60-2"><a href="multiple-reg.html#cb60-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb60-3"><a href="multiple-reg.html#cb60-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb60-4"><a href="multiple-reg.html#cb60-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Temperature (C)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Chirp Rate (per minute)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="multiple-reg.html#cb63-1" tabindex="-1"></a><span class="fu">ggplot</span>(crickets, <span class="fu">aes</span>(<span class="at">x =</span> temp, <span class="at">y =</span> rate, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb63-2"><a href="multiple-reg.html#cb63-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb63-3"><a href="multiple-reg.html#cb63-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb63-4"><a href="multiple-reg.html#cb63-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Temperature (C)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Chirp Rate (per minute)&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:c-2"></span>
 <img src="_main_files/figure-html/c-2-1.png" alt="`crickets` 자료의 세 변수 관계 탐색" width="576" />
 <p class="caption">
@@ -1144,48 +1147,48 @@ F=\frac{(RSS_{\omega}-RSS_{\Omega})/q}{RSS_{\Omega}/(n-k-1)}
 <p>그림 <a href="multiple-reg.html#fig:c-2">4.9</a>에서 두 직선의 기울기는 큰 차이가 없는 것으로 보인다.
 따라서 <code>temp</code>와 <code>species</code>의 상호작용 효과는 필요 없는 것으로 보이는데, 이것을 검정을 통해 확인해 보자.</p>
 <p>식 <a href="multiple-reg.html#eq:dummy-1">(4.13)</a>의 모형으로 <code>fit.main</code>을 적합하고, 식 <a href="multiple-reg.html#eq:dummy-2">(4.14)</a>의 모형으로 <code>fit.inter</code>을 적합해 보자.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="multiple-reg.html#cb61-1" tabindex="-1"></a>fit.main <span class="ot">&lt;-</span> <span class="fu">lm</span>(rate <span class="sc">~</span> temp <span class="sc">+</span> species, <span class="at">data =</span> crickets)</span>
-<span id="cb61-2"><a href="multiple-reg.html#cb61-2" tabindex="-1"></a>fit.inter <span class="ot">&lt;-</span> <span class="fu">lm</span>(rate <span class="sc">~</span> temp <span class="sc">*</span> species, <span class="at">data =</span> crickets)</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="multiple-reg.html#cb64-1" tabindex="-1"></a>fit.main <span class="ot">&lt;-</span> <span class="fu">lm</span>(rate <span class="sc">~</span> temp <span class="sc">+</span> species, <span class="at">data =</span> crickets)</span>
+<span id="cb64-2"><a href="multiple-reg.html#cb64-2" tabindex="-1"></a>fit.inter <span class="ot">&lt;-</span> <span class="fu">lm</span>(rate <span class="sc">~</span> temp <span class="sc">*</span> species, <span class="at">data =</span> crickets)</span></code></pre></div>
 <p>모형 <code>fit.main</code>은 <code>fit.inter</code>에서 상호작용 효과만 제외된 모형으므로 <code>fit.inter</code>의 축소모형이 된다.
 따라서 상호작용 효과의 유의성 여부는 함수 <code>anova()</code>를 사용해서 두 모형을 비교해서 획인할 수 있다.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="multiple-reg.html#cb62-1" tabindex="-1"></a><span class="fu">anova</span>(fit.main, fit.inter)</span>
-<span id="cb62-2"><a href="multiple-reg.html#cb62-2" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
-<span id="cb62-3"><a href="multiple-reg.html#cb62-3" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb62-4"><a href="multiple-reg.html#cb62-4" tabindex="-1"></a><span class="do">## Model 1: rate ~ temp + species</span></span>
-<span id="cb62-5"><a href="multiple-reg.html#cb62-5" tabindex="-1"></a><span class="do">## Model 2: rate ~ temp * species</span></span>
-<span id="cb62-6"><a href="multiple-reg.html#cb62-6" tabindex="-1"></a><span class="do">##   Res.Df    RSS Df Sum of Sq     F Pr(&gt;F)</span></span>
-<span id="cb62-7"><a href="multiple-reg.html#cb62-7" tabindex="-1"></a><span class="do">## 1     28 89.350                          </span></span>
-<span id="cb62-8"><a href="multiple-reg.html#cb62-8" tabindex="-1"></a><span class="do">## 2     27 85.074  1    4.2758 1.357 0.2542</span></span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="multiple-reg.html#cb65-1" tabindex="-1"></a><span class="fu">anova</span>(fit.main, fit.inter)</span>
+<span id="cb65-2"><a href="multiple-reg.html#cb65-2" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb65-3"><a href="multiple-reg.html#cb65-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb65-4"><a href="multiple-reg.html#cb65-4" tabindex="-1"></a><span class="do">## Model 1: rate ~ temp + species</span></span>
+<span id="cb65-5"><a href="multiple-reg.html#cb65-5" tabindex="-1"></a><span class="do">## Model 2: rate ~ temp * species</span></span>
+<span id="cb65-6"><a href="multiple-reg.html#cb65-6" tabindex="-1"></a><span class="do">##   Res.Df    RSS Df Sum of Sq     F Pr(&gt;F)</span></span>
+<span id="cb65-7"><a href="multiple-reg.html#cb65-7" tabindex="-1"></a><span class="do">## 1     28 89.350                          </span></span>
+<span id="cb65-8"><a href="multiple-reg.html#cb65-8" tabindex="-1"></a><span class="do">## 2     27 85.074  1    4.2758 1.357 0.2542</span></span></code></pre></div>
 <p>검정 결과 p-값이 0.2542로 계산되어서, 두 모형의 설명력에는 차이가 없는 것으로 볼 수 있다.
 따라서 축소모형인 <code>fit.main</code>을 선택하게 되고, 상호작용 효과는 비유의적이라고 결론내릴 수 있다.</p>
 <p>물론 모형 <code>fit.inter</code>의 개별회귀계수 검정으로도 동일한 가설을 검정할 수 있다.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="multiple-reg.html#cb63-1" tabindex="-1"></a><span class="fu">summary</span>(fit.inter)<span class="sc">$</span>coef</span>
-<span id="cb63-2"><a href="multiple-reg.html#cb63-2" tabindex="-1"></a><span class="do">##                          Estimate Std. Error    t value     Pr(&gt;|t|)</span></span>
-<span id="cb63-3"><a href="multiple-reg.html#cb63-3" tabindex="-1"></a><span class="do">## (Intercept)           -11.0408481  4.1514800 -2.6594969 1.300079e-02</span></span>
-<span id="cb63-4"><a href="multiple-reg.html#cb63-4" tabindex="-1"></a><span class="do">## temp                    3.7514472  0.1601220 23.4286850 1.780831e-19</span></span>
-<span id="cb63-5"><a href="multiple-reg.html#cb63-5" tabindex="-1"></a><span class="do">## speciesO. niveus       -4.3484072  4.9616805 -0.8763981 3.885447e-01</span></span>
-<span id="cb63-6"><a href="multiple-reg.html#cb63-6" tabindex="-1"></a><span class="do">## temp:speciesO. niveus  -0.2339856  0.2008622 -1.1649059 2.542464e-01</span></span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="multiple-reg.html#cb66-1" tabindex="-1"></a><span class="fu">summary</span>(fit.inter)<span class="sc">$</span>coef</span>
+<span id="cb66-2"><a href="multiple-reg.html#cb66-2" tabindex="-1"></a><span class="do">##                          Estimate Std. Error    t value     Pr(&gt;|t|)</span></span>
+<span id="cb66-3"><a href="multiple-reg.html#cb66-3" tabindex="-1"></a><span class="do">## (Intercept)           -11.0408481  4.1514800 -2.6594969 1.300079e-02</span></span>
+<span id="cb66-4"><a href="multiple-reg.html#cb66-4" tabindex="-1"></a><span class="do">## temp                    3.7514472  0.1601220 23.4286850 1.780831e-19</span></span>
+<span id="cb66-5"><a href="multiple-reg.html#cb66-5" tabindex="-1"></a><span class="do">## speciesO. niveus       -4.3484072  4.9616805 -0.8763981 3.885447e-01</span></span>
+<span id="cb66-6"><a href="multiple-reg.html#cb66-6" tabindex="-1"></a><span class="do">## temp:speciesO. niveus  -0.2339856  0.2008622 -1.1649059 2.542464e-01</span></span></code></pre></div>
 <p>모형 <code>fit.main</code>의 적합 결과를 확인해 보자.</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="multiple-reg.html#cb64-1" tabindex="-1"></a><span class="fu">summary</span>(fit.main)</span>
-<span id="cb64-2"><a href="multiple-reg.html#cb64-2" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb64-3"><a href="multiple-reg.html#cb64-3" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb64-4"><a href="multiple-reg.html#cb64-4" tabindex="-1"></a><span class="do">## lm(formula = rate ~ temp + species, data = crickets)</span></span>
-<span id="cb64-5"><a href="multiple-reg.html#cb64-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb64-6"><a href="multiple-reg.html#cb64-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
-<span id="cb64-7"><a href="multiple-reg.html#cb64-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb64-8"><a href="multiple-reg.html#cb64-8" tabindex="-1"></a><span class="do">## -3.0128 -1.1296 -0.3912  0.9650  3.7800 </span></span>
-<span id="cb64-9"><a href="multiple-reg.html#cb64-9" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb64-10"><a href="multiple-reg.html#cb64-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb64-11"><a href="multiple-reg.html#cb64-11" tabindex="-1"></a><span class="do">##                   Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb64-12"><a href="multiple-reg.html#cb64-12" tabindex="-1"></a><span class="do">## (Intercept)       -7.21091    2.55094  -2.827  0.00858 ** </span></span>
-<span id="cb64-13"><a href="multiple-reg.html#cb64-13" tabindex="-1"></a><span class="do">## temp               3.60275    0.09729  37.032  &lt; 2e-16 ***</span></span>
-<span id="cb64-14"><a href="multiple-reg.html#cb64-14" tabindex="-1"></a><span class="do">## speciesO. niveus -10.06529    0.73526 -13.689 6.27e-14 ***</span></span>
-<span id="cb64-15"><a href="multiple-reg.html#cb64-15" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb64-16"><a href="multiple-reg.html#cb64-16" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb64-17"><a href="multiple-reg.html#cb64-17" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb64-18"><a href="multiple-reg.html#cb64-18" tabindex="-1"></a><span class="do">## Residual standard error: 1.786 on 28 degrees of freedom</span></span>
-<span id="cb64-19"><a href="multiple-reg.html#cb64-19" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.9896, Adjusted R-squared:  0.9888 </span></span>
-<span id="cb64-20"><a href="multiple-reg.html#cb64-20" tabindex="-1"></a><span class="do">## F-statistic:  1331 on 2 and 28 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="multiple-reg.html#cb67-1" tabindex="-1"></a><span class="fu">summary</span>(fit.main)</span>
+<span id="cb67-2"><a href="multiple-reg.html#cb67-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb67-3"><a href="multiple-reg.html#cb67-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb67-4"><a href="multiple-reg.html#cb67-4" tabindex="-1"></a><span class="do">## lm(formula = rate ~ temp + species, data = crickets)</span></span>
+<span id="cb67-5"><a href="multiple-reg.html#cb67-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb67-6"><a href="multiple-reg.html#cb67-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb67-7"><a href="multiple-reg.html#cb67-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb67-8"><a href="multiple-reg.html#cb67-8" tabindex="-1"></a><span class="do">## -3.0128 -1.1296 -0.3912  0.9650  3.7800 </span></span>
+<span id="cb67-9"><a href="multiple-reg.html#cb67-9" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb67-10"><a href="multiple-reg.html#cb67-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb67-11"><a href="multiple-reg.html#cb67-11" tabindex="-1"></a><span class="do">##                   Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb67-12"><a href="multiple-reg.html#cb67-12" tabindex="-1"></a><span class="do">## (Intercept)       -7.21091    2.55094  -2.827  0.00858 ** </span></span>
+<span id="cb67-13"><a href="multiple-reg.html#cb67-13" tabindex="-1"></a><span class="do">## temp               3.60275    0.09729  37.032  &lt; 2e-16 ***</span></span>
+<span id="cb67-14"><a href="multiple-reg.html#cb67-14" tabindex="-1"></a><span class="do">## speciesO. niveus -10.06529    0.73526 -13.689 6.27e-14 ***</span></span>
+<span id="cb67-15"><a href="multiple-reg.html#cb67-15" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb67-16"><a href="multiple-reg.html#cb67-16" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb67-17"><a href="multiple-reg.html#cb67-17" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb67-18"><a href="multiple-reg.html#cb67-18" tabindex="-1"></a><span class="do">## Residual standard error: 1.786 on 28 degrees of freedom</span></span>
+<span id="cb67-19"><a href="multiple-reg.html#cb67-19" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.9896, Adjusted R-squared:  0.9888 </span></span>
+<span id="cb67-20"><a href="multiple-reg.html#cb67-20" tabindex="-1"></a><span class="do">## F-statistic:  1331 on 2 and 28 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
 </div>
 </div>
 <div id="section-selection" class="section level2 hasAnchor" number="4.3">
@@ -1354,50 +1357,50 @@ Forward selection의 경우에는 절편만이 있는 모형인 <code>lm(y ~ 1, 
 <p><span class="math inline">\(\bullet\)</span> 예제: <code>mtcars</code></p>
 <p><a href="multiple-reg.html#section-multi-fitting">4.1.1</a>절에서 다루었던 <code>mtcars</code>를 대상으로 변수선택을 진행해 보자.
 <code>mtcars</code>를 대상으로 앞서 이루어진 주된 분석은 다음과 같다.</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="multiple-reg.html#cb65-1" tabindex="-1"></a>mtcars_4 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb65-2"><a href="multiple-reg.html#cb65-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(gear, carb)) <span class="sc">|&gt;</span> </span>
-<span id="cb65-3"><a href="multiple-reg.html#cb65-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(cyl, vs, am), as.factor))</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="multiple-reg.html#cb68-1" tabindex="-1"></a>mtcars_4 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb68-2"><a href="multiple-reg.html#cb68-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(gear, carb)) <span class="sc">|&gt;</span> </span>
+<span id="cb68-3"><a href="multiple-reg.html#cb68-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(cyl, vs, am), as.factor))</span></code></pre></div>
 <p>Best subset selection 방법을 함수 <code>leaps::regsubsets()</code>로 진행해 보자.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="multiple-reg.html#cb66-1" tabindex="-1"></a><span class="fu">library</span>(leaps)</span>
-<span id="cb66-2"><a href="multiple-reg.html#cb66-2" tabindex="-1"></a>fits <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(mpg <span class="sc">~</span> ., mtcars_4, <span class="at">nvmax =</span> <span class="dv">9</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="multiple-reg.html#cb69-1" tabindex="-1"></a><span class="fu">library</span>(leaps)</span>
+<span id="cb69-2"><a href="multiple-reg.html#cb69-2" tabindex="-1"></a>fits <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(mpg <span class="sc">~</span> ., mtcars_4, <span class="at">nvmax =</span> <span class="dv">9</span>)</span></code></pre></div>
 <p>함수 <code>regsubsets()</code>에 요인을 설명변수로 입력하면, 각 요인에 대한 가변수를 자동으로 생성한다.
 그런데 여기에서 주의할 점은 각 가변수를 개별적인 설명변수로 취급한다는 것이다.</p>
 <p>모형 <code>fits</code>에 입력된 설명변수는 연속형 변수 5개와 요인 3개인데, 요인의 경우에는 각 가변수를 개별 변수로 인식하기 때문에 <code>cyl</code>에 대한 가변수 2개, <code>vs</code>와 <code>am</code>에 대한 가변수 각각 1개씩 모두 4개의 변수가 있는 것으로 인식한다.
 따라서 모형 <code>fits</code>에는 9개의 설명변수가 입력되기 때문에 <code>nvmax = 9</code>를 지정한 것이다.</p>
 <p>설명변수의 개수가 <span class="math inline">\(i\)</span> 개 (<span class="math inline">\(i=1, \ldots, 9\)</span>) 인 모형 중 결정계수가 가장 높은 <code>nbest</code>개의 모형은 다음과 같이 함수 <code>summary()</code>로 출력할 수 있다.
 모형에 포함되는 변수에는 <code>"*"</code>가 표시되어 있다.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="multiple-reg.html#cb67-1" tabindex="-1"></a><span class="fu">summary</span>(fits)</span>
-<span id="cb67-2"><a href="multiple-reg.html#cb67-2" tabindex="-1"></a><span class="do">## Subset selection object</span></span>
-<span id="cb67-3"><a href="multiple-reg.html#cb67-3" tabindex="-1"></a><span class="do">## Call: regsubsets.formula(mpg ~ ., mtcars_4, nvmax = 9)</span></span>
-<span id="cb67-4"><a href="multiple-reg.html#cb67-4" tabindex="-1"></a><span class="do">## 9 Variables  (and intercept)</span></span>
-<span id="cb67-5"><a href="multiple-reg.html#cb67-5" tabindex="-1"></a><span class="do">##      Forced in Forced out</span></span>
-<span id="cb67-6"><a href="multiple-reg.html#cb67-6" tabindex="-1"></a><span class="do">## cyl6     FALSE      FALSE</span></span>
-<span id="cb67-7"><a href="multiple-reg.html#cb67-7" tabindex="-1"></a><span class="do">## cyl8     FALSE      FALSE</span></span>
-<span id="cb67-8"><a href="multiple-reg.html#cb67-8" tabindex="-1"></a><span class="do">## disp     FALSE      FALSE</span></span>
-<span id="cb67-9"><a href="multiple-reg.html#cb67-9" tabindex="-1"></a><span class="do">## hp       FALSE      FALSE</span></span>
-<span id="cb67-10"><a href="multiple-reg.html#cb67-10" tabindex="-1"></a><span class="do">## drat     FALSE      FALSE</span></span>
-<span id="cb67-11"><a href="multiple-reg.html#cb67-11" tabindex="-1"></a><span class="do">## wt       FALSE      FALSE</span></span>
-<span id="cb67-12"><a href="multiple-reg.html#cb67-12" tabindex="-1"></a><span class="do">## qsec     FALSE      FALSE</span></span>
-<span id="cb67-13"><a href="multiple-reg.html#cb67-13" tabindex="-1"></a><span class="do">## vs1      FALSE      FALSE</span></span>
-<span id="cb67-14"><a href="multiple-reg.html#cb67-14" tabindex="-1"></a><span class="do">## am1      FALSE      FALSE</span></span>
-<span id="cb67-15"><a href="multiple-reg.html#cb67-15" tabindex="-1"></a><span class="do">## 1 subsets of each size up to 9</span></span>
-<span id="cb67-16"><a href="multiple-reg.html#cb67-16" tabindex="-1"></a><span class="do">## Selection Algorithm: exhaustive</span></span>
-<span id="cb67-17"><a href="multiple-reg.html#cb67-17" tabindex="-1"></a><span class="do">##          cyl6 cyl8 disp hp  drat wt  qsec vs1 am1</span></span>
-<span id="cb67-18"><a href="multiple-reg.html#cb67-18" tabindex="-1"></a><span class="do">## 1  ( 1 ) &quot; &quot;  &quot; &quot;  &quot; &quot;  &quot; &quot; &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot; &quot; &quot; &quot;</span></span>
-<span id="cb67-19"><a href="multiple-reg.html#cb67-19" tabindex="-1"></a><span class="do">## 2  ( 1 ) &quot; &quot;  &quot; &quot;  &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot; &quot; &quot; &quot;</span></span>
-<span id="cb67-20"><a href="multiple-reg.html#cb67-20" tabindex="-1"></a><span class="do">## 3  ( 1 ) &quot; &quot;  &quot; &quot;  &quot; &quot;  &quot; &quot; &quot; &quot;  &quot;*&quot; &quot;*&quot;  &quot; &quot; &quot;*&quot;</span></span>
-<span id="cb67-21"><a href="multiple-reg.html#cb67-21" tabindex="-1"></a><span class="do">## 4  ( 1 ) &quot;*&quot;  &quot; &quot;  &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot; &quot; &quot;*&quot;</span></span>
-<span id="cb67-22"><a href="multiple-reg.html#cb67-22" tabindex="-1"></a><span class="do">## 5  ( 1 ) &quot;*&quot;  &quot; &quot;  &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot;*&quot; &quot;*&quot;</span></span>
-<span id="cb67-23"><a href="multiple-reg.html#cb67-23" tabindex="-1"></a><span class="do">## 6  ( 1 ) &quot;*&quot;  &quot; &quot;  &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot;*&quot; &quot;*&quot;  &quot;*&quot; &quot;*&quot;</span></span>
-<span id="cb67-24"><a href="multiple-reg.html#cb67-24" tabindex="-1"></a><span class="do">## 7  ( 1 ) &quot;*&quot;  &quot; &quot;  &quot;*&quot;  &quot;*&quot; &quot; &quot;  &quot;*&quot; &quot;*&quot;  &quot;*&quot; &quot;*&quot;</span></span>
-<span id="cb67-25"><a href="multiple-reg.html#cb67-25" tabindex="-1"></a><span class="do">## 8  ( 1 ) &quot;*&quot;  &quot; &quot;  &quot;*&quot;  &quot;*&quot; &quot;*&quot;  &quot;*&quot; &quot;*&quot;  &quot;*&quot; &quot;*&quot;</span></span>
-<span id="cb67-26"><a href="multiple-reg.html#cb67-26" tabindex="-1"></a><span class="do">## 9  ( 1 ) &quot;*&quot;  &quot;*&quot;  &quot;*&quot;  &quot;*&quot; &quot;*&quot;  &quot;*&quot; &quot;*&quot;  &quot;*&quot; &quot;*&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="multiple-reg.html#cb70-1" tabindex="-1"></a><span class="fu">summary</span>(fits)</span>
+<span id="cb70-2"><a href="multiple-reg.html#cb70-2" tabindex="-1"></a><span class="do">## Subset selection object</span></span>
+<span id="cb70-3"><a href="multiple-reg.html#cb70-3" tabindex="-1"></a><span class="do">## Call: regsubsets.formula(mpg ~ ., mtcars_4, nvmax = 9)</span></span>
+<span id="cb70-4"><a href="multiple-reg.html#cb70-4" tabindex="-1"></a><span class="do">## 9 Variables  (and intercept)</span></span>
+<span id="cb70-5"><a href="multiple-reg.html#cb70-5" tabindex="-1"></a><span class="do">##      Forced in Forced out</span></span>
+<span id="cb70-6"><a href="multiple-reg.html#cb70-6" tabindex="-1"></a><span class="do">## cyl6     FALSE      FALSE</span></span>
+<span id="cb70-7"><a href="multiple-reg.html#cb70-7" tabindex="-1"></a><span class="do">## cyl8     FALSE      FALSE</span></span>
+<span id="cb70-8"><a href="multiple-reg.html#cb70-8" tabindex="-1"></a><span class="do">## disp     FALSE      FALSE</span></span>
+<span id="cb70-9"><a href="multiple-reg.html#cb70-9" tabindex="-1"></a><span class="do">## hp       FALSE      FALSE</span></span>
+<span id="cb70-10"><a href="multiple-reg.html#cb70-10" tabindex="-1"></a><span class="do">## drat     FALSE      FALSE</span></span>
+<span id="cb70-11"><a href="multiple-reg.html#cb70-11" tabindex="-1"></a><span class="do">## wt       FALSE      FALSE</span></span>
+<span id="cb70-12"><a href="multiple-reg.html#cb70-12" tabindex="-1"></a><span class="do">## qsec     FALSE      FALSE</span></span>
+<span id="cb70-13"><a href="multiple-reg.html#cb70-13" tabindex="-1"></a><span class="do">## vs1      FALSE      FALSE</span></span>
+<span id="cb70-14"><a href="multiple-reg.html#cb70-14" tabindex="-1"></a><span class="do">## am1      FALSE      FALSE</span></span>
+<span id="cb70-15"><a href="multiple-reg.html#cb70-15" tabindex="-1"></a><span class="do">## 1 subsets of each size up to 9</span></span>
+<span id="cb70-16"><a href="multiple-reg.html#cb70-16" tabindex="-1"></a><span class="do">## Selection Algorithm: exhaustive</span></span>
+<span id="cb70-17"><a href="multiple-reg.html#cb70-17" tabindex="-1"></a><span class="do">##          cyl6 cyl8 disp hp  drat wt  qsec vs1 am1</span></span>
+<span id="cb70-18"><a href="multiple-reg.html#cb70-18" tabindex="-1"></a><span class="do">## 1  ( 1 ) &quot; &quot;  &quot; &quot;  &quot; &quot;  &quot; &quot; &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot; &quot; &quot; &quot;</span></span>
+<span id="cb70-19"><a href="multiple-reg.html#cb70-19" tabindex="-1"></a><span class="do">## 2  ( 1 ) &quot; &quot;  &quot; &quot;  &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot; &quot; &quot; &quot;</span></span>
+<span id="cb70-20"><a href="multiple-reg.html#cb70-20" tabindex="-1"></a><span class="do">## 3  ( 1 ) &quot; &quot;  &quot; &quot;  &quot; &quot;  &quot; &quot; &quot; &quot;  &quot;*&quot; &quot;*&quot;  &quot; &quot; &quot;*&quot;</span></span>
+<span id="cb70-21"><a href="multiple-reg.html#cb70-21" tabindex="-1"></a><span class="do">## 4  ( 1 ) &quot;*&quot;  &quot; &quot;  &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot; &quot; &quot;*&quot;</span></span>
+<span id="cb70-22"><a href="multiple-reg.html#cb70-22" tabindex="-1"></a><span class="do">## 5  ( 1 ) &quot;*&quot;  &quot; &quot;  &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot;*&quot; &quot;*&quot;</span></span>
+<span id="cb70-23"><a href="multiple-reg.html#cb70-23" tabindex="-1"></a><span class="do">## 6  ( 1 ) &quot;*&quot;  &quot; &quot;  &quot; &quot;  &quot;*&quot; &quot; &quot;  &quot;*&quot; &quot;*&quot;  &quot;*&quot; &quot;*&quot;</span></span>
+<span id="cb70-24"><a href="multiple-reg.html#cb70-24" tabindex="-1"></a><span class="do">## 7  ( 1 ) &quot;*&quot;  &quot; &quot;  &quot;*&quot;  &quot;*&quot; &quot; &quot;  &quot;*&quot; &quot;*&quot;  &quot;*&quot; &quot;*&quot;</span></span>
+<span id="cb70-25"><a href="multiple-reg.html#cb70-25" tabindex="-1"></a><span class="do">## 8  ( 1 ) &quot;*&quot;  &quot; &quot;  &quot;*&quot;  &quot;*&quot; &quot;*&quot;  &quot;*&quot; &quot;*&quot;  &quot;*&quot; &quot;*&quot;</span></span>
+<span id="cb70-26"><a href="multiple-reg.html#cb70-26" tabindex="-1"></a><span class="do">## 9  ( 1 ) &quot;*&quot;  &quot;*&quot;  &quot;*&quot;  &quot;*&quot; &quot;*&quot;  &quot;*&quot; &quot;*&quot;  &quot;*&quot; &quot;*&quot;</span></span></code></pre></div>
 <p>설명변수가 하나인 경우에는 <code>wt</code>, 두 개인 경우에는 <code>wt</code>와 <code>hp</code>, 세 개인 경우에는 <code>wt</code>, <code>qsec</code>, <code>am</code>이 선택된 것을 알 수 있다.
 2개 이상의 가변수가 사용된 범주형 변수의 경우에는 하나의 가변수만 포함되어도 해당 범주형 변수를 모형에 포함시키는 것이 적절할 것이다.</p>
 <p>이제 선택된 9개 모형을 대상으로 평가 측도를 비교해 보자.
 평가 측도의 비교는 객체 <code>fits</code>를 함수 <code>plot()</code>에 입력하면 된다.
 평가 측도는 <code>scale</code>에 지정할 수 있는데, 가능한 키워드는 <code>"bic"</code>, <code>"Cp"</code>, <code>"adjr2"</code>, <code>"r2"</code>이며, 디폴트는 <code>"bic"</code>이다.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="multiple-reg.html#cb68-1" tabindex="-1"></a><span class="fu">plot</span>(fits)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="multiple-reg.html#cb71-1" tabindex="-1"></a><span class="fu">plot</span>(fits)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:mtcars4-1"></span>
 <img src="_main_files/figure-html/mtcars4-1-1.png" alt="BIC에 의한 비교 결과" width="576" />
 <p class="caption">
@@ -1407,7 +1410,7 @@ Forward selection의 경우에는 절편만이 있는 모형인 <code>lm(y ~ 1, 
 <p>그림 <a href="multiple-reg.html#fig:mtcars4-1">4.10</a>의 X축에는 설명변수가 표시되어 있고, Y축에는 비교 대상이 되는 각 모형의 <span class="math inline">\(BIC\)</span> 의 값이 표시되어 있다.
 즉, 그래프의 각 행은 비교 대상이 되는 모형을 나타내는 것이며, X축에 표시된 설명변수가 해당 모형에 포함이 된 것이면 직사각형에 색이 채워진다.
 위에서 첫 번째 모형이 <span class="math inline">\(BIC\)</span> 의 값이 가장 작은 모형이며, 변수 <code>wt</code>, <code>qsec</code>, <code>am</code>이 포함된 모형이다.</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="multiple-reg.html#cb69-1" tabindex="-1"></a><span class="fu">plot</span>(fits, <span class="at">scale =</span> <span class="st">&quot;adjr2&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="multiple-reg.html#cb72-1" tabindex="-1"></a><span class="fu">plot</span>(fits, <span class="at">scale =</span> <span class="st">&quot;adjr2&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:mtcars4-2"></span>
 <img src="_main_files/figure-html/mtcars4-2-1.png" alt="수정결정계수에 의한 비교 결과" width="576" />
 <p class="caption">
@@ -1416,7 +1419,7 @@ Forward selection의 경우에는 절편만이 있는 모형인 <code>lm(y ~ 1, 
 </div>
 <p>수정결정계수를 평가 측도로 변경하여 변수선택을 진행해 보자.
 수정결정계수가 가장 큰 모형으로는 변수 <code>hp</code>, <code>wt</code>, <code>vs</code>, <code>am</code>과 <code>cyl</code>이 포함된 모형이 선택되었다.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="multiple-reg.html#cb70-1" tabindex="-1"></a><span class="fu">plot</span>(fits, <span class="at">scale =</span> <span class="st">&quot;Cp&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="multiple-reg.html#cb73-1" tabindex="-1"></a><span class="fu">plot</span>(fits, <span class="at">scale =</span> <span class="st">&quot;Cp&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:mtcars4-3"></span>
 <img src="_main_files/figure-html/mtcars4-3-1.png" alt="Cp에 의한 비교 결과" width="576" />
 <p class="caption">
@@ -1426,56 +1429,56 @@ Forward selection의 경우에는 절편만이 있는 모형인 <code>lm(y ~ 1, 
 <p><span class="math inline">\(C_{p}\)</span> 가 평가 측도인 경우, 선택된 모형은 수정결정계수의 경우와 큰 차이가 없음을 알 수 있다.</p>
 <p>Stepwise selection 방법을 함수 <code>MASS::stepAIC()</code>로 진행해 보자.
 먼저 모든 설명변수가 포함된 모형과 절편만 있는 모형에 대한 <code>lm</code> 객체를 생성시키자.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="multiple-reg.html#cb71-1" tabindex="-1"></a>fit_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> ., mtcars_4)</span>
-<span id="cb71-2"><a href="multiple-reg.html#cb71-2" tabindex="-1"></a>fit_null <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="dv">1</span>, mtcars_4)</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="multiple-reg.html#cb74-1" tabindex="-1"></a>fit_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> ., mtcars_4)</span>
+<span id="cb74-2"><a href="multiple-reg.html#cb74-2" tabindex="-1"></a>fit_null <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="dv">1</span>, mtcars_4)</span></code></pre></div>
 <p>AIC에 의한 forward selection으로 변수선택을 진행해 보자.
 <code>fit_null</code>로 시작하고 <code>scope</code>의 <code>upper</code>가 <code>fit_full</code>로 지정하였기 때문에 hybrid forward selection이 수행된다.
 변수 <code>wt</code>, <code>cyl</code>, <code>hp</code>, <code>am</code>이 선택되었다.</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="multiple-reg.html#cb72-1" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(fit_null,</span>
-<span id="cb72-2"><a href="multiple-reg.html#cb72-2" tabindex="-1"></a>        <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">lower =</span> fit_null, <span class="at">upper =</span> fit_full),</span>
-<span id="cb72-3"><a href="multiple-reg.html#cb72-3" tabindex="-1"></a>        <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb72-4"><a href="multiple-reg.html#cb72-4" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb72-5"><a href="multiple-reg.html#cb72-5" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb72-6"><a href="multiple-reg.html#cb72-6" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + cyl + hp + am, data = mtcars_4)</span></span>
-<span id="cb72-7"><a href="multiple-reg.html#cb72-7" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb72-8"><a href="multiple-reg.html#cb72-8" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb72-9"><a href="multiple-reg.html#cb72-9" tabindex="-1"></a><span class="do">## (Intercept)           wt         cyl6         cyl8           hp          am1  </span></span>
-<span id="cb72-10"><a href="multiple-reg.html#cb72-10" tabindex="-1"></a><span class="do">##    33.70832     -2.49683     -3.03134     -2.16368     -0.03211      1.80921</span></span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="multiple-reg.html#cb75-1" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(fit_null,</span>
+<span id="cb75-2"><a href="multiple-reg.html#cb75-2" tabindex="-1"></a>        <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">lower =</span> fit_null, <span class="at">upper =</span> fit_full),</span>
+<span id="cb75-3"><a href="multiple-reg.html#cb75-3" tabindex="-1"></a>        <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb75-4"><a href="multiple-reg.html#cb75-4" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb75-5"><a href="multiple-reg.html#cb75-5" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb75-6"><a href="multiple-reg.html#cb75-6" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + cyl + hp + am, data = mtcars_4)</span></span>
+<span id="cb75-7"><a href="multiple-reg.html#cb75-7" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb75-8"><a href="multiple-reg.html#cb75-8" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb75-9"><a href="multiple-reg.html#cb75-9" tabindex="-1"></a><span class="do">## (Intercept)           wt         cyl6         cyl8           hp          am1  </span></span>
+<span id="cb75-10"><a href="multiple-reg.html#cb75-10" tabindex="-1"></a><span class="do">##    33.70832     -2.49683     -3.03134     -2.16368     -0.03211      1.80921</span></span></code></pre></div>
 <p>AIC에 의한 backward elimination으로 변수선택을 진행해 보자.
 Backward elimination은 full model을 시작 모형으로 지정하면 실행된다.
 AIC에 의한 forward selection과 같은 결과를 보이고 있다.</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="multiple-reg.html#cb73-1" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(fit_full, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>, <span class="at">trace =</span> <span class="cn">FALSE</span>) </span>
-<span id="cb73-2"><a href="multiple-reg.html#cb73-2" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb73-3"><a href="multiple-reg.html#cb73-3" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb73-4"><a href="multiple-reg.html#cb73-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ cyl + hp + wt + am, data = mtcars_4)</span></span>
-<span id="cb73-5"><a href="multiple-reg.html#cb73-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb73-6"><a href="multiple-reg.html#cb73-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb73-7"><a href="multiple-reg.html#cb73-7" tabindex="-1"></a><span class="do">## (Intercept)         cyl6         cyl8           hp           wt          am1  </span></span>
-<span id="cb73-8"><a href="multiple-reg.html#cb73-8" tabindex="-1"></a><span class="do">##    33.70832     -3.03134     -2.16368     -0.03211     -2.49683      1.80921</span></span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="multiple-reg.html#cb76-1" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(fit_full, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>, <span class="at">trace =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb76-2"><a href="multiple-reg.html#cb76-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb76-3"><a href="multiple-reg.html#cb76-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb76-4"><a href="multiple-reg.html#cb76-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ cyl + hp + wt + am, data = mtcars_4)</span></span>
+<span id="cb76-5"><a href="multiple-reg.html#cb76-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb76-6"><a href="multiple-reg.html#cb76-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb76-7"><a href="multiple-reg.html#cb76-7" tabindex="-1"></a><span class="do">## (Intercept)         cyl6         cyl8           hp           wt          am1  </span></span>
+<span id="cb76-8"><a href="multiple-reg.html#cb76-8" tabindex="-1"></a><span class="do">##    33.70832     -3.03134     -2.16368     -0.03211     -2.49683      1.80921</span></span></code></pre></div>
 <p>BIC에 의한 forward selection으로 변수선택을 진행해 보자.
 변수 <code>wt</code>와 <code>hp</code>만 선택되어 AIC에 의한 방법과는 다른 결과가 나왔다.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="multiple-reg.html#cb74-1" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(fit_null, </span>
-<span id="cb74-2"><a href="multiple-reg.html#cb74-2" tabindex="-1"></a>          <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">lower =</span> fit_null, <span class="at">upper =</span> fit_full),</span>
-<span id="cb74-3"><a href="multiple-reg.html#cb74-3" tabindex="-1"></a>          <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(mtcars_4)), </span>
-<span id="cb74-4"><a href="multiple-reg.html#cb74-4" tabindex="-1"></a>          <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb74-5"><a href="multiple-reg.html#cb74-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb74-6"><a href="multiple-reg.html#cb74-6" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb74-7"><a href="multiple-reg.html#cb74-7" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + hp, data = mtcars_4)</span></span>
-<span id="cb74-8"><a href="multiple-reg.html#cb74-8" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb74-9"><a href="multiple-reg.html#cb74-9" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb74-10"><a href="multiple-reg.html#cb74-10" tabindex="-1"></a><span class="do">## (Intercept)           wt           hp  </span></span>
-<span id="cb74-11"><a href="multiple-reg.html#cb74-11" tabindex="-1"></a><span class="do">##    37.22727     -3.87783     -0.03177</span></span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="multiple-reg.html#cb77-1" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(fit_null, </span>
+<span id="cb77-2"><a href="multiple-reg.html#cb77-2" tabindex="-1"></a>          <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">lower =</span> fit_null, <span class="at">upper =</span> fit_full),</span>
+<span id="cb77-3"><a href="multiple-reg.html#cb77-3" tabindex="-1"></a>          <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(mtcars_4)), </span>
+<span id="cb77-4"><a href="multiple-reg.html#cb77-4" tabindex="-1"></a>          <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb77-5"><a href="multiple-reg.html#cb77-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb77-6"><a href="multiple-reg.html#cb77-6" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb77-7"><a href="multiple-reg.html#cb77-7" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + hp, data = mtcars_4)</span></span>
+<span id="cb77-8"><a href="multiple-reg.html#cb77-8" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb77-9"><a href="multiple-reg.html#cb77-9" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb77-10"><a href="multiple-reg.html#cb77-10" tabindex="-1"></a><span class="do">## (Intercept)           wt           hp  </span></span>
+<span id="cb77-11"><a href="multiple-reg.html#cb77-11" tabindex="-1"></a><span class="do">##    37.22727     -3.87783     -0.03177</span></span></code></pre></div>
 <p>BIC에 의한 backward elimination으로 변수선택을 진행해 보자.
 변수 <code>wt</code>, <code>qsec</code>, <code>am</code>이 선택되었다.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="multiple-reg.html#cb75-1" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(fit_full, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>, </span>
-<span id="cb75-2"><a href="multiple-reg.html#cb75-2" tabindex="-1"></a>          <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(mtcars_4)), <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb75-3"><a href="multiple-reg.html#cb75-3" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb75-4"><a href="multiple-reg.html#cb75-4" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb75-5"><a href="multiple-reg.html#cb75-5" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + qsec + am, data = mtcars_4)</span></span>
-<span id="cb75-6"><a href="multiple-reg.html#cb75-6" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb75-7"><a href="multiple-reg.html#cb75-7" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb75-8"><a href="multiple-reg.html#cb75-8" tabindex="-1"></a><span class="do">## (Intercept)           wt         qsec          am1  </span></span>
-<span id="cb75-9"><a href="multiple-reg.html#cb75-9" tabindex="-1"></a><span class="do">##       9.618       -3.917        1.226        2.936</span></span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="multiple-reg.html#cb78-1" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(fit_full, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>, </span>
+<span id="cb78-2"><a href="multiple-reg.html#cb78-2" tabindex="-1"></a>          <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(mtcars_4)), <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb78-3"><a href="multiple-reg.html#cb78-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb78-4"><a href="multiple-reg.html#cb78-4" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb78-5"><a href="multiple-reg.html#cb78-5" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + qsec + am, data = mtcars_4)</span></span>
+<span id="cb78-6"><a href="multiple-reg.html#cb78-6" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb78-7"><a href="multiple-reg.html#cb78-7" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb78-8"><a href="multiple-reg.html#cb78-8" tabindex="-1"></a><span class="do">## (Intercept)           wt         qsec          am1  </span></span>
+<span id="cb78-9"><a href="multiple-reg.html#cb78-9" tabindex="-1"></a><span class="do">##       9.618       -3.917        1.226        2.936</span></span></code></pre></div>
 </div>
 <div id="section-shrinkage" class="section level3 hasAnchor" number="4.3.3">
 <h3><span class="header-section-number">4.3.3</span> Shrinkage 방법<a href="multiple-reg.html#section-shrinkage" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1526,21 +1529,21 @@ Lasso 회귀계수는 식 <a href="multiple-reg.html#eq:lasso-1">(4.27)</a>을 �
 <p><span class="math inline">\(\bullet\)</span> 예제: <code>mtcars</code></p>
 <p><a href="multiple-reg.html#section-variable-criterion">4.3.2</a>절에서 다루었던 <code>mtcars</code>를 대상으로 shringkage 모형을 적합해 보자.
 <code>mtcars</code>를 대상으로 앞서 이루어진 주된 분석은 다음과 같다.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="multiple-reg.html#cb76-1" tabindex="-1"></a>mtcars_4 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb76-2"><a href="multiple-reg.html#cb76-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(gear, carb)) <span class="sc">|&gt;</span> </span>
-<span id="cb76-3"><a href="multiple-reg.html#cb76-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(cyl, vs, am), as.factor))</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="multiple-reg.html#cb79-1" tabindex="-1"></a>mtcars_4 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb79-2"><a href="multiple-reg.html#cb79-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(gear, carb)) <span class="sc">|&gt;</span> </span>
+<span id="cb79-3"><a href="multiple-reg.html#cb79-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(cyl, vs, am), as.factor))</span></code></pre></div>
 <p>패키기 <code>glmnet</code>의 함수를 사용하기 위해 설명변수로 이루어진 행렬과 반응변수 벡터를 생성해보자.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="multiple-reg.html#cb77-1" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(mpg <span class="sc">~</span> ., mtcars_4)[,<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb77-2"><a href="multiple-reg.html#cb77-2" tabindex="-1"></a>Y <span class="ot">&lt;-</span> mtcars_4<span class="sc">$</span>mpg</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="multiple-reg.html#cb80-1" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(mpg <span class="sc">~</span> ., mtcars_4)[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb80-2"><a href="multiple-reg.html#cb80-2" tabindex="-1"></a>Y <span class="ot">&lt;-</span> mtcars_4<span class="sc">$</span>mpg</span></code></pre></div>
 <p>설명변수의 행렬은 각 변수를 함수 <code>cbind()</code>로 연결해서 만들 수 있지만, 변수의 개수가 많거나 요인이 포함되어 있는 경우에는 불편한 방법이 된다.
 함수 <code>model.matrix()</code>는 회귀모형의 design matrix인 <span class="math inline">\({\bf X}\)</span> 행렬을 생성하는 기능이 있는 함수이다.
 <code>model.matrix(formula, data)</code>의 형태로 <code>lm()</code>과 동일한 방식으로 모형을 정의하면 된다.
 생성된 <span class="math inline">\({\bf X}\)</span> 행렬의 첫 번째 열은 절편에 대한 것이기 때문에 설명변수의 행렬에 해당되지 않으므로 제외한다.</p>
 <p>먼저 ridge 회귀모형을 적합해보자.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="multiple-reg.html#cb78-1" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
-<span id="cb78-2"><a href="multiple-reg.html#cb78-2" tabindex="-1"></a>fit_R <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(X, Y, <span class="at">alpha =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="multiple-reg.html#cb81-1" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb81-2"><a href="multiple-reg.html#cb81-2" tabindex="-1"></a>fit_R <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(X, Y, <span class="at">alpha =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p>조율모수 <span class="math inline">\(\lambda\)</span> 값의 변화에 따른 회귀계수 추정값의 변화 그래프는 <code>fit_R</code>을 함수 <code>plot()</code>에 입력하면 작성할 수 있다.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="multiple-reg.html#cb79-1" tabindex="-1"></a><span class="fu">plot</span>(fit_R, <span class="at">xvar =</span> <span class="st">&quot;lambda&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="multiple-reg.html#cb82-1" tabindex="-1"></a><span class="fu">plot</span>(fit_R, <span class="at">xvar =</span> <span class="st">&quot;lambda&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:ridge-1"></span>
 <img src="_main_files/figure-html/ridge-1-1.png" alt="`lambda` 값의 변화에 따른 ridge 회귀계수 추정값의 변화" width="576" />
 <p class="caption">
@@ -1551,8 +1554,8 @@ Lasso 회귀계수는 식 <a href="multiple-reg.html#eq:lasso-1">(4.27)</a>을 �
 <span class="math inline">\(\lambda\)</span> 값이 커지면서 회귀계수가 0으로 수축되고 있는 것을 볼 수 있다.
 그래프 위쪽의 눈금은 0이 아닌 회귀계수의 개수를 나타내고 있는데, ridge 회귀계수는 매우 큰 <span class="math inline">\(\lambda\)</span> 값에 대해서도 모두 0이 되지는 않고 있음을 알 수 있다.</p>
 <p>Lasso 모형을 적합하고, <span class="math inline">\(\lambda\)</span> 의 값 변화에 따른 회귀계수 추정 결과의 변화를 나타내 보자.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="multiple-reg.html#cb80-1" tabindex="-1"></a>fit_L <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(X, Y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
-<span id="cb80-2"><a href="multiple-reg.html#cb80-2" tabindex="-1"></a><span class="fu">plot</span>(fit_L, <span class="at">xvar =</span> <span class="st">&quot;lambda&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="multiple-reg.html#cb83-1" tabindex="-1"></a>fit_L <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(X, Y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb83-2"><a href="multiple-reg.html#cb83-2" tabindex="-1"></a><span class="fu">plot</span>(fit_L, <span class="at">xvar =</span> <span class="st">&quot;lambda&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:lasso-1"></span>
 <img src="_main_files/figure-html/lasso-1-1.png" alt="`lambda` 값의 변화에 따른 lasso 회귀계수 추정값의 변화" width="576" />
 <p class="caption">
@@ -1562,21 +1565,21 @@ Lasso 회귀계수는 식 <a href="multiple-reg.html#eq:lasso-1">(4.27)</a>을 �
 <p>그림 <a href="multiple-reg.html#fig:lasso-1">4.14</a>을 보면 <span class="math inline">\(\log \lambda\)</span> 값이 증가함에 따라서 0이 아닌 회귀계수의 개수가 줄어들고 있음을 알 수 있다.</p>
 <p>최적 <span class="math inline">\(\lambda\)</span> 값을 cross-validation으로 추정한 모형을 함수 <code>cv.glmnet()</code>으로 적합해 보자.
 먼저 ridge 회귀모형을 적합해보자.</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="multiple-reg.html#cb81-1" tabindex="-1"></a>cvfit_R <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(X, Y, <span class="at">alpha =</span> <span class="dv">0</span>)</span>
-<span id="cb81-2"><a href="multiple-reg.html#cb81-2" tabindex="-1"></a>cvfit_R</span>
-<span id="cb81-3"><a href="multiple-reg.html#cb81-3" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb81-4"><a href="multiple-reg.html#cb81-4" tabindex="-1"></a><span class="do">## Call:  cv.glmnet(x = X, y = Y, alpha = 0) </span></span>
-<span id="cb81-5"><a href="multiple-reg.html#cb81-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb81-6"><a href="multiple-reg.html#cb81-6" tabindex="-1"></a><span class="do">## Measure: Mean-Squared Error </span></span>
-<span id="cb81-7"><a href="multiple-reg.html#cb81-7" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb81-8"><a href="multiple-reg.html#cb81-8" tabindex="-1"></a><span class="do">##     Lambda Index Measure    SE Nonzero</span></span>
-<span id="cb81-9"><a href="multiple-reg.html#cb81-9" tabindex="-1"></a><span class="do">## min  0.899    94   6.547 1.694       9</span></span>
-<span id="cb81-10"><a href="multiple-reg.html#cb81-10" tabindex="-1"></a><span class="do">## 1se  6.345    73   8.192 2.590       9</span></span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="multiple-reg.html#cb84-1" tabindex="-1"></a>cvfit_R <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(X, Y, <span class="at">alpha =</span> <span class="dv">0</span>)</span>
+<span id="cb84-2"><a href="multiple-reg.html#cb84-2" tabindex="-1"></a>cvfit_R</span>
+<span id="cb84-3"><a href="multiple-reg.html#cb84-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb84-4"><a href="multiple-reg.html#cb84-4" tabindex="-1"></a><span class="do">## Call:  cv.glmnet(x = X, y = Y, alpha = 0) </span></span>
+<span id="cb84-5"><a href="multiple-reg.html#cb84-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb84-6"><a href="multiple-reg.html#cb84-6" tabindex="-1"></a><span class="do">## Measure: Mean-Squared Error </span></span>
+<span id="cb84-7"><a href="multiple-reg.html#cb84-7" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb84-8"><a href="multiple-reg.html#cb84-8" tabindex="-1"></a><span class="do">##     Lambda Index Measure    SE Nonzero</span></span>
+<span id="cb84-9"><a href="multiple-reg.html#cb84-9" tabindex="-1"></a><span class="do">## min  0.899    94   6.547 1.694       9</span></span>
+<span id="cb84-10"><a href="multiple-reg.html#cb84-10" tabindex="-1"></a><span class="do">## 1se  6.345    73   8.192 2.590       9</span></span></code></pre></div>
 <p>10-fold cross-validation을 사용하는 것이 디폴트이며, 반응변수가 연속형인 경우에는 MSE를 최소화시키는 <span class="math inline">\(\lambda\)</span> 값을 추정한다.
 <code>min</code>에 해당하는 <code>Lambda</code>는 CV MSE를 최소화시키는 <span class="math inline">\(\lambda\)</span> 값이고, <code>1se</code>에 해당하는 <code>Lambda</code>는 최소 CV MSE <span class="math inline">\(\pm~~ 1 \times SE\)</span> 범위 안에서 최대 <span class="math inline">\(\lambda\)</span> 값이 된다.
 <code>1se</code>의 <span class="math inline">\(\lambda\)</span> 값은 최소 CV MSE와는 큰 차이가 없으면서도 가능한 더 많은 회귀계수를 0으로 수축시킬 수 있는 조율모수가 된다.</p>
 <p><span class="math inline">\(\lambda\)</span> 값의 변화에 따른 CV의 결과는 다음과 같이 확인할 수 있다.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="multiple-reg.html#cb82-1" tabindex="-1"></a><span class="fu">plot</span>(cvfit_R)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="multiple-reg.html#cb85-1" tabindex="-1"></a><span class="fu">plot</span>(cvfit_R)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:ridge-2"></span>
 <img src="_main_files/figure-html/ridge-2-1.png" alt="`lambda` 값의 변화에 따른 CV MSE의 변화" width="576" />
 <p class="caption">
@@ -1585,18 +1588,18 @@ Lasso 회귀계수는 식 <a href="multiple-reg.html#eq:lasso-1">(4.27)</a>을 �
 </div>
 <p>왼쪽에서 첫 번째 수직 점선이 최소 CV MSE에 해당하는 <span class="math inline">\(\lambda\)</span> 값이고, 두 번째 수직 점선이 1SE에 해당하는 <span class="math inline">\(\lambda\)</span> 값이다.</p>
 <p>이번에는 lasso 모형을 적합해 보자.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="multiple-reg.html#cb83-1" tabindex="-1"></a>cvfit_L <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(X, Y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
-<span id="cb83-2"><a href="multiple-reg.html#cb83-2" tabindex="-1"></a>cvfit_L</span>
-<span id="cb83-3"><a href="multiple-reg.html#cb83-3" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb83-4"><a href="multiple-reg.html#cb83-4" tabindex="-1"></a><span class="do">## Call:  cv.glmnet(x = X, y = Y, alpha = 1) </span></span>
-<span id="cb83-5"><a href="multiple-reg.html#cb83-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb83-6"><a href="multiple-reg.html#cb83-6" tabindex="-1"></a><span class="do">## Measure: Mean-Squared Error </span></span>
-<span id="cb83-7"><a href="multiple-reg.html#cb83-7" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb83-8"><a href="multiple-reg.html#cb83-8" tabindex="-1"></a><span class="do">##     Lambda Index Measure    SE Nonzero</span></span>
-<span id="cb83-9"><a href="multiple-reg.html#cb83-9" tabindex="-1"></a><span class="do">## min 0.1983    36   7.779 2.801       7</span></span>
-<span id="cb83-10"><a href="multiple-reg.html#cb83-10" tabindex="-1"></a><span class="do">## 1se 1.1617    17  10.195 5.096       5</span></span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="multiple-reg.html#cb86-1" tabindex="-1"></a>cvfit_L <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(X, Y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb86-2"><a href="multiple-reg.html#cb86-2" tabindex="-1"></a>cvfit_L</span>
+<span id="cb86-3"><a href="multiple-reg.html#cb86-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb86-4"><a href="multiple-reg.html#cb86-4" tabindex="-1"></a><span class="do">## Call:  cv.glmnet(x = X, y = Y, alpha = 1) </span></span>
+<span id="cb86-5"><a href="multiple-reg.html#cb86-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb86-6"><a href="multiple-reg.html#cb86-6" tabindex="-1"></a><span class="do">## Measure: Mean-Squared Error </span></span>
+<span id="cb86-7"><a href="multiple-reg.html#cb86-7" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb86-8"><a href="multiple-reg.html#cb86-8" tabindex="-1"></a><span class="do">##     Lambda Index Measure    SE Nonzero</span></span>
+<span id="cb86-9"><a href="multiple-reg.html#cb86-9" tabindex="-1"></a><span class="do">## min 0.1983    36   7.779 2.801       7</span></span>
+<span id="cb86-10"><a href="multiple-reg.html#cb86-10" tabindex="-1"></a><span class="do">## 1se 1.1617    17  10.195 5.096       5</span></span></code></pre></div>
 <p><span class="math inline">\(\lambda\)</span> 값의 변화에 따른 CV의 결과도 확인해 보자.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="multiple-reg.html#cb84-1" tabindex="-1"></a><span class="fu">plot</span>(cvfit_L)</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="multiple-reg.html#cb87-1" tabindex="-1"></a><span class="fu">plot</span>(cvfit_L)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:lasso-2"></span>
 <img src="_main_files/figure-html/lasso-2-1.png" alt="`lambda` 값의 변화에 따른 CV MSE의 변화" width="576" />
 <p class="caption">
@@ -1606,39 +1609,50 @@ Lasso 회귀계수는 식 <a href="multiple-reg.html#eq:lasso-1">(4.27)</a>을 �
 <p>최적 <span class="math inline">\(\lambda\)</span> 값으로 추정된 회귀계수 값은 함수 <code>coef()</code>에 <code>cv.glmnet</code> 객체를 입력하면 확인할 수 있다.
 <code>s = "lambda.min"</code>을 추가하면 최소 CV MSE에 해당하는 <span class="math inline">\(\lambda\)</span> 값으로 추정된 회귀계수가 출력되고, 생략하면 디폴트 값인 <code>s = "lambda.1se"</code>가 지정되어 1SE에 해당하는 <span class="math inline">\(\lambda\)</span> 값으로 추정된 회귀계수가 출력된다.</p>
 <p>먼저 ridge 회귀계수의 추정값을 출력해 보자.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="multiple-reg.html#cb85-1" tabindex="-1"></a><span class="fu">coef</span>(cvfit_R)</span>
-<span id="cb85-2"><a href="multiple-reg.html#cb85-2" tabindex="-1"></a><span class="do">## 10 x 1 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
-<span id="cb85-3"><a href="multiple-reg.html#cb85-3" tabindex="-1"></a><span class="do">##                       s1</span></span>
-<span id="cb85-4"><a href="multiple-reg.html#cb85-4" tabindex="-1"></a><span class="do">## (Intercept) 19.022276894</span></span>
-<span id="cb85-5"><a href="multiple-reg.html#cb85-5" tabindex="-1"></a><span class="do">## cyl6        -1.079993964</span></span>
-<span id="cb85-6"><a href="multiple-reg.html#cb85-6" tabindex="-1"></a><span class="do">## cyl8        -1.072884386</span></span>
-<span id="cb85-7"><a href="multiple-reg.html#cb85-7" tabindex="-1"></a><span class="do">## disp        -0.006325128</span></span>
-<span id="cb85-8"><a href="multiple-reg.html#cb85-8" tabindex="-1"></a><span class="do">## hp          -0.013135723</span></span>
-<span id="cb85-9"><a href="multiple-reg.html#cb85-9" tabindex="-1"></a><span class="do">## drat         1.107153854</span></span>
-<span id="cb85-10"><a href="multiple-reg.html#cb85-10" tabindex="-1"></a><span class="do">## wt          -1.124668959</span></span>
-<span id="cb85-11"><a href="multiple-reg.html#cb85-11" tabindex="-1"></a><span class="do">## qsec         0.208350553</span></span>
-<span id="cb85-12"><a href="multiple-reg.html#cb85-12" tabindex="-1"></a><span class="do">## vs1          1.119832155</span></span>
-<span id="cb85-13"><a href="multiple-reg.html#cb85-13" tabindex="-1"></a><span class="do">## am1          1.447003442</span></span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="multiple-reg.html#cb88-1" tabindex="-1"></a><span class="fu">coef</span>(cvfit_R)</span>
+<span id="cb88-2"><a href="multiple-reg.html#cb88-2" tabindex="-1"></a><span class="do">## 10 x 1 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
+<span id="cb88-3"><a href="multiple-reg.html#cb88-3" tabindex="-1"></a><span class="do">##                       s1</span></span>
+<span id="cb88-4"><a href="multiple-reg.html#cb88-4" tabindex="-1"></a><span class="do">## (Intercept) 19.022276894</span></span>
+<span id="cb88-5"><a href="multiple-reg.html#cb88-5" tabindex="-1"></a><span class="do">## cyl6        -1.079993964</span></span>
+<span id="cb88-6"><a href="multiple-reg.html#cb88-6" tabindex="-1"></a><span class="do">## cyl8        -1.072884386</span></span>
+<span id="cb88-7"><a href="multiple-reg.html#cb88-7" tabindex="-1"></a><span class="do">## disp        -0.006325128</span></span>
+<span id="cb88-8"><a href="multiple-reg.html#cb88-8" tabindex="-1"></a><span class="do">## hp          -0.013135723</span></span>
+<span id="cb88-9"><a href="multiple-reg.html#cb88-9" tabindex="-1"></a><span class="do">## drat         1.107153854</span></span>
+<span id="cb88-10"><a href="multiple-reg.html#cb88-10" tabindex="-1"></a><span class="do">## wt          -1.124668959</span></span>
+<span id="cb88-11"><a href="multiple-reg.html#cb88-11" tabindex="-1"></a><span class="do">## qsec         0.208350553</span></span>
+<span id="cb88-12"><a href="multiple-reg.html#cb88-12" tabindex="-1"></a><span class="do">## vs1          1.119832155</span></span>
+<span id="cb88-13"><a href="multiple-reg.html#cb88-13" tabindex="-1"></a><span class="do">## am1          1.447003442</span></span></code></pre></div>
 <p>Lasso 회귀계수의 추정값을 출력해 보자.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="multiple-reg.html#cb86-1" tabindex="-1"></a><span class="fu">coef</span>(cvfit_L)</span>
-<span id="cb86-2"><a href="multiple-reg.html#cb86-2" tabindex="-1"></a><span class="do">## 10 x 1 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
-<span id="cb86-3"><a href="multiple-reg.html#cb86-3" tabindex="-1"></a><span class="do">##                        s1</span></span>
-<span id="cb86-4"><a href="multiple-reg.html#cb86-4" tabindex="-1"></a><span class="do">## (Intercept) 32.0056920950</span></span>
-<span id="cb86-5"><a href="multiple-reg.html#cb86-5" tabindex="-1"></a><span class="do">## cyl6         .           </span></span>
-<span id="cb86-6"><a href="multiple-reg.html#cb86-6" tabindex="-1"></a><span class="do">## cyl8         .           </span></span>
-<span id="cb86-7"><a href="multiple-reg.html#cb86-7" tabindex="-1"></a><span class="do">## disp        -0.0008627785</span></span>
-<span id="cb86-8"><a href="multiple-reg.html#cb86-8" tabindex="-1"></a><span class="do">## hp          -0.0202233183</span></span>
-<span id="cb86-9"><a href="multiple-reg.html#cb86-9" tabindex="-1"></a><span class="do">## drat         0.2171493960</span></span>
-<span id="cb86-10"><a href="multiple-reg.html#cb86-10" tabindex="-1"></a><span class="do">## wt          -2.9820129233</span></span>
-<span id="cb86-11"><a href="multiple-reg.html#cb86-11" tabindex="-1"></a><span class="do">## qsec         .           </span></span>
-<span id="cb86-12"><a href="multiple-reg.html#cb86-12" tabindex="-1"></a><span class="do">## vs1          0.1448971143</span></span>
-<span id="cb86-13"><a href="multiple-reg.html#cb86-13" tabindex="-1"></a><span class="do">## am1          .</span></span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="multiple-reg.html#cb89-1" tabindex="-1"></a><span class="fu">coef</span>(cvfit_L)</span>
+<span id="cb89-2"><a href="multiple-reg.html#cb89-2" tabindex="-1"></a><span class="do">## 10 x 1 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
+<span id="cb89-3"><a href="multiple-reg.html#cb89-3" tabindex="-1"></a><span class="do">##                        s1</span></span>
+<span id="cb89-4"><a href="multiple-reg.html#cb89-4" tabindex="-1"></a><span class="do">## (Intercept) 32.0056920950</span></span>
+<span id="cb89-5"><a href="multiple-reg.html#cb89-5" tabindex="-1"></a><span class="do">## cyl6         .           </span></span>
+<span id="cb89-6"><a href="multiple-reg.html#cb89-6" tabindex="-1"></a><span class="do">## cyl8         .           </span></span>
+<span id="cb89-7"><a href="multiple-reg.html#cb89-7" tabindex="-1"></a><span class="do">## disp        -0.0008627785</span></span>
+<span id="cb89-8"><a href="multiple-reg.html#cb89-8" tabindex="-1"></a><span class="do">## hp          -0.0202233183</span></span>
+<span id="cb89-9"><a href="multiple-reg.html#cb89-9" tabindex="-1"></a><span class="do">## drat         0.2171493960</span></span>
+<span id="cb89-10"><a href="multiple-reg.html#cb89-10" tabindex="-1"></a><span class="do">## wt          -2.9820129233</span></span>
+<span id="cb89-11"><a href="multiple-reg.html#cb89-11" tabindex="-1"></a><span class="do">## qsec         .           </span></span>
+<span id="cb89-12"><a href="multiple-reg.html#cb89-12" tabindex="-1"></a><span class="do">## vs1          0.1448971143</span></span>
+<span id="cb89-13"><a href="multiple-reg.html#cb89-13" tabindex="-1"></a><span class="do">## am1          .</span></span></code></pre></div>
 <p>회귀계수의 추정값이 점으로 찍힌 변수는 해당 회귀계수가 0이라는 것을 의미한다.
 Ridge 회귀계수와 lasso 회귀계수의 추정 결과는 최소제곱추정에 의한 추정결과와는 당연히 다르며, 회귀계수 추정에 대한 SE로 계산되지 않는다.
 또한 cross-validation에 의한 결과이기 때문에 추정할 때마다 추정결과가 조금 다르게 된다.</p>
+</div>
+</div>
+</div>
+<div id="연습문제-2" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> 연습문제<a href="multiple-reg.html#연습문제-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>1.</strong> 반응변수 <span class="math inline">\(Y\)</span> 에 대하여 설명변수 <span class="math inline">\(X_{1}, \ldots, X_{k}\)</span> 의 회귀모형 <span class="math inline">\(\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}\)</span> 을 설정하고자 한다.</p>
+<ul>
+<li><p>반응변수의 관찰값 벡터 <span class="math inline">\(\mathbf{Y}\)</span> 를 정의하라.</p></li>
+<li><p>설명변수의 관찰값 행렬이며, design matrix라고 불리는 <span class="math inline">\(\mathbf{X}\)</span> 를 정의하라.</p></li>
+<li><p>모수 벡터 <span class="math inline">\(\boldsymbol{\beta}\)</span> 를 정의하라.</p></li>
+<li><p>오차항 벡터 <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> 를 정의하라.</p></li>
+<li><p>모수 벡터 <span class="math inline">\(\boldsymbol{\beta}\)</span> 의 최소제곱추정량 벡터 <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> 은 무엇인가?</p></li>
+</ul>
 
-</div>
-</div>
 </div>
 </div>
             </section>

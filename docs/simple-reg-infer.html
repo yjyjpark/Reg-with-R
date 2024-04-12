@@ -23,7 +23,7 @@
 <meta name="author" content="박동련" />
 
 
-<meta name="date" content="2024-03-31" />
+<meta name="date" content="2024-04-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -157,6 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.2" data-path="simple-reg.html"><a href="simple-reg.html#section-property-lse"><i class="fa fa-check"></i><b>2.2.2</b> 최소제곱추정량의 특성</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="simple-reg.html"><a href="simple-reg.html#section-simple-sigma"><i class="fa fa-check"></i><b>2.3</b> 오차분산 <span class="math inline">\(\sigma^{2}\)</span>의 추정</a></li>
+<li class="chapter" data-level="2.4" data-path="simple-reg.html"><a href="simple-reg.html#연습문제"><i class="fa fa-check"></i><b>2.4</b> 연습문제</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html"><i class="fa fa-check"></i><b>3</b> 단순선형회귀모형의 추론</a>
 <ul>
@@ -175,6 +176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-평균-eyx_o에-대한-신뢰구간-추정"><i class="fa fa-check"></i><b>3.3</b> 반응변수의 평균, <span class="math inline">\(E(Y|X_{o})\)</span>에 대한 신뢰구간 추정</a></li>
 <li class="chapter" data-level="3.4" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-개별-관측값-예측"><i class="fa fa-check"></i><b>3.4</b> 반응변수의 개별 관측값 예측</a></li>
 <li class="chapter" data-level="3.5" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#상관계수-두-변수-사이의-선형-연관성-측정"><i class="fa fa-check"></i><b>3.5</b> 상관계수 : 두 변수 사이의 선형 연관성 측정</a></li>
+<li class="chapter" data-level="3.6" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#연습문제-1"><i class="fa fa-check"></i><b>3.6</b> 연습문제</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> 다중선형회귀모형</a>
 <ul>
@@ -197,6 +199,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.2" data-path="multiple-reg.html"><a href="multiple-reg.html#section-variable-criterion"><i class="fa fa-check"></i><b>4.3.2</b> 평가 측도에 의한 변수선택</a></li>
 <li class="chapter" data-level="4.3.3" data-path="multiple-reg.html"><a href="multiple-reg.html#section-shrinkage"><i class="fa fa-check"></i><b>4.3.3</b> Shrinkage 방법</a></li>
 </ul></li>
+<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#연습문제-2"><i class="fa fa-check"></i><b>4.4</b> 연습문제</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="reg-diag.html"><a href="reg-diag.html"><i class="fa fa-check"></i><b>5</b> 회귀모형의 진단</a>
 <ul>
@@ -692,6 +695,80 @@ t = \frac{r \sqrt{n-2}}{\sqrt{1-r^{2}}}
 <span id="cb24-11"><a href="simple-reg-infer.html#cb24-11" tabindex="-1"></a><span class="do">##        cor </span></span>
 <span id="cb24-12"><a href="simple-reg-infer.html#cb24-12" tabindex="-1"></a><span class="do">## -0.2881244</span></span></code></pre></div>
 <p>검정 결과는 두 변수 사이에 유의한 선형관계가 존재하는 것으로 나왔다.</p>
+</div>
+<div id="연습문제-1" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> 연습문제<a href="simple-reg-infer.html#연습문제-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>1.</strong> 단순회귀모형에서 기울기 모수인 <span class="math inline">\(\beta_{1}\)</span> 에 대한 다음의 가설 검정을 실시하고자 한다.</p>
+<p><span class="math display">\[\begin{equation}
+H_{0}: \beta_{1}=0,~~H_{1}: \beta_{1} \ne 0
+\end{equation}\]</span></p>
+<ul>
+<li><p>검정통계량을 정의하고, 유도되는 과정을 설명하라.</p></li>
+<li><p><span class="math inline">\(H_{0}\)</span> 이 사실인 경우, 검정통계량의 분포는 무엇인가? 이 분포가 검정 과정에서 어떤 역할을 하고 있는지 설명하라.</p></li>
+</ul>
+<p><strong>2.</strong> 데이터 프레임 <code>mtcars</code>의 변수 <code>mpg</code>를 반응변수로, <code>disp</code>를 설명변수로 하는 회귀모형을 함수 <code>lm()</code>으로 적합시키고, 그 결과를 함수 <code>summary()</code>에 입력한 결과가 다음과 같다. 분석 목적은 자동차 엔진 배기량(<code>disp</code>)이 증가하면 연비(<code>mpg</code>)가 떨어진다는 가설을 검정하는 것이다.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="simple-reg-infer.html#cb25-1" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> disp, <span class="at">data =</span> mtcars) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span>
+<span id="cb25-2"><a href="simple-reg-infer.html#cb25-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb25-3"><a href="simple-reg-infer.html#cb25-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb25-4"><a href="simple-reg-infer.html#cb25-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ disp, data = mtcars)</span></span>
+<span id="cb25-5"><a href="simple-reg-infer.html#cb25-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb25-6"><a href="simple-reg-infer.html#cb25-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb25-7"><a href="simple-reg-infer.html#cb25-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb25-8"><a href="simple-reg-infer.html#cb25-8" tabindex="-1"></a><span class="do">## -4.8922 -2.2022 -0.9631  1.6272  7.2305 </span></span>
+<span id="cb25-9"><a href="simple-reg-infer.html#cb25-9" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb25-10"><a href="simple-reg-infer.html#cb25-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb25-11"><a href="simple-reg-infer.html#cb25-11" tabindex="-1"></a><span class="do">##              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb25-12"><a href="simple-reg-infer.html#cb25-12" tabindex="-1"></a><span class="do">## (Intercept) 29.599855   1.229720  24.070  &lt; 2e-16 ***</span></span>
+<span id="cb25-13"><a href="simple-reg-infer.html#cb25-13" tabindex="-1"></a><span class="do">## disp        -0.041215   0.004712  -8.747 9.38e-10 ***</span></span>
+<span id="cb25-14"><a href="simple-reg-infer.html#cb25-14" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb25-15"><a href="simple-reg-infer.html#cb25-15" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb25-16"><a href="simple-reg-infer.html#cb25-16" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb25-17"><a href="simple-reg-infer.html#cb25-17" tabindex="-1"></a><span class="do">## Residual standard error: 3.251 on 30 degrees of freedom</span></span>
+<span id="cb25-18"><a href="simple-reg-infer.html#cb25-18" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.7183, Adjusted R-squared:  0.709 </span></span>
+<span id="cb25-19"><a href="simple-reg-infer.html#cb25-19" tabindex="-1"></a><span class="do">## F-statistic: 76.51 on 1 and 30 DF,  p-value: 9.38e-10</span></span></code></pre></div>
+<ul>
+<li><p>추정된 회귀모형식을 작성하고, 그 의미를 해석하라.</p></li>
+<li><p>분석 목적을 위한 가설을 작성하라.</p></li>
+<li><p>검정통계량의 값은 무엇이며, 어떻게 계산되었는지 설명하라.</p></li>
+<li><p>p-value를 계산하고, 가설 검정을 실시하라. 가설 검정 결과에서는 어떤 오류가 발생할 수 있는가?</p></li>
+</ul>
+<p><strong>3.</strong> 두 변수 사이의 선형 관련성을 측정하고자 한다.</p>
+<ul>
+<li><p>두 변수의 공분산은 무엇이며, 어떻게 두 변수 사이의 선형 관련성을 측정할 수 있는가?</p></li>
+<li><p>두 변수 사이의 선형 관련성은 공분산이 아닌 상관계수로 측정하는 것이 일반적이다. 그 이유는 무엇인가?</p></li>
+</ul>
+<p><strong>4.</strong> 단순회귀모형 <span class="math inline">\(Y=\beta_{0}+\beta_{1}X+\varepsilon\)</span> 에서 기울기 모수 <span class="math inline">\(\beta_{1}\)</span> 에 대한 유의성 검정과 두 변수 <span class="math inline">\((X,Y)\)</span> 의 상관계수에 대한 유의성 검정에는 어떤 관련성이 있는지 설명하라.</p>
+<p><strong>5.</strong> 자동차의 특정 주행속도(<code>speed</code>)에서 급제동을 해서 차를 완전히 멈추는데 필요한 거리(<code>dist</code>)를 측정하는 실험을 50회 반복한 자료의 산점도이다. <code>speed</code>의 단위는 mph이고, <code>dist</code>의 단위는 feet이다.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="simple-reg-infer.html#cb26-1" tabindex="-1"></a>cars <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a href="simple-reg-infer.html#cb26-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> speed, <span class="at">y =</span> dist)) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="simple-reg-infer.html#cb26-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="576" /></p>
+<p><code>speed</code>를 설명변수로 하는 <code>dist</code>에 대한 단순회귀모형을 적합한 결과가 다음과 같다.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="simple-reg-infer.html#cb27-1" tabindex="-1"></a><span class="fu">lm</span>(dist <span class="sc">~</span> speed, cars) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span>
+<span id="cb27-2"><a href="simple-reg-infer.html#cb27-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb27-3"><a href="simple-reg-infer.html#cb27-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb27-4"><a href="simple-reg-infer.html#cb27-4" tabindex="-1"></a><span class="do">## lm(formula = dist ~ speed, data = cars)</span></span>
+<span id="cb27-5"><a href="simple-reg-infer.html#cb27-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb27-6"><a href="simple-reg-infer.html#cb27-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb27-7"><a href="simple-reg-infer.html#cb27-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb27-8"><a href="simple-reg-infer.html#cb27-8" tabindex="-1"></a><span class="do">## -29.069  -9.525  -2.272   9.215  43.201 </span></span>
+<span id="cb27-9"><a href="simple-reg-infer.html#cb27-9" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb27-10"><a href="simple-reg-infer.html#cb27-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb27-11"><a href="simple-reg-infer.html#cb27-11" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb27-12"><a href="simple-reg-infer.html#cb27-12" tabindex="-1"></a><span class="do">## (Intercept) -17.5791     6.7584  -2.601   0.0123 *  </span></span>
+<span id="cb27-13"><a href="simple-reg-infer.html#cb27-13" tabindex="-1"></a><span class="do">## speed         3.9324     0.4155   9.464 1.49e-12 ***</span></span>
+<span id="cb27-14"><a href="simple-reg-infer.html#cb27-14" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb27-15"><a href="simple-reg-infer.html#cb27-15" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb27-16"><a href="simple-reg-infer.html#cb27-16" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb27-17"><a href="simple-reg-infer.html#cb27-17" tabindex="-1"></a><span class="do">## Residual standard error: 15.38 on 48 degrees of freedom</span></span>
+<span id="cb27-18"><a href="simple-reg-infer.html#cb27-18" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 </span></span>
+<span id="cb27-19"><a href="simple-reg-infer.html#cb27-19" tabindex="-1"></a><span class="do">## F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12</span></span></code></pre></div>
+<ul>
+<li><p>추정된 회귀모형식을 작성하고, 의미를 해석하라.</p></li>
+<li><p>주어진 결과물을 근거로 기울기 모수 <span class="math inline">\(\beta_{1}\)</span> 에 대한 95% 신뢰구간을 작성하고 해석하라.</p></li>
+<li><p>자동차의 주행속도가 증가하면 차를 완전히 멈추는데 필요한 거리도 증가한다는 가설을 검정하라.</p></li>
+<li><p>철수가 60 feet 앞에 나타난 장애물을 보고 차를 급제동을 했는데, 그 때 차량의 운행속도는 21mph였다. 철수는 장애물과 출동하지 않고 차량을 멈출 수 있겠는가?</p></li>
+</ul>
 
 </div>
 </div>

@@ -191,25 +191,29 @@ fit_m
 
 ```{r ex4-1-1, echo=FALSE, fig.cap="설명변수가 2개인 다중회귀모형에서 추정된 회귀평면"}
 library(tidyverse)
-#library(rayshader)
-library(lattice)
 
 wt <- seq(1, 6, len = 50)
 qsec <- seq(13, 23, len = 50)
 fun12 <- function(x1, x2) 19.74 - 5.047*x1 + 0.929*x2
+mpg <- outer(wt, qsec, fun12)
 
+
+library(lattice)
+wireframe(mpg, drape = TRUE, screen = list(z = -40, x = -80, y = 0),
+          xlab = "wt", ylab = "qsec", zlab = "mpg",
+          scales = list(arrows = FALSE))
+
+
+#library(plotly)
+#plot_ly() |> add_surface(y = ~wt, x = ~qsec, z = ~mpg) 
+
+#library(rayshader)
 # df1 <- expand_grid(wt, qsec)
 # p <- df1 |> mutate(mpg = fun12(wt, qsec)) |> 
 #   ggplot(aes(x = wt, y = qsec, fill = mpg)) +
 #   geom_raster()  +
 #   scale_fill_viridis_c()
 # plot_gg(p)
-
-mpg <- outer(wt, qsec, fun12)
-wireframe(mpg, drape = TRUE, screen = list(z = -40, x = -80, y = 0),
-          xlab = "wt", ylab = "qsec", zlab = "mpg",
-          scales = list(arrows = FALSE))
-
 ```
 
 
@@ -1467,10 +1471,20 @@ Ridge 회귀계수와 lasso 회귀계수의 추정 결과는 최소제곱추정�
 또한 cross-validation에 의한 결과이기 때문에 추정할 때마다 추정결과가 조금 다르게 된다. 
 
 
+## 연습문제
+
+**1.** 반응변수 $Y$ 에 대하여 설명변수 $X_{1}, \ldots, X_{k}$ 의 회귀모형 $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}$ 을 설정하고자 한다.
 
 
+- 반응변수의 관찰값 벡터 $\mathbf{Y}$ 를 정의하라.
 
+- 설명변수의 관찰값 행렬이며, design matrix라고 불리는 $\mathbf{X}$ 를 정의하라. 
 
+- 모수 벡터 $\boldsymbol{\beta}$ 를 정의하라. 
+
+- 오차항 벡터 $\boldsymbol{\varepsilon}$ 를 정의하라. 
+
+- 모수 벡터 $\boldsymbol{\beta}$ 의 최소제곱추정량 벡터 $\hat{\boldsymbol{\beta}}$ 은 무엇인가?
 
 
 

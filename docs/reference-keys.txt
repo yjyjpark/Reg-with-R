@@ -125,6 +125,7 @@ simple-reg
 모수-beta_0와-beta_1의-추정
 section-property-lse
 section-simple-sigma
+연습문제
 simple-reg-infer
 회귀계수-beta_1에-대한-추론
 hatbeta_1의-표본분포
@@ -137,6 +138,7 @@ beta_0에-대한-가설검정
 반응변수의-평균-eyx_o에-대한-신뢰구간-추정
 반응변수의-개별-관측값-예측
 상관계수-두-변수-사이의-선형-연관성-측정
+연습문제-1
 multiple-reg
 section-multi-model
 section-multi-fitting
@@ -153,6 +155,7 @@ section-variable-criterion
 section-shrinkage
 ridge-회귀모형
 lasso
+연습문제-2
 reg-diag
 section-assumption-error
 section-influence-data

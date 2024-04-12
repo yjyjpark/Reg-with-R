@@ -23,7 +23,7 @@
 <meta name="author" content="박동련" />
 
 
-<meta name="date" content="2024-03-31" />
+<meta name="date" content="2024-04-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -157,6 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.2" data-path="simple-reg.html"><a href="simple-reg.html#section-property-lse"><i class="fa fa-check"></i><b>2.2.2</b> 최소제곱추정량의 특성</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="simple-reg.html"><a href="simple-reg.html#section-simple-sigma"><i class="fa fa-check"></i><b>2.3</b> 오차분산 <span class="math inline">\(\sigma^{2}\)</span>의 추정</a></li>
+<li class="chapter" data-level="2.4" data-path="simple-reg.html"><a href="simple-reg.html#연습문제"><i class="fa fa-check"></i><b>2.4</b> 연습문제</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html"><i class="fa fa-check"></i><b>3</b> 단순선형회귀모형의 추론</a>
 <ul>
@@ -175,6 +176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-평균-eyx_o에-대한-신뢰구간-추정"><i class="fa fa-check"></i><b>3.3</b> 반응변수의 평균, <span class="math inline">\(E(Y|X_{o})\)</span>에 대한 신뢰구간 추정</a></li>
 <li class="chapter" data-level="3.4" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-개별-관측값-예측"><i class="fa fa-check"></i><b>3.4</b> 반응변수의 개별 관측값 예측</a></li>
 <li class="chapter" data-level="3.5" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#상관계수-두-변수-사이의-선형-연관성-측정"><i class="fa fa-check"></i><b>3.5</b> 상관계수 : 두 변수 사이의 선형 연관성 측정</a></li>
+<li class="chapter" data-level="3.6" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#연습문제-1"><i class="fa fa-check"></i><b>3.6</b> 연습문제</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> 다중선형회귀모형</a>
 <ul>
@@ -197,6 +199,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.2" data-path="multiple-reg.html"><a href="multiple-reg.html#section-variable-criterion"><i class="fa fa-check"></i><b>4.3.2</b> 평가 측도에 의한 변수선택</a></li>
 <li class="chapter" data-level="4.3.3" data-path="multiple-reg.html"><a href="multiple-reg.html#section-shrinkage"><i class="fa fa-check"></i><b>4.3.3</b> Shrinkage 방법</a></li>
 </ul></li>
+<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#연습문제-2"><i class="fa fa-check"></i><b>4.4</b> 연습문제</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="reg-diag.html"><a href="reg-diag.html"><i class="fa fa-check"></i><b>5</b> 회귀모형의 진단</a>
 <ul>
@@ -600,6 +603,35 @@ RSS = \sum_{i=1}^{n}\left(y_{i}-\hat{y}_{i}\right)^{2}
 <p>회귀모형의 다양한 추정 결과는 함수 <code>lm()</code>으로 생성된 객체를 함수 <code>summary()</code>에 입력하면 얻을 수 있다. 자세한 사용 방법은 <a href="simple-reg-infer.html#simple-reg-infer">3</a>장에서 살펴볼 것이지만, 여기에서는 함수 <code>summary()</code>의 결과 중 <span class="math inline">\(\sigma\)</span> 의 추정값만을 출력해 보자.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="simple-reg.html#cb12-1" tabindex="-1"></a><span class="fu">summary</span>(fit2<span class="fl">.2</span>)<span class="sc">$</span>sigma</span>
 <span id="cb12-2"><a href="simple-reg.html#cb12-2" tabindex="-1"></a><span class="do">## [1] 60.41388</span></span></code></pre></div>
+</div>
+<div id="연습문제" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> 연습문제<a href="simple-reg.html#연습문제" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>1.</strong> 설명변수가 하나이고 반응변수와의 관계가 직선으로 가정할 수 있는 경우에 회귀모형은 다음과 같이 정의된다.</p>
+<p><span class="math display">\[\begin{equation}
+y_{i} = \beta_{0} + \beta_{1}x_{i} + \varepsilon_{i}, ~~i = 1, \ldots, n
+\end{equation}\]</span></p>
+<p>여기에서 <span class="math inline">\(y_{i}\)</span> 는 반응변수의 <span class="math inline">\(i\)</span> 번째 관찰값, <span class="math inline">\(x_{i}\)</span> 는 설명변수의 <span class="math inline">\(i\)</span> 번째 관찰값을 의미한다.</p>
+<ul>
+<li><p><span class="math inline">\(\beta_{0}\)</span> 와 <span class="math inline">\(\beta_{1}\)</span> 은 모수인데, 모수란 무엇인지 설명하고, 두 모수가 모형에서 어떤 역할을 하고 있는지 설명하라.</p></li>
+<li><p><span class="math inline">\(\varepsilon_{i}\)</span> 는 모형의 오차항을 나타내는 변량이다. 모형에 오차항을 포함시킨 이유는 무엇이며, 어떤 가정을 하고 있는지 설명하라.</p></li>
+</ul>
+<p><strong>2.</strong> 단순회귀모형의 모수 <span class="math inline">\(\beta_{0}\)</span> 와 <span class="math inline">\(\beta_{1}\)</span> 의 최소제곱추정량을 각각 <span class="math inline">\(\hat{\beta}_{0}\)</span> 와 <span class="math inline">\(\hat{\beta}_{1}\)</span> 이라고 하자.</p>
+<ul>
+<li><p>최소제곱추정량이란 무엇을 ’최소화’시키는 추정량이며, 어떤 의미를 지니고 있는지 설명하라.</p></li>
+<li><p>최소제곱추정량 <span class="math inline">\(\hat{\beta}_{0}\)</span> 와 <span class="math inline">\(\hat{\beta}_{1}\)</span> 을 각각 유도하라.</p></li>
+<li><p>최소제곱추정량 <span class="math inline">\(\hat{\beta}_{1}\)</span> 의 표본분포를 유도하라.</p></li>
+</ul>
+<p><strong>3.</strong> Gauss-Markov 정리는 회귀모형에서 중요한 역할을 하고 있다.</p>
+<ul>
+<li><p>Gauss-Markov 정리의 가정사항은 무엇인가?</p></li>
+<li><p>Gauss-Markov 정리로 최소제곱추정량의 사용에 정당성이 부여되었다고 할 수 있는데, 그 이유는 무엇인가?</p></li>
+</ul>
+<p><strong>4.</strong> 단순회귀모형의 오차항 <span class="math inline">\(\varepsilon_{i}\)</span> 의 분산 <span class="math inline">\(\sigma^{2}\)</span> 를 추정하고자 한다.</p>
+<ul>
+<li><p>오차항의 분산을 잔차의 제곱합을 이용해서 추정할 수밖에 없는 이유는 무엇인가?</p></li>
+<li><p>잔차제곱합의 자유도는 무엇인가? 계산 과정을 설명하라.</p></li>
+<li><p>오차항 분산 <span class="math inline">\(\sigma^{2}\)</span> 의 불편추정량을 정의하라.</p></li>
+</ul>
 
 </div>
 </div>
