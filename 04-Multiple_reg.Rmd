@@ -413,8 +413,8 @@ Y = \beta_{0} + \beta_{1}X + \beta_{2}D + \varepsilon
 $$
  E(Y) =
 \begin{cases}
-\beta_{0} + \beta_{1}X & \quad  \text{if   } D = 0 \\
-\beta_{0} + \beta_{2} + \beta_{1}X & \quad  \text{if   } D = 1
+\beta_{0} + \beta_{1}X & \quad  \text{if   } ~~D = 0 \\
+\beta_{0} + \beta_{2} + \beta_{1}X & \quad  \text{if   } ~~D = 1
 \end{cases}
 $$
 
@@ -434,8 +434,8 @@ Y = \beta_{0} + \beta_{1}X + \beta_{2}D + \beta_{3}DX + \varepsilon
 $$
 E(Y) =
 \begin{cases}
-\beta_{0} + \beta_{1}X & \quad  \text{if   } D = 0 \\
-(\beta_{0} + \beta_{2}) + (\beta_{1}+\beta_{3})X & \quad  \text{if   } D = 1
+\beta_{0} + \beta_{1}X & \quad  \text{if   } ~~D = 0 \\
+(\beta_{0} + \beta_{2}) + (\beta_{1}+\beta_{3})X & \quad  \text{if   } ~~D = 1
 \end{cases}
 $$
 

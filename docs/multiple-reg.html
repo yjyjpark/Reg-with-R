@@ -23,7 +23,7 @@
 <meta name="author" content="박동련" />
 
 
-<meta name="date" content="2024-04-12" />
+<meta name="date" content="2024-04-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -651,8 +651,8 @@ Y = \beta_{0} + \beta_{1}X + \beta_{2}D + \varepsilon
 <span class="math display">\[
 E(Y) =
 \begin{cases}
-\beta_{0} + \beta_{1}X &amp; \quad  \text{if   } D = 0 \\
-\beta_{0} + \beta_{2} + \beta_{1}X &amp; \quad  \text{if   } D = 1
+\beta_{0} + \beta_{1}X &amp; \quad  \text{if   } ~~D = 0 \\
+\beta_{0} + \beta_{2} + \beta_{1}X &amp; \quad  \text{if   } ~~D = 1
 \end{cases}
 \]</span></p>
 <p><span class="math inline">\(D=0\)</span> 이 되는 범주를 ’기준범주’라고 하는데, 절편 <span class="math inline">\(\beta_{0}\)</span> 가 기준범주의 효과를 나타내고 있고, 가변수의 회귀계수 <span class="math inline">\(\beta_{2}\)</span> 는 기준범주와 “Yes” 범주의 효과 차이를 나타내고 있다.</p>
@@ -667,8 +667,8 @@ Y = \beta_{0} + \beta_{1}X + \beta_{2}D + \beta_{3}DX + \varepsilon
 <p><span class="math display">\[
 E(Y) =
 \begin{cases}
-\beta_{0} + \beta_{1}X &amp; \quad  \text{if   } D = 0 \\
-(\beta_{0} + \beta_{2}) + (\beta_{1}+\beta_{3})X &amp; \quad  \text{if   } D = 1
+\beta_{0} + \beta_{1}X &amp; \quad  \text{if   } ~~D = 0 \\
+(\beta_{0} + \beta_{2}) + (\beta_{1}+\beta_{3})X &amp; \quad  \text{if   } ~~D = 1
 \end{cases}
 \]</span></p>
 <p>연속형 설명변수와 가변수의 상호작용 효과를 모형에 추가하는 것이 더 포괄적인 모형을 구축하는 방법이지만, 설명변수가 많은 경우에는 지나치게 많은 변수가 모형에 추가될 수 있어서 분석에 큰 부담이 될 수 있다.
