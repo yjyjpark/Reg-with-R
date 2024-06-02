@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 장 회귀모형의 진단 | R에 의한 회귀분석</title>
   <meta name="description" content="한신대학교 응용통계학과 전공 과목 회귀분석및실습의 교재로 사용되고 있습니다." />
-  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 장 회귀모형의 진단 | R에 의한 회귀분석" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="박동련" />
 
 
-<meta name="date" content="2024-04-20" />
+<meta name="date" content="2024-06-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -56,7 +56,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -205,6 +205,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="5.1" data-path="reg-diag.html"><a href="reg-diag.html#section-assumption-error"><i class="fa fa-check"></i><b>5.1</b> 회귀모형에 대한 진단</a></li>
 <li class="chapter" data-level="5.2" data-path="reg-diag.html"><a href="reg-diag.html#section-influence-data"><i class="fa fa-check"></i><b>5.2</b> 관찰값에 대한 진단</a></li>
+<li class="chapter" data-level="5.3" data-path="reg-diag.html"><a href="reg-diag.html#연습문제-3"><i class="fa fa-check"></i><b>5.3</b> 연습문제</a></li>
 </ul></li>
 </ul>
 
@@ -246,17 +247,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><a href="multiple-reg.html#multiple-reg">4</a>장에서 사용한 예제 자료인 <code>state.x77</code>과 <code>mtcars</code>를 대상으로 회귀모형 진단을 실시해 보자.</p>
 <p><span class="math inline">\(\bullet\)</span> 예제 : <code>state.x77</code></p>
 <p><code>state.x77</code> 자료에 대해 <a href="multiple-reg.html#section-multi-fitting">4.1.1</a>절에서 이루어진 주된 분석은 다음과 같다.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="reg-diag.html#cb90-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="reg-diag.html#cb91-1" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(state.x77) <span class="sc">|&gt;</span></span>
-<span id="cb91-2"><a href="reg-diag.html#cb91-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Life_Exp =</span> <span class="st">&#39;Life Exp&#39;</span>, <span class="at">HS_Grad =</span> <span class="st">&#39;HS Grad&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="reg-diag.html#cb100-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="reg-diag.html#cb101-1" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(state.x77) <span class="sc">|&gt;</span></span>
+<span id="cb101-2"><a href="reg-diag.html#cb101-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Life_Exp =</span> <span class="st">&#39;Life Exp&#39;</span>, <span class="at">HS_Grad =</span> <span class="st">&#39;HS Grad&#39;</span>)</span></code></pre></div>
 <p><code>states</code> 자료에 대하여 변수선택 과정 없이 모든 설명변수를 포함한 회귀모형을 적합하고, 그 모형에 대한 회귀진단을 실시해 보자.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="reg-diag.html#cb92-1" tabindex="-1"></a>fit_s <span class="ot">&lt;-</span> <span class="fu">lm</span>(Murder <span class="sc">~</span> ., states)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="reg-diag.html#cb102-1" tabindex="-1"></a>fit_s <span class="ot">&lt;-</span> <span class="fu">lm</span>(Murder <span class="sc">~</span> ., states)</span></code></pre></div>
 <p>추정된 회귀모형의 가정 만족 여부를 확인하는 가장 기본적인 절차는 함수 <code>lm()</code>으로 생성된 객체를 함수 <code>plot()</code>에 입력하는 것인데, 네 종류의 그래프가 차례로 그려진다.
 작성된 그래프를 하나의 Plots 창에서 함께 보는 것이 편리한데, 그것을 위해서는 함수 <code>par()</code>를 함께 사용해야 한다.
 함수 <code>par()</code>는 <code>plot()</code>과 같은 base graphic 함수로 작성된 그래프의 다양한 환경 모수를 조정하는 기능이 있다.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="reg-diag.html#cb93-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb93-2"><a href="reg-diag.html#cb93-2" tabindex="-1"></a><span class="fu">plot</span>(fit_s, <span class="at">pch =</span> <span class="dv">20</span>)</span>
-<span id="cb93-3"><a href="reg-diag.html#cb93-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="reg-diag.html#cb103-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb103-2"><a href="reg-diag.html#cb103-2" tabindex="-1"></a><span class="fu">plot</span>(fit_s, <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb103-3"><a href="reg-diag.html#cb103-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:resid-1"></span>
 <img src="_main_files/figure-html/resid-1-1.png" alt="`states` 자료에 대한 회귀모형 `fit_s`의 회귀진단" width="768" />
 <p class="caption">
@@ -348,8 +349,8 @@ Durbin-Watson 검정은 패키지 <code>car</code>의 함수 <code>durbinWatsonT
 따라서 다중선형회귀모형에서 <span class="math inline">\(X_{i}\)</span> 와 <span class="math inline">\(Y\)</span> 의 선형관계는 변수 <span class="math inline">\(X_{i}\)</span> 와 그 부분잔차 <span class="math inline">\(e + \hat{\beta}_{i}X_{i}\)</span> 의 산점도로 확인할 수 있다.</p>
 <p>데이터 프레임 <code>states</code>의 회귀모형 <code>fit_s</code>에 포함된 설명변수와 반응변수의 선형관계를 부분잔차 산점도를 작성하여 확인해 보자.
 부분 잔차 산점도는 패키지 <code>car</code>의 <code>crPlots()</code>로 작성할 수 있는데, 이 그래프는 Component + Residual Plots라고도 불린다.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="reg-diag.html#cb94-1" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="reg-diag.html#cb95-1" tabindex="-1"></a><span class="fu">crPlots</span>(fit_s)</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="reg-diag.html#cb104-1" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="reg-diag.html#cb105-1" tabindex="-1"></a><span class="fu">crPlots</span>(fit_s)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:resid-5"></span>
 <img src="_main_files/figure-html/resid-5-1.png" alt="선형 가정 확인을 위한 부분잔차 산점도" width="768" />
 <p class="caption">
@@ -378,24 +379,24 @@ Var(\hat{\beta}_{j}) = \frac{\sigma^{2}}{1-R_{j}^{2}}
 Ridge 회귀모형과 같은 shrinkage 모형이 사용될 수 있으며, 관련이 있을 것 같은 설명변수들을 대상으로 주성분을 추출해서 설명변수로 대신 사용하는 방법도 대안으로 사용된다.</p>
 <p>분산팽창계수의 계산은 패키지 <code>car</code>의 함수 <code>vif()</code>로 할 수 있다.
 모형 <code>fit_s</code>의 다중공선성 존재 여부를 확인해 보자.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="reg-diag.html#cb96-1" tabindex="-1"></a><span class="fu">vif</span>(fit_s)</span>
-<span id="cb96-2"><a href="reg-diag.html#cb96-2" tabindex="-1"></a><span class="do">## Population     Income Illiteracy   Life_Exp    HS_Grad      Frost       Area </span></span>
-<span id="cb96-3"><a href="reg-diag.html#cb96-3" tabindex="-1"></a><span class="do">##   1.342691   1.989395   4.135956   1.901430   3.437276   2.373463   1.690625</span></span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="reg-diag.html#cb106-1" tabindex="-1"></a><span class="fu">vif</span>(fit_s)</span>
+<span id="cb106-2"><a href="reg-diag.html#cb106-2" tabindex="-1"></a><span class="do">## Population     Income Illiteracy   Life_Exp    HS_Grad      Frost       Area </span></span>
+<span id="cb106-3"><a href="reg-diag.html#cb106-3" tabindex="-1"></a><span class="do">##   1.342691   1.989395   4.135956   1.901430   3.437276   2.373463   1.690625</span></span></code></pre></div>
 <p>회귀모형 <code>fit_s</code>에 있는 다섯 설명변수의 분산팽창계수가 모두 큰 값이 아닌 것으로 계산되었고, 따라서 다중공선성의 문제는 없는 것으로 보인다.</p>
 <p><span class="math inline">\(\bullet\)</span> 예제 : <code>mtcars</code></p>
 <p><code>mtcars</code> 자료에 대해 <a href="multiple-reg.html#section-variable-criterion">4.3.2</a>절에서 이루어진 주된 분석은 다음과 같다.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="reg-diag.html#cb97-1" tabindex="-1"></a>mtcars_4 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb97-2"><a href="reg-diag.html#cb97-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(gear, carb)) <span class="sc">|&gt;</span> </span>
-<span id="cb97-3"><a href="reg-diag.html#cb97-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(cyl, vs, am), as.factor))</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="reg-diag.html#cb107-1" tabindex="-1"></a>mtcars_4 <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb107-2"><a href="reg-diag.html#cb107-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(gear, carb)) <span class="sc">|&gt;</span> </span>
+<span id="cb107-3"><a href="reg-diag.html#cb107-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(cyl, vs, am), as.factor))</span></code></pre></div>
 <p><code>mtcars_4</code> 자료에 대하여 BIC를 기준으로 best subset selection에 의한 변수선택 결과로 <code>wt</code>, <code>qsec</code>, <code>am</code>이 선택되었다.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="reg-diag.html#cb98-1" tabindex="-1"></a>fit_bic <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> qsec <span class="sc">+</span> am, mtcars_4)</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="reg-diag.html#cb108-1" tabindex="-1"></a>fit_bic <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> qsec <span class="sc">+</span> am, mtcars_4)</span></code></pre></div>
 <p>모형 <code>fit_bic</code>에 대한 잔차분석을 진행해 보자.
 잔차분석 결과에 큰 문제가 없다면, 회귀모형에 대한 가정을 대부분 만족하는 것으로 간주할 수 있고, 따라서 모형 <code>fit_bic</code>를 예측모형으로 사용할 수 있는 것이다.
 하지만 중대한 문제가 발견이 된다면, 발견된 문제 해결을 위해 모형 수정을 진행해야 할 것이다.</p>
 <p>이제 모형 <code>fit_bic</code>에 대한 기본 그래프를 작성하는 것으로 잔차분석을 진행해 보자.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="reg-diag.html#cb99-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb99-2"><a href="reg-diag.html#cb99-2" tabindex="-1"></a><span class="fu">plot</span>(fit_bic, <span class="at">pch =</span> <span class="dv">20</span>)</span>
-<span id="cb99-3"><a href="reg-diag.html#cb99-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="reg-diag.html#cb109-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb109-2"><a href="reg-diag.html#cb109-2" tabindex="-1"></a><span class="fu">plot</span>(fit_bic, <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb109-3"><a href="reg-diag.html#cb109-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:resid-6"></span>
 <img src="_main_files/figure-html/resid-6-1.png" alt="`mtcars` 자료에 대한 모형 `fit_bic`의 잔차 산점도" width="768" />
 <p class="caption">
@@ -407,7 +408,7 @@ Ridge 회귀모형과 같은 shrinkage 모형이 사용될 수 있으며, 관련
 또한 <code>Scale-Location</code>이라는 제목의 세 번째 그래프에서 점들이 전체적으로 증가하는 패턴이 있음을 볼 수 있다.
 이것은 일반적으로 오차항의 분산이 적합값이 증가하면 함께 증가할 때 발생하는 현상이다.</p>
 <p>부분잔차 그래프를 작성해서 선형관계에 문제가 있는 변수를 확인해 보자.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="reg-diag.html#cb100-1" tabindex="-1"></a><span class="fu">crPlots</span>(fit_bic, <span class="at">pch =</span> <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="reg-diag.html#cb110-1" tabindex="-1"></a><span class="fu">crPlots</span>(fit_bic, <span class="at">pch =</span> <span class="dv">20</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:resid-7"></span>
 <img src="_main_files/figure-html/resid-7-1.png" alt="`mtcars` 자료에 대한 모형 `fit_bic`의 부분잔차 그래프" width="576" />
 <p class="caption">
@@ -416,76 +417,76 @@ Ridge 회귀모형과 같은 shrinkage 모형이 사용될 수 있으며, 관련
 </div>
 <p>변수 <code>qsec</code>의 경우에는 선형성에 큰 문제가 없는 것으로 보이지만, <code>wt</code>의 경우에는 선형으로 설명하기에 약간의 무리가 있는 것으로 보인다.
 모형 <code>fit_bic</code>에 <code>wt</code>의 2차항을 포함시키고,적합 결과를 확인해보자.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="reg-diag.html#cb101-1" tabindex="-1"></a>fit_bic<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_bic, . <span class="sc">~</span> . <span class="sc">+</span> <span class="fu">I</span>(wt<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="reg-diag.html#cb102-1" tabindex="-1"></a><span class="fu">summary</span>(fit_bic<span class="fl">.1</span>)</span>
-<span id="cb102-2"><a href="reg-diag.html#cb102-2" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb102-3"><a href="reg-diag.html#cb102-3" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb102-4"><a href="reg-diag.html#cb102-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + qsec + am + I(wt^2), data = mtcars_4)</span></span>
-<span id="cb102-5"><a href="reg-diag.html#cb102-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb102-6"><a href="reg-diag.html#cb102-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
-<span id="cb102-7"><a href="reg-diag.html#cb102-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb102-8"><a href="reg-diag.html#cb102-8" tabindex="-1"></a><span class="do">## -3.7508 -1.3125 -0.4954  1.0722  4.8553 </span></span>
-<span id="cb102-9"><a href="reg-diag.html#cb102-9" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb102-10"><a href="reg-diag.html#cb102-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb102-11"><a href="reg-diag.html#cb102-11" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb102-12"><a href="reg-diag.html#cb102-12" tabindex="-1"></a><span class="do">## (Intercept)  27.7376     8.9574   3.097 0.004528 ** </span></span>
-<span id="cb102-13"><a href="reg-diag.html#cb102-13" tabindex="-1"></a><span class="do">## wt          -11.2491     2.6808  -4.196 0.000263 ***</span></span>
-<span id="cb102-14"><a href="reg-diag.html#cb102-14" tabindex="-1"></a><span class="do">## qsec          0.9705     0.2739   3.543 0.001461 ** </span></span>
-<span id="cb102-15"><a href="reg-diag.html#cb102-15" tabindex="-1"></a><span class="do">## am1           1.0215     1.4346   0.712 0.482522    </span></span>
-<span id="cb102-16"><a href="reg-diag.html#cb102-16" tabindex="-1"></a><span class="do">## I(wt^2)       0.9582     0.3403   2.816 0.008978 ** </span></span>
-<span id="cb102-17"><a href="reg-diag.html#cb102-17" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb102-18"><a href="reg-diag.html#cb102-18" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb102-19"><a href="reg-diag.html#cb102-19" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb102-20"><a href="reg-diag.html#cb102-20" tabindex="-1"></a><span class="do">## Residual standard error: 2.201 on 27 degrees of freedom</span></span>
-<span id="cb102-21"><a href="reg-diag.html#cb102-21" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.8838, Adjusted R-squared:  0.8666 </span></span>
-<span id="cb102-22"><a href="reg-diag.html#cb102-22" tabindex="-1"></a><span class="do">## F-statistic: 51.33 on 4 and 27 DF,  p-value: 3.107e-12</span></span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="reg-diag.html#cb111-1" tabindex="-1"></a>fit_bic<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_bic, . <span class="sc">~</span> . <span class="sc">+</span> <span class="fu">I</span>(wt<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="reg-diag.html#cb112-1" tabindex="-1"></a><span class="fu">summary</span>(fit_bic<span class="fl">.1</span>)</span>
+<span id="cb112-2"><a href="reg-diag.html#cb112-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb112-3"><a href="reg-diag.html#cb112-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb112-4"><a href="reg-diag.html#cb112-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + qsec + am + I(wt^2), data = mtcars_4)</span></span>
+<span id="cb112-5"><a href="reg-diag.html#cb112-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb112-6"><a href="reg-diag.html#cb112-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb112-7"><a href="reg-diag.html#cb112-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb112-8"><a href="reg-diag.html#cb112-8" tabindex="-1"></a><span class="do">## -3.7508 -1.3125 -0.4954  1.0722  4.8553 </span></span>
+<span id="cb112-9"><a href="reg-diag.html#cb112-9" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb112-10"><a href="reg-diag.html#cb112-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb112-11"><a href="reg-diag.html#cb112-11" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb112-12"><a href="reg-diag.html#cb112-12" tabindex="-1"></a><span class="do">## (Intercept)  27.7376     8.9574   3.097 0.004528 ** </span></span>
+<span id="cb112-13"><a href="reg-diag.html#cb112-13" tabindex="-1"></a><span class="do">## wt          -11.2491     2.6808  -4.196 0.000263 ***</span></span>
+<span id="cb112-14"><a href="reg-diag.html#cb112-14" tabindex="-1"></a><span class="do">## qsec          0.9705     0.2739   3.543 0.001461 ** </span></span>
+<span id="cb112-15"><a href="reg-diag.html#cb112-15" tabindex="-1"></a><span class="do">## am1           1.0215     1.4346   0.712 0.482522    </span></span>
+<span id="cb112-16"><a href="reg-diag.html#cb112-16" tabindex="-1"></a><span class="do">## I(wt^2)       0.9582     0.3403   2.816 0.008978 ** </span></span>
+<span id="cb112-17"><a href="reg-diag.html#cb112-17" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb112-18"><a href="reg-diag.html#cb112-18" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb112-19"><a href="reg-diag.html#cb112-19" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb112-20"><a href="reg-diag.html#cb112-20" tabindex="-1"></a><span class="do">## Residual standard error: 2.201 on 27 degrees of freedom</span></span>
+<span id="cb112-21"><a href="reg-diag.html#cb112-21" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.8838, Adjusted R-squared:  0.8666 </span></span>
+<span id="cb112-22"><a href="reg-diag.html#cb112-22" tabindex="-1"></a><span class="do">## F-statistic: 51.33 on 4 and 27 DF,  p-value: 3.107e-12</span></span></code></pre></div>
 <p>추가된 <code>wt</code>의 2차항이 유의하게 나왔고, 수정결정계수가 증가한 것으로 보아, <code>wt</code>의 2차항을 포함시키는 것이 좋을 것으로 보인다.
 그러나 <code>wt</code>의 2차항이 포함됨으로써 <code>am</code>이 비유의적이 되었는데, 따라서 <code>am</code>을 제외한 모형을 적합시키고, 결과를 확인할 필요가 있다.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="reg-diag.html#cb103-1" tabindex="-1"></a>fit_bic<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_bic<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> am)</span></code></pre></div>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="reg-diag.html#cb104-1" tabindex="-1"></a><span class="fu">summary</span>(fit_bic<span class="fl">.2</span>)</span>
-<span id="cb104-2"><a href="reg-diag.html#cb104-2" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb104-3"><a href="reg-diag.html#cb104-3" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb104-4"><a href="reg-diag.html#cb104-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + qsec + I(wt^2), data = mtcars_4)</span></span>
-<span id="cb104-5"><a href="reg-diag.html#cb104-5" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb104-6"><a href="reg-diag.html#cb104-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
-<span id="cb104-7"><a href="reg-diag.html#cb104-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb104-8"><a href="reg-diag.html#cb104-8" tabindex="-1"></a><span class="do">## -4.2200 -1.2521 -0.6288  0.9357  5.1761 </span></span>
-<span id="cb104-9"><a href="reg-diag.html#cb104-9" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb104-10"><a href="reg-diag.html#cb104-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb104-11"><a href="reg-diag.html#cb104-11" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb104-12"><a href="reg-diag.html#cb104-12" tabindex="-1"></a><span class="do">## (Intercept)  32.6418     5.6768   5.750 3.59e-06 ***</span></span>
-<span id="cb104-13"><a href="reg-diag.html#cb104-13" tabindex="-1"></a><span class="do">## wt          -12.4331     2.0842  -5.965 2.01e-06 ***</span></span>
-<span id="cb104-14"><a href="reg-diag.html#cb104-14" tabindex="-1"></a><span class="do">## qsec          0.8599     0.2236   3.846 0.000634 ***</span></span>
-<span id="cb104-15"><a href="reg-diag.html#cb104-15" tabindex="-1"></a><span class="do">## I(wt^2)       1.0730     0.2970   3.613 0.001174 ** </span></span>
-<span id="cb104-16"><a href="reg-diag.html#cb104-16" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb104-17"><a href="reg-diag.html#cb104-17" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb104-18"><a href="reg-diag.html#cb104-18" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb104-19"><a href="reg-diag.html#cb104-19" tabindex="-1"></a><span class="do">## Residual standard error: 2.182 on 28 degrees of freedom</span></span>
-<span id="cb104-20"><a href="reg-diag.html#cb104-20" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.8816, Adjusted R-squared:  0.8689 </span></span>
-<span id="cb104-21"><a href="reg-diag.html#cb104-21" tabindex="-1"></a><span class="do">## F-statistic:  69.5 on 3 and 28 DF,  p-value: 4.345e-13</span></span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="reg-diag.html#cb113-1" tabindex="-1"></a>fit_bic<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_bic<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> am)</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="reg-diag.html#cb114-1" tabindex="-1"></a><span class="fu">summary</span>(fit_bic<span class="fl">.2</span>)</span>
+<span id="cb114-2"><a href="reg-diag.html#cb114-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb114-3"><a href="reg-diag.html#cb114-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb114-4"><a href="reg-diag.html#cb114-4" tabindex="-1"></a><span class="do">## lm(formula = mpg ~ wt + qsec + I(wt^2), data = mtcars_4)</span></span>
+<span id="cb114-5"><a href="reg-diag.html#cb114-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb114-6"><a href="reg-diag.html#cb114-6" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb114-7"><a href="reg-diag.html#cb114-7" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb114-8"><a href="reg-diag.html#cb114-8" tabindex="-1"></a><span class="do">## -4.2200 -1.2521 -0.6288  0.9357  5.1761 </span></span>
+<span id="cb114-9"><a href="reg-diag.html#cb114-9" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb114-10"><a href="reg-diag.html#cb114-10" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb114-11"><a href="reg-diag.html#cb114-11" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb114-12"><a href="reg-diag.html#cb114-12" tabindex="-1"></a><span class="do">## (Intercept)  32.6418     5.6768   5.750 3.59e-06 ***</span></span>
+<span id="cb114-13"><a href="reg-diag.html#cb114-13" tabindex="-1"></a><span class="do">## wt          -12.4331     2.0842  -5.965 2.01e-06 ***</span></span>
+<span id="cb114-14"><a href="reg-diag.html#cb114-14" tabindex="-1"></a><span class="do">## qsec          0.8599     0.2236   3.846 0.000634 ***</span></span>
+<span id="cb114-15"><a href="reg-diag.html#cb114-15" tabindex="-1"></a><span class="do">## I(wt^2)       1.0730     0.2970   3.613 0.001174 ** </span></span>
+<span id="cb114-16"><a href="reg-diag.html#cb114-16" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb114-17"><a href="reg-diag.html#cb114-17" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb114-18"><a href="reg-diag.html#cb114-18" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb114-19"><a href="reg-diag.html#cb114-19" tabindex="-1"></a><span class="do">## Residual standard error: 2.182 on 28 degrees of freedom</span></span>
+<span id="cb114-20"><a href="reg-diag.html#cb114-20" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.8816, Adjusted R-squared:  0.8689 </span></span>
+<span id="cb114-21"><a href="reg-diag.html#cb114-21" tabindex="-1"></a><span class="do">## F-statistic:  69.5 on 3 and 28 DF,  p-value: 4.345e-13</span></span></code></pre></div>
 <p>모형 <code>fit_bic</code>, <code>fit_bic.1</code>, <code>fit_bic.2</code>를 비교해 보자.
 AIC와 BIC, 그리고 수정결정계수를 비교해 보자.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="reg-diag.html#cb105-1" tabindex="-1"></a><span class="fu">AIC</span>(fit_bic, fit_bic<span class="fl">.1</span>, fit_bic<span class="fl">.2</span>)</span>
-<span id="cb105-2"><a href="reg-diag.html#cb105-2" tabindex="-1"></a><span class="do">##           df      AIC</span></span>
-<span id="cb105-3"><a href="reg-diag.html#cb105-3" tabindex="-1"></a><span class="do">## fit_bic    5 154.1194</span></span>
-<span id="cb105-4"><a href="reg-diag.html#cb105-4" tabindex="-1"></a><span class="do">## fit_bic.1  6 147.8800</span></span>
-<span id="cb105-5"><a href="reg-diag.html#cb105-5" tabindex="-1"></a><span class="do">## fit_bic.2  5 146.4754</span></span></code></pre></div>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="reg-diag.html#cb106-1" tabindex="-1"></a><span class="fu">BIC</span>(fit_bic, fit_bic<span class="fl">.1</span>, fit_bic<span class="fl">.2</span>)</span>
-<span id="cb106-2"><a href="reg-diag.html#cb106-2" tabindex="-1"></a><span class="do">##           df      BIC</span></span>
-<span id="cb106-3"><a href="reg-diag.html#cb106-3" tabindex="-1"></a><span class="do">## fit_bic    5 161.4481</span></span>
-<span id="cb106-4"><a href="reg-diag.html#cb106-4" tabindex="-1"></a><span class="do">## fit_bic.1  6 156.6744</span></span>
-<span id="cb106-5"><a href="reg-diag.html#cb106-5" tabindex="-1"></a><span class="do">## fit_bic.2  5 153.8040</span></span></code></pre></div>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="reg-diag.html#cb107-1" tabindex="-1"></a><span class="fu">summary</span>(fit_bic)<span class="sc">$</span>adj.r.squared</span>
-<span id="cb107-2"><a href="reg-diag.html#cb107-2" tabindex="-1"></a><span class="do">## [1] 0.8335561</span></span>
-<span id="cb107-3"><a href="reg-diag.html#cb107-3" tabindex="-1"></a><span class="fu">summary</span>(fit_bic<span class="fl">.1</span>)<span class="sc">$</span>adj.r.squared</span>
-<span id="cb107-4"><a href="reg-diag.html#cb107-4" tabindex="-1"></a><span class="do">## [1] 0.8665743</span></span>
-<span id="cb107-5"><a href="reg-diag.html#cb107-5" tabindex="-1"></a><span class="fu">summary</span>(fit_bic<span class="fl">.2</span>)<span class="sc">$</span>adj.r.squared</span>
-<span id="cb107-6"><a href="reg-diag.html#cb107-6" tabindex="-1"></a><span class="do">## [1] 0.8689233</span></span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="reg-diag.html#cb115-1" tabindex="-1"></a><span class="fu">AIC</span>(fit_bic, fit_bic<span class="fl">.1</span>, fit_bic<span class="fl">.2</span>)</span>
+<span id="cb115-2"><a href="reg-diag.html#cb115-2" tabindex="-1"></a><span class="do">##           df      AIC</span></span>
+<span id="cb115-3"><a href="reg-diag.html#cb115-3" tabindex="-1"></a><span class="do">## fit_bic    5 154.1194</span></span>
+<span id="cb115-4"><a href="reg-diag.html#cb115-4" tabindex="-1"></a><span class="do">## fit_bic.1  6 147.8800</span></span>
+<span id="cb115-5"><a href="reg-diag.html#cb115-5" tabindex="-1"></a><span class="do">## fit_bic.2  5 146.4754</span></span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="reg-diag.html#cb116-1" tabindex="-1"></a><span class="fu">BIC</span>(fit_bic, fit_bic<span class="fl">.1</span>, fit_bic<span class="fl">.2</span>)</span>
+<span id="cb116-2"><a href="reg-diag.html#cb116-2" tabindex="-1"></a><span class="do">##           df      BIC</span></span>
+<span id="cb116-3"><a href="reg-diag.html#cb116-3" tabindex="-1"></a><span class="do">## fit_bic    5 161.4481</span></span>
+<span id="cb116-4"><a href="reg-diag.html#cb116-4" tabindex="-1"></a><span class="do">## fit_bic.1  6 156.6744</span></span>
+<span id="cb116-5"><a href="reg-diag.html#cb116-5" tabindex="-1"></a><span class="do">## fit_bic.2  5 153.8040</span></span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="reg-diag.html#cb117-1" tabindex="-1"></a><span class="fu">summary</span>(fit_bic)<span class="sc">$</span>adj.r.squared</span>
+<span id="cb117-2"><a href="reg-diag.html#cb117-2" tabindex="-1"></a><span class="do">## [1] 0.8335561</span></span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="reg-diag.html#cb118-1" tabindex="-1"></a><span class="fu">summary</span>(fit_bic<span class="fl">.1</span>)<span class="sc">$</span>adj.r.squared</span>
+<span id="cb118-2"><a href="reg-diag.html#cb118-2" tabindex="-1"></a><span class="do">## [1] 0.8665743</span></span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="reg-diag.html#cb119-1" tabindex="-1"></a><span class="fu">summary</span>(fit_bic<span class="fl">.2</span>)<span class="sc">$</span>adj.r.squared</span>
+<span id="cb119-2"><a href="reg-diag.html#cb119-2" tabindex="-1"></a><span class="do">## [1] 0.8689233</span></span></code></pre></div>
 <p>세 가지 기준에서 모형 <code>fit_bic.2</code>를 선택하는 것이 좋을 것으로 보인다.
 이제 <code>fit_bic.2</code>에 대한 잔차분석을 다시 진행해 보자.</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="reg-diag.html#cb108-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb108-2"><a href="reg-diag.html#cb108-2" tabindex="-1"></a><span class="fu">plot</span>(fit_bic<span class="fl">.2</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span>
-<span id="cb108-3"><a href="reg-diag.html#cb108-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="reg-diag.html#cb120-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb120-2"><a href="reg-diag.html#cb120-2" tabindex="-1"></a><span class="fu">plot</span>(fit_bic<span class="fl">.2</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb120-3"><a href="reg-diag.html#cb120-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:resid-8"></span>
 <img src="_main_files/figure-html/resid-8-1.png" alt="모형 `fit_bic.2`의 잔차분석 그래프" width="768" />
 <p class="caption">
@@ -494,7 +495,7 @@ AIC와 BIC, 그리고 수정결정계수를 비교해 보자.</p>
 </div>
 <p>큰 문제는 없는 것으로 보인다.
 부분잔차 그래프도 작성해 보자. 선형 가정이 만족되는 것으로 보인다.</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="reg-diag.html#cb109-1" tabindex="-1"></a><span class="fu">crPlots</span>(fit_bic<span class="fl">.2</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="reg-diag.html#cb121-1" tabindex="-1"></a><span class="fu">crPlots</span>(fit_bic<span class="fl">.2</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:resid-9"></span>
 <img src="_main_files/figure-html/resid-9-1.png" alt="모형 `fit_bic.2`의 부분잔차 그래프" width="576" />
 <p class="caption">
@@ -503,14 +504,14 @@ AIC와 BIC, 그리고 수정결정계수를 비교해 보자.</p>
 </div>
 <p>모형 <code>fit_bic.2</code>에 대한 다중공선성도 확인해 보자.
 모형 <code>fit_bic.2</code>는 <code>wt</code>의 다항회귀모형이 되는데, 이런 경우에는 해당 변수 1차항과 2차항의 VIF 값은 상당히 큰 값으로 계산되는 것이 당연하다.</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="reg-diag.html#cb110-1" tabindex="-1"></a><span class="fu">vif</span>(fit_bic<span class="fl">.2</span>)</span>
-<span id="cb110-2"><a href="reg-diag.html#cb110-2" tabindex="-1"></a><span class="do">##        wt      qsec   I(wt^2) </span></span>
-<span id="cb110-3"><a href="reg-diag.html#cb110-3" tabindex="-1"></a><span class="do">## 27.076669  1.039145 26.896784</span></span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="reg-diag.html#cb122-1" tabindex="-1"></a><span class="fu">vif</span>(fit_bic<span class="fl">.2</span>)</span>
+<span id="cb122-2"><a href="reg-diag.html#cb122-2" tabindex="-1"></a><span class="do">##        wt      qsec   I(wt^2) </span></span>
+<span id="cb122-3"><a href="reg-diag.html#cb122-3" tabindex="-1"></a><span class="do">## 27.076669  1.039145 26.896784</span></span></code></pre></div>
 <p>이것은 다항회귀모형이 갖고 있는 구조적 문제인데, 따라서 가능한 낮은 차수를 유지하는 것이 필요한 것이다.
 수정 전 모형인 <code>fit_bic</code>의 VIF를 확인해 보면, 다중공선성의 문제는 없는 것으로 보인다.</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="reg-diag.html#cb111-1" tabindex="-1"></a><span class="fu">vif</span>(fit_bic)</span>
-<span id="cb111-2"><a href="reg-diag.html#cb111-2" tabindex="-1"></a><span class="do">##       wt     qsec       am </span></span>
-<span id="cb111-3"><a href="reg-diag.html#cb111-3" tabindex="-1"></a><span class="do">## 2.482952 1.364339 2.541437</span></span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="reg-diag.html#cb123-1" tabindex="-1"></a><span class="fu">vif</span>(fit_bic)</span>
+<span id="cb123-2"><a href="reg-diag.html#cb123-2" tabindex="-1"></a><span class="do">##       wt     qsec       am </span></span>
+<span id="cb123-3"><a href="reg-diag.html#cb123-3" tabindex="-1"></a><span class="do">## 2.482952 1.364339 2.541437</span></span></code></pre></div>
 </div>
 <div id="section-influence-data" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> 관찰값에 대한 진단<a href="reg-diag.html#section-influence-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -536,8 +537,8 @@ t_{i} = \frac{y_{i}-\hat{y}_{(i)}}{SE\left(y_{i}-\hat{y}_{(i)}\right)}
 따라서 이상값을 판단하고자 한다면 일반적인 잔차보다는 스튜던트화 잔차를 이용하는 것이 더 효과적이라고 하겠다.
 함수 <code>influencePlot()</code>은 스튜던트화 잔차와 레버리지, 그리고 Cook’s distance를 하나의 그래프에서 같이 보여줌으로써 특이한 관찰값을 분류하는 데 큰 도움이 되는 함수이다.</p>
 <p>우선 <a href="reg-diag.html#section-assumption-error">5.1</a>절에서 살펴본 <code>states</code> 자료에 대한 모형 <code>fit_s</code>를 대상으로 관찰값에 대한 진단을 실시해 보자.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="reg-diag.html#cb112-1" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="reg-diag.html#cb113-1" tabindex="-1"></a><span class="fu">influencePlot</span>(fit_s)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="reg-diag.html#cb124-1" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="reg-diag.html#cb125-1" tabindex="-1"></a><span class="fu">influencePlot</span>(fit_s)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:resid-10"></span>
 <img src="_main_files/figure-html/resid-10-1.png" alt="모형 `fit_s`에 대한 관찰값 진단" width="576" />
 <p class="caption">
@@ -555,7 +556,7 @@ t_{i} = \frac{y_{i}-\hat{y}_{(i)}}{SE\left(y_{i}-\hat{y}_{(i)}\right)}
 <p>그래프에서 확인할 수 있는 것으로는 우선 Alaska의 경우에 leverage 값과 Cook’s distance의 값이 제일 커서 영향력이 큰 관찰값이라 할 수 있지만, 스튜던트화 잔차는 비교적 크지 않다는 점이다.
 Nevada의 경우에는 Cook’s distance와 스튜던트화 잔차가 비교적 크지만, leverage는 작은 값을 갖고 있다. 전체적으로, 회귀모형 <code>fit_s</code>에는 문제가 되는 관찰값이 없다고 할 수 있다.</p>
 <p>이번에는 <a href="reg-diag.html#section-assumption-error">5.1</a>절에서 살펴본 <code>mtcars</code> 자료에 대한 모형 <code>fit_bic.2</code>를 대상으로 관찰값에 대한 진단을 실시해 보자.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="reg-diag.html#cb115-1" tabindex="-1"></a><span class="fu">influencePlot</span>(fit_bic<span class="fl">.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="reg-diag.html#cb127-1" tabindex="-1"></a><span class="fu">influencePlot</span>(fit_bic<span class="fl">.2</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:resid-11"></span>
 <img src="_main_files/figure-html/resid-11-1.png" alt="모형 `fit_bic.2`에 대한 관찰값 진단" width="576" />
 <p class="caption">
@@ -569,6 +570,61 @@ Nevada의 경우에는 Cook’s distance와 스튜던트화 잔차가 비교적 
 ## Fiat 128             2.7615594 0.08752801 0.14788680
 ## Toyota Corona       -2.1542828 0.08927881 0.10065078</code></pre>
 <p>전체적으로, 회귀모형 <code>fit_bic.2</code>에도 큰 문제가 되는 관찰값은 없다고 할 수 있다.</p>
+</div>
+<div id="연습문제-3" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> 연습문제<a href="reg-diag.html#연습문제-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>1.</strong> 반응변수 <span class="math inline">\(y\)</span>에 대한 설명변수 <span class="math inline">\(x\)</span>의 단순회귀모형 <span class="math inline">\(y_{i}=\beta_{0}+\beta_{1}x_{i}+\varepsilon_{i}, ~i=1,\ldots,n\)</span> 을 적합하고자 한다.</p>
+<ul>
+<li><p>각 개별 관찰값들이 X축 공간에서 자료의 중심에서 떨어져 있는 정도를 측정하는 통계량을 무엇이라 하는가?</p></li>
+<li><p>’X축 공간에서 다른 자료와 멀리 떨어져 있는 자료는 모형의 적합에 큰 영향을 미칠 수 있으나, 그 자료가 실제 모형 적합에 미치는 영향이 크지 않을 수 있다.’라는 사실이 의미하는 바를 산점도 등을 이용하여 설명하라.</p></li>
+<li><p><span class="math inline">\(y_{i}\)</span> 가 이상값이면 잔차 <span class="math inline">\(e_{i}\)</span> 는 대부분 큰 값이 되겠지만, 어떤 경우에는 크지 않은 값을 갖게 되는데, 그 이유는 무엇인가? 또한 이러한 경우에 어떠한 척도를 사용하는 것이 더 유용한 정보를 얻을 수 있는가?</p></li>
+</ul>
+<p><strong>2.</strong> 다음 모형 적합 결과에 있는 문제점을 발견하라. 어떤 이유로 이러한 문제가 발생한 것으로 보이는가?</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="reg-diag.html#cb129-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, df1)</span>
+<span id="cb129-2"><a href="reg-diag.html#cb129-2" tabindex="-1"></a><span class="fu">summary</span>(fit)</span>
+<span id="cb129-3"><a href="reg-diag.html#cb129-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb129-4"><a href="reg-diag.html#cb129-4" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb129-5"><a href="reg-diag.html#cb129-5" tabindex="-1"></a><span class="do">## lm(formula = y ~ x1 + x2, data = df1)</span></span>
+<span id="cb129-6"><a href="reg-diag.html#cb129-6" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb129-7"><a href="reg-diag.html#cb129-7" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb129-8"><a href="reg-diag.html#cb129-8" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb129-9"><a href="reg-diag.html#cb129-9" tabindex="-1"></a><span class="do">## -3.6719 -0.5497 -0.0280  0.2701  3.7489 </span></span>
+<span id="cb129-10"><a href="reg-diag.html#cb129-10" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb129-11"><a href="reg-diag.html#cb129-11" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb129-12"><a href="reg-diag.html#cb129-12" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb129-13"><a href="reg-diag.html#cb129-13" tabindex="-1"></a><span class="do">## (Intercept)   1.7532     0.3373   5.197 4.31e-06 ***</span></span>
+<span id="cb129-14"><a href="reg-diag.html#cb129-14" tabindex="-1"></a><span class="do">## x1           14.2673    16.1362   0.884    0.381    </span></span>
+<span id="cb129-15"><a href="reg-diag.html#cb129-15" tabindex="-1"></a><span class="do">## x2            2.8347     1.7842   1.589    0.119    </span></span>
+<span id="cb129-16"><a href="reg-diag.html#cb129-16" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb129-17"><a href="reg-diag.html#cb129-17" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb129-18"><a href="reg-diag.html#cb129-18" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb129-19"><a href="reg-diag.html#cb129-19" tabindex="-1"></a><span class="do">## Residual standard error: 1.162 on 47 degrees of freedom</span></span>
+<span id="cb129-20"><a href="reg-diag.html#cb129-20" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.9907, Adjusted R-squared:  0.9903 </span></span>
+<span id="cb129-21"><a href="reg-diag.html#cb129-21" tabindex="-1"></a><span class="do">## F-statistic:  2500 on 2 and 47 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<p><strong>3.</strong> 데이터 프레임 <code>auto_df</code>에는 302대 차량의 연비와 관련된 자료가 입력되어 있다.</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="reg-diag.html#cb130-1" tabindex="-1"></a>auto_df <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">3</span>)</span>
+<span id="cb130-2"><a href="reg-diag.html#cb130-2" tabindex="-1"></a><span class="do">## # A tibble: 302 × 7</span></span>
+<span id="cb130-3"><a href="reg-diag.html#cb130-3" tabindex="-1"></a><span class="do">##     mpg cylinders displacement horsepower weight acceleration  year</span></span>
+<span id="cb130-4"><a href="reg-diag.html#cb130-4" tabindex="-1"></a><span class="do">##   &lt;dbl&gt; &lt;fct&gt;            &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb130-5"><a href="reg-diag.html#cb130-5" tabindex="-1"></a><span class="do">## 1    18 8                  307        130   3504         12      70</span></span>
+<span id="cb130-6"><a href="reg-diag.html#cb130-6" tabindex="-1"></a><span class="do">## 2    15 8                  350        165   3693         11.5    70</span></span>
+<span id="cb130-7"><a href="reg-diag.html#cb130-7" tabindex="-1"></a><span class="do">## 3    18 8                  318        150   3436         11      70</span></span>
+<span id="cb130-8"><a href="reg-diag.html#cb130-8" tabindex="-1"></a><span class="do">## # ℹ 299 more rows</span></span></code></pre></div>
+<ul>
+<li>회귀모형 <code>auto_fit</code>에 대한 회귀진단을 실시해 보자. 작성된 그래프를 근거로 확인할 수 있는 회귀모형의 가정 사항은 어떤 것이 있는가? 가정 사항은 만족하는 것으로 보이는가?</li>
+</ul>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="reg-diag.html#cb131-1" tabindex="-1"></a>auto_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> displacement <span class="sc">+</span> horsepower <span class="sc">+</span> acceleration, auto_df)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-123-1.png" width="864" /></p>
+<ul>
+<li>회귀모형 <code>auto_fit</code>의 적합에 사용된 관찰값에 대한 진단을 실시해 보자. 작성된 그래프에 사용된 통계량에 대해 설명하라. 문제가 되는 관찰값이 있는 것으로 보이는가?</li>
+</ul>
+<p><img src="_main_files/figure-html/unnamed-chunk-124-1.png" width="864" /></p>
+<pre><code>##        StudRes         Hat       CookD
+## 24   0.4670488 0.077621531 0.004601278
+## 25  -0.1939362 0.094916421 0.000989271
+## 244  3.7497889 0.006560897 0.022240596
+## 248  2.9957114 0.037488038 0.085105547
+## 299  3.4040189 0.046791930 0.137323650</code></pre>
 
 </div>
 </div>
