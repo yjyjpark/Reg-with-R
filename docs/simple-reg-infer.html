@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 장 단순선형회귀모형의 추론 | R에 의한 회귀분석</title>
   <meta name="description" content="한신대학교 응용통계학과 전공 과목 회귀분석및실습의 교재로 사용되고 있습니다." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 장 단순선형회귀모형의 추론 | R에 의한 회귀분석" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="박동련" />
 
 
-<meta name="date" content="2024-06-02" />
+<meta name="date" content="2025-05-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -66,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -136,62 +136,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>머리말</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#%EB%A8%B8%EB%A6%AC%EB%A7%90"><i class="fa fa-check"></i>머리말</a></li>
 <li class="chapter" data-level="1" data-path="ch1.html"><a href="ch1.html"><i class="fa fa-check"></i><b>1</b> 회귀모형</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="ch1.html"><a href="ch1.html#반응변수와-설명변수-사이의-관계-설정"><i class="fa fa-check"></i><b>1.1</b> 반응변수와 설명변수 사이의 관계 설정</a></li>
-<li class="chapter" data-level="1.2" data-path="ch1.html"><a href="ch1.html#회귀분석의-목적"><i class="fa fa-check"></i><b>1.2</b> 회귀분석의 목적</a></li>
-<li class="chapter" data-level="1.3" data-path="ch1.html"><a href="ch1.html#회귀모형의-종류"><i class="fa fa-check"></i><b>1.3</b> 회귀모형의 종류</a>
+<li class="chapter" data-level="1.1" data-path="03-Simple_reg-infer.html"><a href="#%EB%B0%98%EC%9D%91%EB%B3%80%EC%88%98%EC%99%80-%EC%84%A4%EB%AA%85%EB%B3%80%EC%88%98-%EC%82%AC%EC%9D%B4%EC%9D%98-%EA%B4%80%EA%B3%84-%EC%84%A4%EC%A0%95"><i class="fa fa-check"></i><b>1.1</b> 반응변수와 설명변수 사이의 관계 설정</a></li>
+<li class="chapter" data-level="1.2" data-path="03-Simple_reg-infer.html"><a href="#%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D%EC%9D%98-%EB%AA%A9%EC%A0%81"><i class="fa fa-check"></i><b>1.2</b> 회귀분석의 목적</a></li>
+<li class="chapter" data-level="1.3" data-path="03-Simple_reg-infer.html"><a href="#%ED%9A%8C%EA%B7%80%EB%AA%A8%ED%98%95%EC%9D%98-%EC%A2%85%EB%A5%98"><i class="fa fa-check"></i><b>1.3</b> 회귀모형의 종류</a>
 <ul>
-<li class="chapter" data-level="1.3.1" data-path="ch1.html"><a href="ch1.html#모수적-회귀모형"><i class="fa fa-check"></i><b>1.3.1</b> 모수적 회귀모형</a></li>
-<li class="chapter" data-level="1.3.2" data-path="ch1.html"><a href="ch1.html#비모수적-회귀모형"><i class="fa fa-check"></i><b>1.3.2</b> 비모수적 회귀모형</a></li>
+<li class="chapter" data-level="1.3.1" data-path="03-Simple_reg-infer.html"><a href="#%EB%AA%A8%EC%88%98%EC%A0%81-%ED%9A%8C%EA%B7%80%EB%AA%A8%ED%98%95"><i class="fa fa-check"></i><b>1.3.1</b> 모수적 회귀모형</a></li>
+<li class="chapter" data-level="1.3.2" data-path="03-Simple_reg-infer.html"><a href="#%EB%B9%84%EB%AA%A8%EC%88%98%EC%A0%81-%ED%9A%8C%EA%B7%80%EB%AA%A8%ED%98%95"><i class="fa fa-check"></i><b>1.3.2</b> 비모수적 회귀모형</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="ch1.html"><a href="ch1.html#r의-역할"><i class="fa fa-check"></i><b>1.4</b> R의 역할</a></li>
+<li class="chapter" data-level="1.4" data-path="03-Simple_reg-infer.html"><a href="#r%EC%9D%98-%EC%97%AD%ED%95%A0"><i class="fa fa-check"></i><b>1.4</b> R의 역할</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="simple-reg.html"><a href="simple-reg.html"><i class="fa fa-check"></i><b>2</b> 단순선형회귀모형</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="simple-reg.html"><a href="simple-reg.html#단순회귀모형의-설정"><i class="fa fa-check"></i><b>2.1</b> 단순회귀모형의 설정</a></li>
-<li class="chapter" data-level="2.2" data-path="simple-reg.html"><a href="simple-reg.html#회귀계수의-최소제곱추정"><i class="fa fa-check"></i><b>2.2</b> 회귀계수의 최소제곱추정</a>
+<li class="chapter" data-level="2.1" data-path="03-Simple_reg-infer.html"><a href="#%EB%8B%A8%EC%88%9C%ED%9A%8C%EA%B7%80%EB%AA%A8%ED%98%95%EC%9D%98-%EC%84%A4%EC%A0%95"><i class="fa fa-check"></i><b>2.1</b> 단순회귀모형의 설정</a></li>
+<li class="chapter" data-level="2.2" data-path="03-Simple_reg-infer.html"><a href="#%ED%9A%8C%EA%B7%80%EA%B3%84%EC%88%98%EC%9D%98-%EC%B5%9C%EC%86%8C%EC%A0%9C%EA%B3%B1%EC%B6%94%EC%A0%95"><i class="fa fa-check"></i><b>2.2</b> 회귀계수의 최소제곱추정</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="simple-reg.html"><a href="simple-reg.html#모수-beta_0와-beta_1의-추정"><i class="fa fa-check"></i><b>2.2.1</b> 모수 <span class="math inline">\(\beta_{0}\)</span>와 <span class="math inline">\(\beta_{1}\)</span>의 추정</a></li>
+<li class="chapter" data-level="2.2.1" data-path="03-Simple_reg-infer.html"><a href="#%EB%AA%A8%EC%88%98-beta_0%EC%99%80-beta_1%EC%9D%98-%EC%B6%94%EC%A0%95"><i class="fa fa-check"></i><b>2.2.1</b> 모수 <span class="math inline">\(\beta_{0}\)</span>와 <span class="math inline">\(\beta_{1}\)</span>의 추정</a></li>
 <li class="chapter" data-level="2.2.2" data-path="simple-reg.html"><a href="simple-reg.html#section-property-lse"><i class="fa fa-check"></i><b>2.2.2</b> 최소제곱추정량의 특성</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="simple-reg.html"><a href="simple-reg.html#section-simple-sigma"><i class="fa fa-check"></i><b>2.3</b> 오차분산 <span class="math inline">\(\sigma^{2}\)</span>의 추정</a></li>
-<li class="chapter" data-level="2.4" data-path="simple-reg.html"><a href="simple-reg.html#연습문제"><i class="fa fa-check"></i><b>2.4</b> 연습문제</a></li>
+<li class="chapter" data-level="2.4" data-path="03-Simple_reg-infer.html"><a href="#%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C"><i class="fa fa-check"></i><b>2.4</b> 연습문제</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html"><i class="fa fa-check"></i><b>3</b> 단순선형회귀모형의 추론</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#회귀계수-beta_1에-대한-추론"><i class="fa fa-check"></i><b>3.1</b> 회귀계수 <span class="math inline">\(\beta_{1}\)</span>에 대한 추론</a>
+<li class="chapter" data-level="3.1" data-path="03-Simple_reg-infer.html"><a href="#%ED%9A%8C%EA%B7%80%EA%B3%84%EC%88%98-beta_1%EC%97%90-%EB%8C%80%ED%95%9C-%EC%B6%94%EB%A1%A0"><i class="fa fa-check"></i><b>3.1</b> 회귀계수 <span class="math inline">\(\beta_{1}\)</span>에 대한 추론</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#hatbeta_1의-표본분포"><i class="fa fa-check"></i><b>3.1.1</b> <span class="math inline">\(\hat{\beta}_{1}\)</span>의 표본분포</a></li>
+<li class="chapter" data-level="3.1.1" data-path="03-Simple_reg-infer.html"><a href="#hatbeta_1%EC%9D%98-%ED%91%9C%EB%B3%B8%EB%B6%84%ED%8F%AC"><i class="fa fa-check"></i><b>3.1.1</b> <span class="math inline">\(\hat{\beta}_{1}\)</span>의 표본분포</a></li>
 <li class="chapter" data-level="3.1.2" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#section-ci-beta1"><i class="fa fa-check"></i><b>3.1.2</b> <span class="math inline">\(\beta_{1}\)</span>의 신뢰구간</a></li>
 <li class="chapter" data-level="3.1.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#section-test-beta1"><i class="fa fa-check"></i><b>3.1.3</b> <span class="math inline">\(\beta_{1}\)</span>에 대한 가설검정</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#회귀계수-beta_0에-대한-추론"><i class="fa fa-check"></i><b>3.2</b> 회귀계수 <span class="math inline">\(\beta_{0}\)</span>에 대한 추론</a>
+<li class="chapter" data-level="3.2" data-path="03-Simple_reg-infer.html"><a href="#%ED%9A%8C%EA%B7%80%EA%B3%84%EC%88%98-beta_0%EC%97%90-%EB%8C%80%ED%95%9C-%EC%B6%94%EB%A1%A0"><i class="fa fa-check"></i><b>3.2</b> 회귀계수 <span class="math inline">\(\beta_{0}\)</span>에 대한 추론</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#hatbeta_0-의-표본분포"><i class="fa fa-check"></i><b>3.2.1</b> <span class="math inline">\(\hat{\beta}_{0}\)</span> 의 표본분포</a></li>
-<li class="chapter" data-level="3.2.2" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#beta_0의-신뢰구간"><i class="fa fa-check"></i><b>3.2.2</b> <span class="math inline">\(\beta_{0}\)</span>의 신뢰구간</a></li>
-<li class="chapter" data-level="3.2.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#beta_0에-대한-가설검정"><i class="fa fa-check"></i><b>3.2.3</b> <span class="math inline">\(\beta_{0}\)</span>에 대한 가설검정</a></li>
+<li class="chapter" data-level="3.2.1" data-path="03-Simple_reg-infer.html"><a href="#hatbeta_0-%EC%9D%98-%ED%91%9C%EB%B3%B8%EB%B6%84%ED%8F%AC"><i class="fa fa-check"></i><b>3.2.1</b> <span class="math inline">\(\hat{\beta}_{0}\)</span> 의 표본분포</a></li>
+<li class="chapter" data-level="3.2.2" data-path="03-Simple_reg-infer.html"><a href="#beta_0%EC%9D%98-%EC%8B%A0%EB%A2%B0%EA%B5%AC%EA%B0%84"><i class="fa fa-check"></i><b>3.2.2</b> <span class="math inline">\(\beta_{0}\)</span>의 신뢰구간</a></li>
+<li class="chapter" data-level="3.2.3" data-path="03-Simple_reg-infer.html"><a href="#beta_0%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B0%80%EC%84%A4%EA%B2%80%EC%A0%95"><i class="fa fa-check"></i><b>3.2.3</b> <span class="math inline">\(\beta_{0}\)</span>에 대한 가설검정</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-평균-eyx_o에-대한-신뢰구간-추정"><i class="fa fa-check"></i><b>3.3</b> 반응변수의 평균, <span class="math inline">\(E(Y|X_{o})\)</span>에 대한 신뢰구간 추정</a></li>
-<li class="chapter" data-level="3.4" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#반응변수의-개별-관측값-예측"><i class="fa fa-check"></i><b>3.4</b> 반응변수의 개별 관측값 예측</a></li>
-<li class="chapter" data-level="3.5" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#상관계수-두-변수-사이의-선형-연관성-측정"><i class="fa fa-check"></i><b>3.5</b> 상관계수 : 두 변수 사이의 선형 연관성 측정</a></li>
-<li class="chapter" data-level="3.6" data-path="simple-reg-infer.html"><a href="simple-reg-infer.html#연습문제-1"><i class="fa fa-check"></i><b>3.6</b> 연습문제</a></li>
+<li class="chapter" data-level="3.3" data-path="03-Simple_reg-infer.html"><a href="#%EB%B0%98%EC%9D%91%EB%B3%80%EC%88%98%EC%9D%98-%ED%8F%89%EA%B7%A0-eyx_o%EC%97%90-%EB%8C%80%ED%95%9C-%EC%8B%A0%EB%A2%B0%EA%B5%AC%EA%B0%84-%EC%B6%94%EC%A0%95"><i class="fa fa-check"></i><b>3.3</b> 반응변수의 평균, <span class="math inline">\(E(Y|X_{o})\)</span>에 대한 신뢰구간 추정</a></li>
+<li class="chapter" data-level="3.4" data-path="03-Simple_reg-infer.html"><a href="#%EB%B0%98%EC%9D%91%EB%B3%80%EC%88%98%EC%9D%98-%EA%B0%9C%EB%B3%84-%EA%B4%80%EC%B8%A1%EA%B0%92-%EC%98%88%EC%B8%A1"><i class="fa fa-check"></i><b>3.4</b> 반응변수의 개별 관측값 예측</a></li>
+<li class="chapter" data-level="3.5" data-path="03-Simple_reg-infer.html"><a href="#%EC%83%81%EA%B4%80%EA%B3%84%EC%88%98-%EB%91%90-%EB%B3%80%EC%88%98-%EC%82%AC%EC%9D%B4%EC%9D%98-%EC%84%A0%ED%98%95-%EC%97%B0%EA%B4%80%EC%84%B1-%EC%B8%A1%EC%A0%95"><i class="fa fa-check"></i><b>3.5</b> 상관계수 : 두 변수 사이의 선형 연관성 측정</a></li>
+<li class="chapter" data-level="3.6" data-path="03-Simple_reg-infer.html"><a href="#%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C-1"><i class="fa fa-check"></i><b>3.6</b> 연습문제</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="multiple-reg.html"><a href="multiple-reg.html"><i class="fa fa-check"></i><b>4</b> 다중선형회귀모형</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-model"><i class="fa fa-check"></i><b>4.1</b> 다중회귀모형의 설정</a>
 <ul>
 <li class="chapter" data-level="4.1.1" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-fitting"><i class="fa fa-check"></i><b>4.1.1</b> 회귀계수의 추정</a></li>
-<li class="chapter" data-level="4.1.2" data-path="multiple-reg.html"><a href="multiple-reg.html#다항회귀모형"><i class="fa fa-check"></i><b>4.1.2</b> 다항회귀모형</a></li>
+<li class="chapter" data-level="4.1.2" data-path="03-Simple_reg-infer.html"><a href="#%EB%8B%A4%ED%95%AD%ED%9A%8C%EA%B7%80%EB%AA%A8%ED%98%95"><i class="fa fa-check"></i><b>4.1.2</b> 다항회귀모형</a></li>
 <li class="chapter" data-level="4.1.3" data-path="multiple-reg.html"><a href="multiple-reg.html#section-dummy"><i class="fa fa-check"></i><b>4.1.3</b> 가변수 회귀모형</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-infer"><i class="fa fa-check"></i><b>4.2</b> 다중회귀모형의 추론</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="multiple-reg.html"><a href="multiple-reg.html#회귀계수-추정량의-표본분포"><i class="fa fa-check"></i><b>4.2.1</b> 회귀계수 추정량의 표본분포</a></li>
+<li class="chapter" data-level="4.2.1" data-path="03-Simple_reg-infer.html"><a href="#%ED%9A%8C%EA%B7%80%EA%B3%84%EC%88%98-%EC%B6%94%EC%A0%95%EB%9F%89%EC%9D%98-%ED%91%9C%EB%B3%B8%EB%B6%84%ED%8F%AC"><i class="fa fa-check"></i><b>4.2.1</b> 회귀계수 추정량의 표본분포</a></li>
 <li class="chapter" data-level="4.2.2" data-path="multiple-reg.html"><a href="multiple-reg.html#section-multi-model-signif"><i class="fa fa-check"></i><b>4.2.2</b> 회귀모형의 유의성 검정</a></li>
-<li class="chapter" data-level="4.2.3" data-path="multiple-reg.html"><a href="multiple-reg.html#개별-회귀계수-유의성-검정"><i class="fa fa-check"></i><b>4.2.3</b> 개별 회귀계수 유의성 검정</a></li>
-<li class="chapter" data-level="4.2.4" data-path="multiple-reg.html"><a href="multiple-reg.html#두-회귀모형의-비교"><i class="fa fa-check"></i><b>4.2.4</b> 두 회귀모형의 비교</a></li>
+<li class="chapter" data-level="4.2.3" data-path="03-Simple_reg-infer.html"><a href="#%EA%B0%9C%EB%B3%84-%ED%9A%8C%EA%B7%80%EA%B3%84%EC%88%98-%EC%9C%A0%EC%9D%98%EC%84%B1-%EA%B2%80%EC%A0%95"><i class="fa fa-check"></i><b>4.2.3</b> 개별 회귀계수 유의성 검정</a></li>
+<li class="chapter" data-level="4.2.4" data-path="03-Simple_reg-infer.html"><a href="#%EB%91%90-%ED%9A%8C%EA%B7%80%EB%AA%A8%ED%98%95%EC%9D%98-%EB%B9%84%EA%B5%90"><i class="fa fa-check"></i><b>4.2.4</b> 두 회귀모형의 비교</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="multiple-reg.html"><a href="multiple-reg.html#section-selection"><i class="fa fa-check"></i><b>4.3</b> 변수선택</a>
 <ul>
@@ -199,13 +199,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.2" data-path="multiple-reg.html"><a href="multiple-reg.html#section-variable-criterion"><i class="fa fa-check"></i><b>4.3.2</b> 평가 측도에 의한 변수선택</a></li>
 <li class="chapter" data-level="4.3.3" data-path="multiple-reg.html"><a href="multiple-reg.html#section-shrinkage"><i class="fa fa-check"></i><b>4.3.3</b> Shrinkage 방법</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="multiple-reg.html"><a href="multiple-reg.html#연습문제-2"><i class="fa fa-check"></i><b>4.4</b> 연습문제</a></li>
+<li class="chapter" data-level="4.4" data-path="03-Simple_reg-infer.html"><a href="#%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C-2"><i class="fa fa-check"></i><b>4.4</b> 연습문제</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="reg-diag.html"><a href="reg-diag.html"><i class="fa fa-check"></i><b>5</b> 회귀모형의 진단</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="reg-diag.html"><a href="reg-diag.html#section-assumption-error"><i class="fa fa-check"></i><b>5.1</b> 회귀모형에 대한 진단</a></li>
 <li class="chapter" data-level="5.2" data-path="reg-diag.html"><a href="reg-diag.html#section-influence-data"><i class="fa fa-check"></i><b>5.2</b> 관찰값에 대한 진단</a></li>
-<li class="chapter" data-level="5.3" data-path="reg-diag.html"><a href="reg-diag.html#연습문제-3"><i class="fa fa-check"></i><b>5.3</b> 연습문제</a></li>
+<li class="chapter" data-level="5.3" data-path="03-Simple_reg-infer.html"><a href="#%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C-3"><i class="fa fa-check"></i><b>5.3</b> 연습문제</a></li>
 </ul></li>
 </ul>
 
@@ -243,7 +243,7 @@ Y_{i} = \beta_{0} + \beta_{1}X_{i} + \varepsilon_{i}, ~~i = 1, \ldots, n
 \tag{3.2}
 \end{equation}\]</span></p>
 <div id="회귀계수-beta_1에-대한-추론" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> 회귀계수 <span class="math inline">\(\beta_{1}\)</span>에 대한 추론<a href="simple-reg-infer.html#회귀계수-beta_1에-대한-추론" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">3.1</span> 회귀계수 <span class="math inline">\(\beta_{1}\)</span>에 대한 추론<a href="#%ED%9A%8C%EA%B7%80%EA%B3%84%EC%88%98-beta_1%EC%97%90-%EB%8C%80%ED%95%9C-%EC%B6%94%EB%A1%A0" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>식 <a href="simple-reg-infer.html#eq:simple-ch3-1">(3.1)</a>에서 회귀계수 <span class="math inline">\(\beta_{1}\)</span>은 회귀직선의 기울기를 나타내는 모수로서,
 설명변수 <span class="math inline">\(X\)</span>를 한 단위 증가시켰을 때 반응변수 <span class="math inline">\(Y\)</span>의 평균 변화량을 나타낸다.
 회귀계수 <span class="math inline">\(\beta_{1}\)</span>의 점추정량은 <a href="simple-reg.html#simple-reg">2</a>장에서 살펴본 최소제곱추정량으로 구할 수 있었는데,
@@ -254,7 +254,7 @@ Y_{i} = \beta_{0} + \beta_{1}X_{i} + \varepsilon_{i}, ~~i = 1, \ldots, n
 만일 가설을 기각할 수 없다면, 반응변수 <span class="math inline">\(Y\)</span>와 설명변수 <span class="math inline">\(X\)</span>의 관계가 식 <a href="simple-reg-infer.html#eq:simple-ch3-1">(3.1)</a>에서 설정한 선형관계로는 설명하기 어렵다는 것을 의미하기 때문이다.</p>
 <p>이러한 추론을 실시하기 위해서는 회귀계수 <span class="math inline">\(\beta_{1}\)</span>의 점추정량인 <span class="math inline">\(\hat{\beta}_{1}\)</span>의 표본분포를 반드시 알고 있어야 한다.</p>
 <div id="hatbeta_1의-표본분포" class="section level3 hasAnchor" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> <span class="math inline">\(\hat{\beta}_{1}\)</span>의 표본분포<a href="simple-reg-infer.html#hatbeta_1의-표본분포" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">3.1.1</span> <span class="math inline">\(\hat{\beta}_{1}\)</span>의 표본분포<a href="#hatbeta_1%EC%9D%98-%ED%91%9C%EB%B3%B8%EB%B6%84%ED%8F%AC" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>식 <a href="simple-reg-infer.html#eq:simple-ch3-1">(3.1)</a>의 회귀모형에 식 <a href="simple-reg-infer.html#eq:error-assumption">(3.2)</a>에 주어진 오차항의 가정 사항을 적용시키면 설명변수 <span class="math inline">\(X_{i}\)</span>가 주어졌을 때 반응변수 <span class="math inline">\(Y_{i}\)</span>에 대한 분포는 다음과 같이 주어진다.</p>
 <p><span class="math display">\[\begin{equation}
 Y_{i} \stackrel{iid}{\sim} N(\beta_{0}+\beta_{1}X_{i}, \sigma^{2}),~~i=1, \ldots, n
@@ -355,12 +355,12 @@ t = \frac{\hat{\beta}_{1}}{SE(\hat{\beta}_{1})}
 </div>
 </div>
 <div id="회귀계수-beta_0에-대한-추론" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> 회귀계수 <span class="math inline">\(\beta_{0}\)</span>에 대한 추론<a href="simple-reg-infer.html#회귀계수-beta_0에-대한-추론" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">3.2</span> 회귀계수 <span class="math inline">\(\beta_{0}\)</span>에 대한 추론<a href="#%ED%9A%8C%EA%B7%80%EA%B3%84%EC%88%98-beta_0%EC%97%90-%EB%8C%80%ED%95%9C-%EC%B6%94%EB%A1%A0" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>회귀계수 <span class="math inline">\(\beta_{0}\)</span> 는 회귀직선의 Y축 절편을 나타내는 모수로서, 설명변수 <span class="math inline">\(X\)</span> 의 값이 0일 때 반응변수 <span class="math inline">\(Y\)</span>의 평균값을 나타낸다.
 따라서 설명변수가 갖는 자료의 범위에 0이 포함되지 않는 경우에는 추론의 필요성이 크지 않은 모수가 된다.
 또한 가설 <span class="math inline">\(H_{0}:\beta_{0}=0\)</span> 을 기각할 수 없는 경우에도 일반적으로는 모형에서 <span class="math inline">\(\beta_{0}\)</span> 를 제외시키지 않는다.</p>
 <div id="hatbeta_0-의-표본분포" class="section level3 hasAnchor" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> <span class="math inline">\(\hat{\beta}_{0}\)</span> 의 표본분포<a href="simple-reg-infer.html#hatbeta_0-의-표본분포" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">3.2.1</span> <span class="math inline">\(\hat{\beta}_{0}\)</span> 의 표본분포<a href="#hatbeta_0-%EC%9D%98-%ED%91%9C%EB%B3%B8%EB%B6%84%ED%8F%AC" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><a href="simple-reg.html#simple-reg">2</a>장에서 살펴본 <span class="math inline">\(\beta_{0}\)</span> 의 최소제곱추정량은 식 <a href="simple-reg.html#eq:lse-3">(2.6)</a>에서 다음과 같이 유도되었다.</p>
 <p><span class="math display">\[\begin{equation}
 \hat{\beta}_{0} = \overline{Y} - \hat{\beta}_{1} \overline{X}
@@ -378,7 +378,7 @@ Var\left(\hat{\beta}_{0}\right) &amp;= \sigma^{2}\left(\frac{1}{n}+\frac{\overli
 \end{equation}\]</span></p>
 </div>
 <div id="beta_0의-신뢰구간" class="section level3 hasAnchor" number="3.2.2">
-<h3><span class="header-section-number">3.2.2</span> <span class="math inline">\(\beta_{0}\)</span>의 신뢰구간<a href="simple-reg-infer.html#beta_0의-신뢰구간" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">3.2.2</span> <span class="math inline">\(\beta_{0}\)</span>의 신뢰구간<a href="#beta_0%EC%9D%98-%EC%8B%A0%EB%A2%B0%EA%B5%AC%EA%B0%84" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>모수 <span class="math inline">\(\beta_{0}\)</span> 의 신뢰구간은 <a href="simple-reg-infer.html#section-ci-beta1">3.1.2</a>절에서 <span class="math inline">\(\beta_{1}\)</span>의 신뢰구간을 유도할 때 사용했던 것과 동일한 방식으로 유도할 수 있다.
 우선 <span class="math inline">\(\beta_{0}\)</span> 의 불편추정량인 <span class="math inline">\(\hat{\beta}_{0}\)</span> 을 표준화시킨 통계량 <span class="math inline">\(t\)</span> 는 다음과 같이 표현되며, 분포는 <span class="math inline">\(\hat{\beta}_{1}\)</span> 의 경우와 동일하게 <span class="math inline">\(t(n-2)\)</span>가 된다.</p>
 <p><span class="math display" id="eq:dist-beta0">\[\begin{equation}
@@ -394,7 +394,7 @@ t = \frac{\hat{\beta}_{0}-\beta_{0}}{\sqrt{MSE\left(\frac{1}{n}+\frac{\overline{
 <p>단, <span class="math inline">\(SE(\hat{\beta}_{0})=\sqrt{MSE\left(\frac{1}{n}+\frac{\overline{X}^{2}}{\sum(X_{i}-\overline{X})^{2}}\right)}\)</span> 을 나타내며, <span class="math inline">\(t_{\alpha, n-2}\)</span> 는 자유도가 <span class="math inline">\(n-2\)</span>인 <span class="math inline">\(t\)</span> 분포에서 상위 <span class="math inline">\(100 \times \alpha\)</span> 백분위수를 나타낸다.</p>
 </div>
 <div id="beta_0에-대한-가설검정" class="section level3 hasAnchor" number="3.2.3">
-<h3><span class="header-section-number">3.2.3</span> <span class="math inline">\(\beta_{0}\)</span>에 대한 가설검정<a href="simple-reg-infer.html#beta_0에-대한-가설검정" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">3.2.3</span> <span class="math inline">\(\beta_{0}\)</span>에 대한 가설검정<a href="#beta_0%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B0%80%EC%84%A4%EA%B2%80%EC%A0%95" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>모수 <span class="math inline">\(\beta_{0}\)</span> 에 대한 가설검정도 <a href="simple-reg-infer.html#section-test-beta1">3.1.3</a>절에서 살펴본 <span class="math inline">\(\beta_{1}\)</span> 의 가설검정의 경우와 동일한 방식으로 진행할 수 있다.
 다음의 가설에 대하여</p>
 <p><span class="math display">\[\begin{equation}
@@ -486,7 +486,7 @@ H_{0}:\beta_{1}=0, ~~H_{1}:\beta_{1}&gt;0
 </div>
 </div>
 <div id="반응변수의-평균-eyx_o에-대한-신뢰구간-추정" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> 반응변수의 평균, <span class="math inline">\(E(Y|X_{o})\)</span>에 대한 신뢰구간 추정<a href="simple-reg-infer.html#반응변수의-평균-eyx_o에-대한-신뢰구간-추정" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">3.3</span> 반응변수의 평균, <span class="math inline">\(E(Y|X_{o})\)</span>에 대한 신뢰구간 추정<a href="#%EB%B0%98%EC%9D%91%EB%B3%80%EC%88%98%EC%9D%98-%ED%8F%89%EA%B7%A0-eyx_o%EC%97%90-%EB%8C%80%ED%95%9C-%EC%8B%A0%EB%A2%B0%EA%B5%AC%EA%B0%84-%EC%B6%94%EC%A0%95" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>새롭게 관측되는 설명변수 자료에 대한 가장 정확한 반응변수의 예측값을 생성하는 것이 회귀분석의 목적이 되는 경우가 많이 있다.
 반응변수의 예측값은 대부분의 경우 반응변수의 평균을 의미하는데, 경우에 따라서는 반응변수의 개별 관측값을 예측하고자 하는 경우도 있을 수 있다.
 반응변수의 평균 예측에 대한 문제는 이번 절에서 살펴볼 것이고, 반응변수의 개별 관측값 예측에 대한 문제는 다음 절에서 살펴볼 것이다.</p>
@@ -535,7 +535,7 @@ t = \frac{\widehat{Y}_{o}-E(Y|X_{o})}{\sqrt{MSE\left(\frac{1}{n}+\frac{(X_{o}-\o
 즉, <span class="math inline">\(E(Y|X_{o})\)</span> 에 대한 추정은 <span class="math inline">\(X_{o}\)</span> 의 값이 자료의 평균에 가까우면 좋은 결과를 기대할 수 있지만, 그렇지 않은 경우에는 신뢰도가 많이 떨어질 수 있다는 것을 의미한다.</p>
 </div>
 <div id="반응변수의-개별-관측값-예측" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> 반응변수의 개별 관측값 예측<a href="simple-reg-infer.html#반응변수의-개별-관측값-예측" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">3.4</span> 반응변수의 개별 관측값 예측<a href="#%EB%B0%98%EC%9D%91%EB%B3%80%EC%88%98%EC%9D%98-%EA%B0%9C%EB%B3%84-%EA%B4%80%EC%B8%A1%EA%B0%92-%EC%98%88%EC%B8%A1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>이번 절에서는 주어진 설명변수의 수준에 대한 반응변수의 개별 관측값 예측에 대한 문제를 살펴보겠다.
 이번 절에서도 미리 지정되는 설명변수의 수준을 <span class="math inline">\(X_{o}\)</span> 라고 하고, <span class="math inline">\(X_{o}\)</span> 에 해당하는 새로운 관측값을 <span class="math inline">\(Y_{o}\)</span> 라고 하자.
 새로운 관측값 <span class="math inline">\(Y_{o}\)</span> 는 식 <a href="simple-reg-infer.html#eq:simple-ch3-1">(3.1)</a>의 회귀모형에 의해서 다음과 같이 주어진다.</p>
@@ -641,7 +641,7 @@ t = \frac{\widehat{Y}_{o}-Y_{o}}{SE(\psi)}
 <span id="cb23-6"><a href="simple-reg-infer.html#cb23-6" tabindex="-1"></a><span class="do">## 4            40 701.5714 566.5916 836.5512 269.9596</span></span></code></pre></div>
 </div>
 <div id="상관계수-두-변수-사이의-선형-연관성-측정" class="section level2 hasAnchor" number="3.5">
-<h2><span class="header-section-number">3.5</span> 상관계수 : 두 변수 사이의 선형 연관성 측정<a href="simple-reg-infer.html#상관계수-두-변수-사이의-선형-연관성-측정" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">3.5</span> 상관계수 : 두 변수 사이의 선형 연관성 측정<a href="#%EC%83%81%EA%B4%80%EA%B3%84%EC%88%98-%EB%91%90-%EB%B3%80%EC%88%98-%EC%82%AC%EC%9D%B4%EC%9D%98-%EC%84%A0%ED%98%95-%EC%97%B0%EA%B4%80%EC%84%B1-%EC%B8%A1%EC%A0%95" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>두 변수 사이의 선형 관련성을 측정하는 통계량으로 식 <a href="simple-reg.html#eq:cov">(2.2)</a>에 정의된 공분산이 있다.
 공분산의 값이 크면 두 변수 사이에 강한 양의 관계 또는 음의 관계가 있다고 할 수 있지만, 값이 작으면 선형 관계가 명확하지 않다고 할 수 있다.
 그러나 공분산은 변수가 취하는 값 자체의 절대적 크기에도 영향을 받는 통계량이기 때문에, ‘값이 크다’ 또는 ’값이 작다’에 대한 절대적 기준을 제시할 수 없는데,
@@ -698,7 +698,7 @@ t = \frac{r \sqrt{n-2}}{\sqrt{1-r^{2}}}
 <p>검정 결과는 두 변수 사이에 유의한 선형관계가 존재하는 것으로 나왔다.</p>
 </div>
 <div id="연습문제-1" class="section level2 hasAnchor" number="3.6">
-<h2><span class="header-section-number">3.6</span> 연습문제<a href="simple-reg-infer.html#연습문제-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">3.6</span> 연습문제<a href="#%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>1.</strong> 단순회귀모형에서 기울기 모수인 <span class="math inline">\(\beta_{1}\)</span> 에 대한 다음의 가설 검정을 실시하고자 한다.</p>
 <p><span class="math display">\[\begin{equation}
 H_{0}: \beta_{1}=0,~~H_{1}: \beta_{1} \ne 0
@@ -793,42 +793,42 @@ H_{0}: \beta_{1}=0,~~H_{1}: \beta_{1} \ne 0
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["_main.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

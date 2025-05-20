@@ -1525,12 +1525,16 @@ summary(fit_s)
 - 모형 `fit_s`의 결정계수와 수정결정계수를 주어진 결과물에서 각각 구하고, 그 의미를 설명하라. 
 
 
-**3.** 데이터 프레임 `car_df`는 230대 차량의 연비(`mpg`)와 배기량(`displ`), 변속기 종류(`trans`)가 입력된 자료이다. 
+**3.** 데이터 파일 `car_df.csv`에는 234대 차량의 연비(`mpg`)와 배기량(`displ`), 변속기 종류(`trans`)가 입력되어 있다. 웹 서버 `https://raw.githubusercontent.com/yjyjpark/Reg-with-R/main/Data/`에 있는 자료를 불러와서 데이터 프레임 `car_df`에 할당하고, 처음 3줄을 출력한 결과는 다음과 같다.
 
-```{r, echo=FALSE}
+```{r, include=FALSE}
 car_df <- ggplot2::mpg |> 
   mutate(trans = if_else(substr(trans, 1, 1) == "a", "auto", "manual")) |> 
   select(mpg = cty, trans, displ)
+```
+
+```{r, echo=FALSE}
+car_df <- read_csv("https://raw.githubusercontent.com/yjyjpark/Reg-with-R/main/Data/car_df.csv")
 ```
 
 ```{r}
@@ -1558,14 +1562,18 @@ summary(car_fit_2)
 - 두 회귀모형의 차이는 무엇인지 설명하라. 또한 주어진 결과물만을 근거로 두 모형 중 한 모형을 선택해야 한다면 어떤 모형을 선택하겠는가? 
 
 
-**4.** 데이터 프레임 `auto_df`에는 302대 차량의 연비와 관련된 자료가 입력되어 있다. 
+**4.** 데이터 파일 `auto_df.csv`에는 302대 차량의 연비와 관련된 자료가 입력되어 있다. 웹 서버 `https://raw.githubusercontent.com/yjyjpark/Reg-with-R/main/Data/`에 있는 자료를 R로 불러와서 데이터 프레임 `auto_df`에 할당하고, 처음 3줄을 출력한 결과는 다음과 같다.  
 
-```{r, echo=FALSE}
+```{r, include=FALSE}
 auto_df <- ISLR::Auto |> 
   filter(cylinders %in% c(4, 8)) |>
   mutate(cylinders = as.factor(cylinders)) |> 
   select(!c(origin, name)) |> 
   as_tibble()
+```
+
+```{r, echo=FALSE}
+auto_df <- read_csv("https://raw.githubusercontent.com/yjyjpark/Reg-with-R/main/Data/auto_df.csv")
 ```
 
 ```{r}
