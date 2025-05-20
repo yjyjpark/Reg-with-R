@@ -449,14 +449,18 @@ summary(fit)
 ```
 
 
-**3.** 데이터 프레임 `auto_df`에는 302대 차량의 연비와 관련된 자료가 입력되어 있다. 
+**3.** 데이터 파일 `auto_df.csv`에는 302대 차량의 연비와 관련된 자료가 입력되어 있다. 웹 서버 `https://raw.githubusercontent.com/yjyjpark/Reg-with-R/main/Data/`에 있는 자료를 R로 불러와서 데이터 프레임 `auto_df`에 할당하고, 처음 3줄을 출력한 결과는 다음과 같다.  
 
-```{r, echo=FALSE}
+```{r, include=FALSE}
 auto_df <- ISLR::Auto |> 
   filter(cylinders %in% c(4, 8)) |>
   mutate(cylinders = as.factor(cylinders)) |> 
   select(!c(origin, name)) |> 
   as_tibble()
+```
+
+```{r, echo=FALSE}
+auto_df <- read_csv("https://raw.githubusercontent.com/yjyjpark/Reg-with-R/main/Data/auto_df.csv")
 ```
 
 ```{r}

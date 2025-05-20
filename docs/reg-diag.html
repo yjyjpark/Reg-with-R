@@ -601,24 +601,24 @@ Nevada의 경우에는 Cook’s distance와 스튜던트화 잔차가 비교적 
 <span id="cb127-19"><a href="reg-diag.html#cb127-19" tabindex="-1"></a><span class="do">## Residual standard error: 1.162 on 47 degrees of freedom</span></span>
 <span id="cb127-20"><a href="reg-diag.html#cb127-20" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.9907, Adjusted R-squared:  0.9903 </span></span>
 <span id="cb127-21"><a href="reg-diag.html#cb127-21" tabindex="-1"></a><span class="do">## F-statistic:  2500 on 2 and 47 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
-<p><strong>3.</strong> 데이터 프레임 <code>auto_df</code>에는 302대 차량의 연비와 관련된 자료가 입력되어 있다.</p>
+<p><strong>3.</strong> 데이터 파일 <code>auto_df.csv</code>에는 302대 차량의 연비와 관련된 자료가 입력되어 있다. 웹 서버 <code>https://raw.githubusercontent.com/yjyjpark/Reg-with-R/main/Data/</code>에 있는 자료를 R로 불러와서 데이터 프레임 <code>auto_df</code>에 할당하고, 처음 3줄을 출력한 결과는 다음과 같다.</p>
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="reg-diag.html#cb128-1" tabindex="-1"></a>auto_df <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">3</span>)</span>
 <span id="cb128-2"><a href="reg-diag.html#cb128-2" tabindex="-1"></a><span class="do">## # A tibble: 302 × 7</span></span>
 <span id="cb128-3"><a href="reg-diag.html#cb128-3" tabindex="-1"></a><span class="do">##     mpg cylinders displacement horsepower weight acceleration  year</span></span>
-<span id="cb128-4"><a href="reg-diag.html#cb128-4" tabindex="-1"></a><span class="do">##   &lt;dbl&gt; &lt;fct&gt;            &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb128-5"><a href="reg-diag.html#cb128-5" tabindex="-1"></a><span class="do">## 1    18 8                  307        130   3504         12      70</span></span>
-<span id="cb128-6"><a href="reg-diag.html#cb128-6" tabindex="-1"></a><span class="do">## 2    15 8                  350        165   3693         11.5    70</span></span>
-<span id="cb128-7"><a href="reg-diag.html#cb128-7" tabindex="-1"></a><span class="do">## 3    18 8                  318        150   3436         11      70</span></span>
+<span id="cb128-4"><a href="reg-diag.html#cb128-4" tabindex="-1"></a><span class="do">##   &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb128-5"><a href="reg-diag.html#cb128-5" tabindex="-1"></a><span class="do">## 1    18         8          307        130   3504         12      70</span></span>
+<span id="cb128-6"><a href="reg-diag.html#cb128-6" tabindex="-1"></a><span class="do">## 2    15         8          350        165   3693         11.5    70</span></span>
+<span id="cb128-7"><a href="reg-diag.html#cb128-7" tabindex="-1"></a><span class="do">## 3    18         8          318        150   3436         11      70</span></span>
 <span id="cb128-8"><a href="reg-diag.html#cb128-8" tabindex="-1"></a><span class="do">## # ℹ 299 more rows</span></span></code></pre></div>
 <ul>
 <li>회귀모형 <code>auto_fit</code>에 대한 회귀진단을 실시해 보자. 작성된 그래프를 근거로 확인할 수 있는 회귀모형의 가정 사항은 어떤 것이 있는가? 가정 사항은 만족하는 것으로 보이는가?</li>
 </ul>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="reg-diag.html#cb129-1" tabindex="-1"></a>auto_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> displacement <span class="sc">+</span> horsepower <span class="sc">+</span> acceleration, auto_df)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-125-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-126-1.png" width="864" /></p>
 <ul>
 <li>회귀모형 <code>auto_fit</code>의 적합에 사용된 관찰값에 대한 진단을 실시해 보자. 작성된 그래프에 사용된 통계량에 대해 설명하라. 문제가 되는 관찰값이 있는 것으로 보이는가?</li>
 </ul>
-<p><img src="_main_files/figure-html/unnamed-chunk-126-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-127-1.png" width="864" /></p>
 <pre><code>##        StudRes         Hat       CookD
 ## 24   0.4670488 0.077621531 0.004601278
 ## 25  -0.1939362 0.094916421 0.000989271
